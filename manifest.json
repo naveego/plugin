@@ -1,0 +1,54 @@
+{
+  "id": "zoho-plugin",
+  "displayName": "Zoho Publisher",
+  "description": "Publisher which pulls data from a zoho instance",
+  "versionDescription": "Version 1",
+  "version": "1.0.0",
+  "iconFile": "icon.jpg",
+  "executable": "Plugin-Zoho",
+  "kind": "publisher",
+  "os": "$GOOS",
+  "arch": "$GOARCH",
+  "canProduceMultipleSchemas": true,
+  "canAcceptQueryBasedSchemas": false,
+  "configSchema": {
+    "ui": {
+      "ui:order": [
+        "auth"
+      ],
+      "auth": {
+        "ui:widget": "ZohoAuth"
+      }
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "object",
+          "title": "Host",
+          "description": "The hostname of the server",
+          "properties": {
+            "clientId": {
+              "type": "string",
+              "title": "Client ID",
+              "description": "The client id of the Zoho api application"
+            },
+            "clientSecret": {
+              "type": "string",
+              "title": "Client Secret",
+              "description": "The client secret of the Zoho api application"
+            },
+            "refreshToken": {
+              "type": "string",
+              "title": "Refresh Token",
+              "description": "The refresh token generated during authorization process"
+            }
+          }
+        }
+      },
+      "required": [
+        "auth"
+      ]
+    }
+  }
+}
