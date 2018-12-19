@@ -31,7 +31,7 @@ namespace Plugin_Zoho.Helper
                 // Append text to the file
                 using (StreamWriter sw = File.AppendText(@"plugin.txt"))
                 {
-                    sw.WriteLine(message);
+                    sw.WriteLine(DateTime.Now + message);
                     sw.Close();
                 }
             }
