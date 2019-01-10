@@ -102,7 +102,7 @@ namespace Plugin_Zoho_Test.Plugin
 
             // assert
             Assert.IsType<DiscoverShapesResponse>(response);
-            Assert.Equal(1, response.Shapes.Count);
+            Assert.Single(response.Shapes);
             
             // cleanup
             await channel.ShutdownAsync();
@@ -159,7 +159,7 @@ namespace Plugin_Zoho_Test.Plugin
 
             // assert
             Assert.IsType<DiscoverShapesResponse>(response);
-            Assert.Equal(0, response.Shapes.Count);
+            Assert.Empty(response.Shapes);
             
             // cleanup
             await channel.ShutdownAsync();
@@ -270,7 +270,7 @@ namespace Plugin_Zoho_Test.Plugin
             }
 
             // assert
-            Assert.Equal(1, records.Count);
+            Assert.Single(records);
             
             // cleanup
             await channel.ShutdownAsync();

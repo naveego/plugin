@@ -88,7 +88,7 @@ namespace Plugin_Zoho_Test.Helper
             // assert
             string[] lines = File.ReadAllLines(@"plugin.txt");
 
-            Assert.Equal(1, lines.Length);
+            Assert.Single(lines);
             
             // cleanup
             File.Delete(@"plugin.txt");
@@ -110,7 +110,7 @@ namespace Plugin_Zoho_Test.Helper
             // assert
             string[] lines = File.Exists(@"plugin.txt") ? File.ReadAllLines(@"plugin.txt") : new string[0];
 
-            Assert.Equal(0, lines.Length);
+            Assert.Empty(lines);
             
             // cleanup
             File.Delete(@"plugin.txt");

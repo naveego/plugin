@@ -5,7 +5,6 @@
 #pragma warning disable 0414, 1591
 #region Designer generated code
 
-using System.Diagnostics.CodeAnalysis;
 using grpc = global::Grpc.Core;
 
 namespace Pub {
@@ -21,11 +20,28 @@ namespace Pub {
     static readonly grpc::Marshaller<global::Pub.Record> __Marshaller_pub_Record = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.Record.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.DisconnectRequest> __Marshaller_pub_DisconnectRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DisconnectRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.DisconnectResponse> __Marshaller_pub_DisconnectResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DisconnectResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureConnectionRequest> __Marshaller_pub_ConfigureConnectionRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureConnectionRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureConnectionResponse> __Marshaller_pub_ConfigureConnectionResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureConnectionResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureQueryRequest> __Marshaller_pub_ConfigureQueryRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureQueryRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureQueryResponse> __Marshaller_pub_ConfigureQueryResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureQueryResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureRealTimeRequest> __Marshaller_pub_ConfigureRealTimeRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureRealTimeRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureRealTimeResponse> __Marshaller_pub_ConfigureRealTimeResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureRealTimeResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.BeginOAuthFlowRequest> __Marshaller_pub_BeginOAuthFlowRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.BeginOAuthFlowRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.BeginOAuthFlowResponse> __Marshaller_pub_BeginOAuthFlowResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.BeginOAuthFlowResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.CompleteOAuthFlowRequest> __Marshaller_pub_CompleteOAuthFlowRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.CompleteOAuthFlowRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.CompleteOAuthFlowResponse> __Marshaller_pub_CompleteOAuthFlowResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.CompleteOAuthFlowResponse.Parser.ParseFrom);
 
     static readonly grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse> __Method_Connect = new grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Connect",
+        __Marshaller_pub_ConnectRequest,
+        __Marshaller_pub_ConnectResponse);
+
+    static readonly grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse> __Method_ConnectSession = new grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ConnectSession",
         __Marshaller_pub_ConnectRequest,
         __Marshaller_pub_ConnectResponse);
 
@@ -50,6 +66,41 @@ namespace Pub {
         __Marshaller_pub_DisconnectRequest,
         __Marshaller_pub_DisconnectResponse);
 
+    static readonly grpc::Method<global::Pub.ConfigureConnectionRequest, global::Pub.ConfigureConnectionResponse> __Method_ConfigureConnection = new grpc::Method<global::Pub.ConfigureConnectionRequest, global::Pub.ConfigureConnectionResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ConfigureConnection",
+        __Marshaller_pub_ConfigureConnectionRequest,
+        __Marshaller_pub_ConfigureConnectionResponse);
+
+    static readonly grpc::Method<global::Pub.ConfigureQueryRequest, global::Pub.ConfigureQueryResponse> __Method_ConfigureQuery = new grpc::Method<global::Pub.ConfigureQueryRequest, global::Pub.ConfigureQueryResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ConfigureQuery",
+        __Marshaller_pub_ConfigureQueryRequest,
+        __Marshaller_pub_ConfigureQueryResponse);
+
+    static readonly grpc::Method<global::Pub.ConfigureRealTimeRequest, global::Pub.ConfigureRealTimeResponse> __Method_ConfigureRealTime = new grpc::Method<global::Pub.ConfigureRealTimeRequest, global::Pub.ConfigureRealTimeResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ConfigureRealTime",
+        __Marshaller_pub_ConfigureRealTimeRequest,
+        __Marshaller_pub_ConfigureRealTimeResponse);
+
+    static readonly grpc::Method<global::Pub.BeginOAuthFlowRequest, global::Pub.BeginOAuthFlowResponse> __Method_BeginOAuthFlow = new grpc::Method<global::Pub.BeginOAuthFlowRequest, global::Pub.BeginOAuthFlowResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "BeginOAuthFlow",
+        __Marshaller_pub_BeginOAuthFlowRequest,
+        __Marshaller_pub_BeginOAuthFlowResponse);
+
+    static readonly grpc::Method<global::Pub.CompleteOAuthFlowRequest, global::Pub.CompleteOAuthFlowResponse> __Method_CompleteOAuthFlow = new grpc::Method<global::Pub.CompleteOAuthFlowRequest, global::Pub.CompleteOAuthFlowResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CompleteOAuthFlow",
+        __Marshaller_pub_CompleteOAuthFlowRequest,
+        __Marshaller_pub_CompleteOAuthFlowResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -66,6 +117,22 @@ namespace Pub {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::Pub.ConnectResponse> Connect(global::Pub.ConnectRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Instructs the plugin to connect to its data source
+      /// and maintain a session where any change in the connection state
+      /// or updates to OAuth information are streamed back to the host.
+      /// The plugin should maintain this connection until Disconnect is called.
+      /// This must be implemented if the plugin manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      public virtual global::System.Threading.Tasks.Task ConnectSession(global::Pub.ConnectRequest request, grpc::IServerStreamWriter<global::Pub.ConnectResponse> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -101,6 +168,67 @@ namespace Pub {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::Pub.DisconnectResponse> Disconnect(global::Pub.DisconnectRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Configures a connection which can be used to connect to a data source.
+      /// This must be implemented if the plugin manifest has `canConfigureConnection` set to true.
+      /// This is an alternative to having a `configSchema` element in the manifest.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.ConfigureConnectionResponse> ConfigureConnection(global::Pub.ConfigureConnectionRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Configures a query which can be used to publish a shape.
+      /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.ConfigureQueryResponse> ConfigureQuery(global::Pub.ConfigureQueryRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Configures settings for real time publishing (change detection).
+      /// This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.ConfigureRealTimeResponse> ConfigureRealTime(global::Pub.ConfigureRealTimeRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Invoked to begin an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.BeginOAuthFlowResponse> BeginOAuthFlow(global::Pub.BeginOAuthFlowRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Invoked to complete an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.CompleteOAuthFlowResponse> CompleteOAuthFlow(global::Pub.CompleteOAuthFlowRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -173,6 +301,36 @@ namespace Pub {
       public virtual grpc::AsyncUnaryCall<global::Pub.ConnectResponse> ConnectAsync(global::Pub.ConnectRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_Connect, null, options, request);
+      }
+      /// <summary>
+      /// Instructs the plugin to connect to its data source
+      /// and maintain a session where any change in the connection state
+      /// or updates to OAuth information are streamed back to the host.
+      /// The plugin should maintain this connection until Disconnect is called.
+      /// This must be implemented if the plugin manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.ConnectResponse> ConnectSession(global::Pub.ConnectRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConnectSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Instructs the plugin to connect to its data source
+      /// and maintain a session where any change in the connection state
+      /// or updates to OAuth information are streamed back to the host.
+      /// The plugin should maintain this connection until Disconnect is called.
+      /// This must be implemented if the plugin manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.ConnectResponse> ConnectSession(global::Pub.ConnectRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_ConnectSession, null, options, request);
       }
       /// <summary>
       /// Requests a listing of shapes this publisher can provide records for.
@@ -288,6 +446,250 @@ namespace Pub {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Disconnect, null, options, request);
       }
+      /// <summary>
+      /// Configures a connection which can be used to connect to a data source.
+      /// This must be implemented if the plugin manifest has `canConfigureConnection` set to true.
+      /// This is an alternative to having a `configSchema` element in the manifest.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureConnectionResponse ConfigureConnection(global::Pub.ConfigureConnectionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureConnection(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a connection which can be used to connect to a data source.
+      /// This must be implemented if the plugin manifest has `canConfigureConnection` set to true.
+      /// This is an alternative to having a `configSchema` element in the manifest.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureConnectionResponse ConfigureConnection(global::Pub.ConfigureConnectionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ConfigureConnection, null, options, request);
+      }
+      /// <summary>
+      /// Configures a connection which can be used to connect to a data source.
+      /// This must be implemented if the plugin manifest has `canConfigureConnection` set to true.
+      /// This is an alternative to having a `configSchema` element in the manifest.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureConnectionResponse> ConfigureConnectionAsync(global::Pub.ConfigureConnectionRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureConnectionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a connection which can be used to connect to a data source.
+      /// This must be implemented if the plugin manifest has `canConfigureConnection` set to true.
+      /// This is an alternative to having a `configSchema` element in the manifest.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureConnectionResponse> ConfigureConnectionAsync(global::Pub.ConfigureConnectionRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ConfigureConnection, null, options, request);
+      }
+      /// <summary>
+      /// Configures a query which can be used to publish a shape.
+      /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureQueryResponse ConfigureQuery(global::Pub.ConfigureQueryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureQuery(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a query which can be used to publish a shape.
+      /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureQueryResponse ConfigureQuery(global::Pub.ConfigureQueryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ConfigureQuery, null, options, request);
+      }
+      /// <summary>
+      /// Configures a query which can be used to publish a shape.
+      /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureQueryResponse> ConfigureQueryAsync(global::Pub.ConfigureQueryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureQueryAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a query which can be used to publish a shape.
+      /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureQueryResponse> ConfigureQueryAsync(global::Pub.ConfigureQueryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ConfigureQuery, null, options, request);
+      }
+      /// <summary>
+      /// Configures settings for real time publishing (change detection).
+      /// This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureRealTimeResponse ConfigureRealTime(global::Pub.ConfigureRealTimeRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureRealTime(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures settings for real time publishing (change detection).
+      /// This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureRealTimeResponse ConfigureRealTime(global::Pub.ConfigureRealTimeRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ConfigureRealTime, null, options, request);
+      }
+      /// <summary>
+      /// Configures settings for real time publishing (change detection).
+      /// This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureRealTimeResponse> ConfigureRealTimeAsync(global::Pub.ConfigureRealTimeRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureRealTimeAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures settings for real time publishing (change detection).
+      /// This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureRealTimeResponse> ConfigureRealTimeAsync(global::Pub.ConfigureRealTimeRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ConfigureRealTime, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to begin an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.BeginOAuthFlowResponse BeginOAuthFlow(global::Pub.BeginOAuthFlowRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return BeginOAuthFlow(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to begin an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.BeginOAuthFlowResponse BeginOAuthFlow(global::Pub.BeginOAuthFlowRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_BeginOAuthFlow, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to begin an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.BeginOAuthFlowResponse> BeginOAuthFlowAsync(global::Pub.BeginOAuthFlowRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return BeginOAuthFlowAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to begin an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.BeginOAuthFlowResponse> BeginOAuthFlowAsync(global::Pub.BeginOAuthFlowRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_BeginOAuthFlow, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to complete an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.CompleteOAuthFlowResponse CompleteOAuthFlow(global::Pub.CompleteOAuthFlowRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CompleteOAuthFlow(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to complete an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.CompleteOAuthFlowResponse CompleteOAuthFlow(global::Pub.CompleteOAuthFlowRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CompleteOAuthFlow, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to complete an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.CompleteOAuthFlowResponse> CompleteOAuthFlowAsync(global::Pub.CompleteOAuthFlowRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CompleteOAuthFlowAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to complete an OAuth flow. This must be implemented if the plugin 
+      /// manifest has `canUseOAuth` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.CompleteOAuthFlowResponse> CompleteOAuthFlowAsync(global::Pub.CompleteOAuthFlowRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CompleteOAuthFlow, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override PublisherClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -301,9 +703,15 @@ namespace Pub {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Connect, serviceImpl.Connect)
+          .AddMethod(__Method_ConnectSession, serviceImpl.ConnectSession)
           .AddMethod(__Method_DiscoverShapes, serviceImpl.DiscoverShapes)
           .AddMethod(__Method_PublishStream, serviceImpl.PublishStream)
-          .AddMethod(__Method_Disconnect, serviceImpl.Disconnect).Build();
+          .AddMethod(__Method_Disconnect, serviceImpl.Disconnect)
+          .AddMethod(__Method_ConfigureConnection, serviceImpl.ConfigureConnection)
+          .AddMethod(__Method_ConfigureQuery, serviceImpl.ConfigureQuery)
+          .AddMethod(__Method_ConfigureRealTime, serviceImpl.ConfigureRealTime)
+          .AddMethod(__Method_BeginOAuthFlow, serviceImpl.BeginOAuthFlow)
+          .AddMethod(__Method_CompleteOAuthFlow, serviceImpl.CompleteOAuthFlow).Build();
     }
 
     /// <summary>Register service method implementations with a service binder. Useful when customizing the service binding logic.
@@ -313,9 +721,15 @@ namespace Pub {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, PublisherBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_Connect, serviceImpl.Connect);
+      serviceBinder.AddMethod(__Method_ConnectSession, serviceImpl.ConnectSession);
       serviceBinder.AddMethod(__Method_DiscoverShapes, serviceImpl.DiscoverShapes);
       serviceBinder.AddMethod(__Method_PublishStream, serviceImpl.PublishStream);
       serviceBinder.AddMethod(__Method_Disconnect, serviceImpl.Disconnect);
+      serviceBinder.AddMethod(__Method_ConfigureConnection, serviceImpl.ConfigureConnection);
+      serviceBinder.AddMethod(__Method_ConfigureQuery, serviceImpl.ConfigureQuery);
+      serviceBinder.AddMethod(__Method_ConfigureRealTime, serviceImpl.ConfigureRealTime);
+      serviceBinder.AddMethod(__Method_BeginOAuthFlow, serviceImpl.BeginOAuthFlow);
+      serviceBinder.AddMethod(__Method_CompleteOAuthFlow, serviceImpl.CompleteOAuthFlow);
     }
 
   }

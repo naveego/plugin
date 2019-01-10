@@ -46,7 +46,6 @@ namespace Plugin_Zoho
             {
                 Logger.Error(e.Message);
             }
-            
         }
     }
 }

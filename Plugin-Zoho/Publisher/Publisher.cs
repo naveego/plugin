@@ -5,12 +5,12 @@
 #pragma warning disable 1591, 0612, 3021
 #region Designer generated code
 
-using System.Diagnostics.CodeAnalysis;
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
 namespace Pub {
+
   /// <summary>Holder for reflection information generated from publisher.proto</summary>
   public static partial class PublisherReflection {
 
@@ -24,50 +24,94 @@ namespace Pub {
     static PublisherReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9wdWJsaXNoZXIucHJvdG8SA3B1YiInCg5Db25uZWN0UmVxdWVzdBIVCg1z",
-            "ZXR0aW5nc19qc29uGAIgASgJIhEKD0Nvbm5lY3RSZXNwb25zZSJfCg5QdWJs",
-            "aXNoUmVxdWVzdBIZCgVzaGFwZRgBIAEoCzIKLnB1Yi5TaGFwZRINCgVsaW1p",
-            "dBgCIAEoDRIjCgdmaWx0ZXJzGAMgAygLMhIucHViLlB1Ymxpc2hGaWx0ZXIi",
-            "jwEKDVB1Ymxpc2hGaWx0ZXISJQoEa2luZBgBIAEoDjIXLnB1Yi5QdWJsaXNo",
-            "RmlsdGVyLktpbmQSEwoLcHJvcGVydHlfaWQYAiABKAkSDQoFdmFsdWUYAyAB",
-            "KAkiMwoES2luZBIKCgZFUVVBTFMQABINCglMRVNTX1RIQU4QARIQCgxHUkVB",
-            "VEVSX1RIQU4QAiKZAQoVRGlzY292ZXJTaGFwZXNSZXF1ZXN0Ei0KBG1vZGUY",
-            "ASABKA4yHy5wdWIuRGlzY292ZXJTaGFwZXNSZXF1ZXN0Lk1vZGUSHgoKdG9f",
-            "cmVmcmVzaBgCIAMoCzIKLnB1Yi5TaGFwZRITCgtzYW1wbGVfc2l6ZRgEIAEo",
-            "DSIcCgRNb2RlEgcKA0FMTBAAEgsKB1JFRlJFU0gQASI0ChZEaXNjb3ZlclNo",
-            "YXBlc1Jlc3BvbnNlEhoKBnNoYXBlcxgBIAMoCzIKLnB1Yi5TaGFwZSLNAQoF",
-            "U2hhcGUSCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNjcmlwdGlv",
-            "bhgDIAEoCRIhCgpwcm9wZXJ0aWVzGAQgAygLMg0ucHViLlByb3BlcnR5EhkK",
-            "BWNvdW50GAUgASgLMgoucHViLkNvdW50EhsKBnNhbXBsZRgGIAMoCzILLnB1",
-            "Yi5SZWNvcmQSDQoFcXVlcnkYByABKAkSGwoTcHVibGlzaGVyX21ldGFfanNv",
-            "bhgIIAEoCRIOCgZlcnJvcnMYCSADKAkiZwoFQ291bnQSHQoEa2luZBgBIAEo",
-            "DjIPLnB1Yi5Db3VudC5LaW5kEg0KBXZhbHVlGAIgASgFIjAKBEtpbmQSDwoL",
-            "VU5BVkFJTEFCTEUQABIMCghFU1RJTUFURRABEgkKBUVYQUNUEAIi6gEKCFBy",
-            "b3BlcnR5EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRp",
-            "b24YAyABKAkSHwoEdHlwZRgEIAEoDjIRLnB1Yi5Qcm9wZXJ0eVR5cGUSDgoG",
-            "aXNfa2V5GAUgASgIEhkKEWlzX2NyZWF0ZV9jb3VudGVyGAYgASgIEhkKEWlz",
-            "X3VwZGF0ZV9jb3VudGVyGAcgASgIEhsKE3B1Ymxpc2hlcl9tZXRhX2pzb24Y",
-            "CCABKAkSFgoOdHlwZV9hdF9zb3VyY2UYCSABKAkSEwoLaXNfbnVsbGFibGUY",
-            "CiABKAgiEwoRRGlzY29ubmVjdFJlcXVlc3QiFAoSRGlzY29ubmVjdFJlc3Bv",
-            "bnNlInkKBlJlY29yZBIiCgZhY3Rpb24YASABKA4yEi5wdWIuUmVjb3JkLkFj",
-            "dGlvbhIRCglkYXRhX2pzb24YAiABKAkiOAoGQWN0aW9uEgoKBlVQU0VSVBAA",
-            "EgoKBklOU0VSVBABEgoKBlVQREFURRACEgoKBkRFTEVURRADKpIBCgxQcm9w",
-            "ZXJ0eVR5cGUSCgoGU1RSSU5HEAASCAoEQk9PTBACEgsKB0lOVEVHRVIQAxIJ",
-            "CgVGTE9BVBAEEgsKB0RFQ0lNQUwQBRIICgREQVRFEAYSCAoEVElNRRAHEgwK",
-            "CERBVEVUSU1FEAgSCAoEVEVYVBAJEggKBEJMT0IQChIICgRKU09OEAsSBwoD",
-            "WE1MEAwyiAIKCVB1Ymxpc2hlchI2CgdDb25uZWN0EhMucHViLkNvbm5lY3RS",
-            "ZXF1ZXN0GhQucHViLkNvbm5lY3RSZXNwb25zZSIAEksKDkRpc2NvdmVyU2hh",
-            "cGVzEhoucHViLkRpc2NvdmVyU2hhcGVzUmVxdWVzdBobLnB1Yi5EaXNjb3Zl",
-            "clNoYXBlc1Jlc3BvbnNlIgASNQoNUHVibGlzaFN0cmVhbRITLnB1Yi5QdWJs",
-            "aXNoUmVxdWVzdBoLLnB1Yi5SZWNvcmQiADABEj8KCkRpc2Nvbm5lY3QSFi5w",
-            "dWIuRGlzY29ubmVjdFJlcXVlc3QaFy5wdWIuRGlzY29ubmVjdFJlc3BvbnNl",
-            "IgBiBnByb3RvMw=="));
+            "Cg9wdWJsaXNoZXIucHJvdG8SA3B1YiJ3Cg5Db25uZWN0UmVxdWVzdBIVCg1z",
+            "ZXR0aW5nc19qc29uGAIgASgJEjQKE29hdXRoX2NvbmZpZ3VyYXRpb24YAyAB",
+            "KAsyFy5wdWIuT0F1dGhDb25maWd1cmF0aW9uEhgKEG9hdXRoX3N0YXRlX2pz",
+            "b24YBCABKAkicgoPQ29ubmVjdFJlc3BvbnNlEhYKDnNldHRpbmdzX2Vycm9y",
+            "GAEgASgJEhgKEGNvbm5lY3Rpb25fZXJyb3IYAiABKAkSEwoLb2F1dGhfZXJy",
+            "b3IYAyABKAkSGAoQb2F1dGhfc3RhdGVfanNvbhgEIAEoCSLAAQoOUHVibGlz",
+            "aFJlcXVlc3QSGQoFc2hhcGUYASABKAsyCi5wdWIuU2hhcGUSDQoFbGltaXQY",
+            "AiABKA0SIwoHZmlsdGVycxgDIAMoCzISLnB1Yi5QdWJsaXNoRmlsdGVyEiAK",
+            "GGNvbm5lY3Rpb25fc2V0dGluZ3NfanNvbhgFIAEoCRIfChdyZWFsX3RpbWVf",
+            "c2V0dGluZ3NfanNvbhgGIAEoCRIcChRyZWFsX3RpbWVfc3RhdGVfanNvbhgH",
+            "IAEoCSKPAQoNUHVibGlzaEZpbHRlchIlCgRraW5kGAEgASgOMhcucHViLlB1",
+            "Ymxpc2hGaWx0ZXIuS2luZBITCgtwcm9wZXJ0eV9pZBgCIAEoCRINCgV2YWx1",
+            "ZRgDIAEoCSIzCgRLaW5kEgoKBkVRVUFMUxAAEg0KCUxFU1NfVEhBThABEhAK",
+            "DEdSRUFURVJfVEhBThACIpkBChVEaXNjb3ZlclNoYXBlc1JlcXVlc3QSLQoE",
+            "bW9kZRgBIAEoDjIfLnB1Yi5EaXNjb3ZlclNoYXBlc1JlcXVlc3QuTW9kZRIe",
+            "Cgp0b19yZWZyZXNoGAIgAygLMgoucHViLlNoYXBlEhMKC3NhbXBsZV9zaXpl",
+            "GAQgASgNIhwKBE1vZGUSBwoDQUxMEAASCwoHUkVGUkVTSBABIjQKFkRpc2Nv",
+            "dmVyU2hhcGVzUmVzcG9uc2USGgoGc2hhcGVzGAEgAygLMgoucHViLlNoYXBl",
+            "Is0BCgVTaGFwZRIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2Ny",
+            "aXB0aW9uGAMgASgJEiEKCnByb3BlcnRpZXMYBCADKAsyDS5wdWIuUHJvcGVy",
+            "dHkSGQoFY291bnQYBSABKAsyCi5wdWIuQ291bnQSGwoGc2FtcGxlGAYgAygL",
+            "MgsucHViLlJlY29yZBINCgVxdWVyeRgHIAEoCRIbChNwdWJsaXNoZXJfbWV0",
+            "YV9qc29uGAggASgJEg4KBmVycm9ycxgJIAMoCSJnCgVDb3VudBIdCgRraW5k",
+            "GAEgASgOMg8ucHViLkNvdW50LktpbmQSDQoFdmFsdWUYAiABKAUiMAoES2lu",
+            "ZBIPCgtVTkFWQUlMQUJMRRAAEgwKCEVTVElNQVRFEAESCQoFRVhBQ1QQAiLq",
+            "AQoIUHJvcGVydHkSCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRITCgtkZXNj",
+            "cmlwdGlvbhgDIAEoCRIfCgR0eXBlGAQgASgOMhEucHViLlByb3BlcnR5VHlw",
+            "ZRIOCgZpc19rZXkYBSABKAgSGQoRaXNfY3JlYXRlX2NvdW50ZXIYBiABKAgS",
+            "GQoRaXNfdXBkYXRlX2NvdW50ZXIYByABKAgSGwoTcHVibGlzaGVyX21ldGFf",
+            "anNvbhgIIAEoCRIWCg50eXBlX2F0X3NvdXJjZRgJIAEoCRITCgtpc19udWxs",
+            "YWJsZRgKIAEoCCITChFEaXNjb25uZWN0UmVxdWVzdCIUChJEaXNjb25uZWN0",
+            "UmVzcG9uc2UilwEKBlJlY29yZBIiCgZhY3Rpb24YASABKA4yEi5wdWIuUmVj",
+            "b3JkLkFjdGlvbhIRCglkYXRhX2pzb24YAiABKAkSHAoUcmVhbF90aW1lX3N0",
+            "YXRlX2pzb24YAyABKAkiOAoGQWN0aW9uEgoKBlVQU0VSVBAAEgoKBklOU0VS",
+            "VBABEgoKBlVQREFURRACEgoKBkRFTEVURRADIkQKFUNvbmZpZ3VyZVF1ZXJ5",
+            "UmVxdWVzdBIrCgRmb3JtGAEgASgLMh0ucHViLkNvbmZpZ3VyYXRpb25Gb3Jt",
+            "UmVxdWVzdCJhChZDb25maWd1cmVRdWVyeVJlc3BvbnNlEiwKBGZvcm0YASAB",
+            "KAsyHi5wdWIuQ29uZmlndXJhdGlvbkZvcm1SZXNwb25zZRIZCgVzaGFwZRgC",
+            "IAEoCzIKLnB1Yi5TaGFwZSJ3ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVz",
+            "dBIrCgRmb3JtGAEgASgLMh0ucHViLkNvbmZpZ3VyYXRpb25Gb3JtUmVxdWVz",
+            "dBIsCg9jb25uZWN0X3JlcXVlc3QYAiABKAsyEy5wdWIuQ29ubmVjdFJlcXVl",
+            "c3QiewobQ29uZmlndXJlQ29ubmVjdGlvblJlc3BvbnNlEiwKBGZvcm0YASAB",
+            "KAsyHi5wdWIuQ29uZmlndXJhdGlvbkZvcm1SZXNwb25zZRIuChBjb25uZWN0",
+            "X3Jlc3BvbnNlGAIgASgLMhQucHViLkNvbm5lY3RSZXNwb25zZSJHChhDb25m",
+            "aWd1cmVSZWFsVGltZVJlcXVlc3QSKwoEZm9ybRgBIAEoCzIdLnB1Yi5Db25m",
+            "aWd1cmF0aW9uRm9ybVJlcXVlc3QiSQoZQ29uZmlndXJlUmVhbFRpbWVSZXNw",
+            "b25zZRIsCgRmb3JtGAEgASgLMh4ucHViLkNvbmZpZ3VyYXRpb25Gb3JtUmVz",
+            "cG9uc2UiQQoYQ29uZmlndXJhdGlvbkZvcm1SZXF1ZXN0EhEKCWRhdGFfanNv",
+            "bhgBIAEoCRISCgpzdGF0ZV9qc29uGAIgASgJIpIBChlDb25maWd1cmF0aW9u",
+            "Rm9ybVJlc3BvbnNlEhMKC3NjaGVtYV9qc29uGAEgASgJEg8KB3VpX2pzb24Y",
+            "AiABKAkSEgoKc3RhdGVfanNvbhgDIAEoCRIRCglkYXRhX2pzb24YBCABKAkS",
+            "GAoQZGF0YV9lcnJvcnNfanNvbhgFIAEoCRIOCgZlcnJvcnMYBiADKAkiXQoV",
+            "QmVnaW5PQXV0aEZsb3dSZXF1ZXN0Ei4KDWNvbmZpZ3VyYXRpb24YASABKAsy",
+            "Fy5wdWIuT0F1dGhDb25maWd1cmF0aW9uEhQKDHJlZGlyZWN0X3VybBgCIAEo",
+            "CSIzChZCZWdpbk9BdXRoRmxvd1Jlc3BvbnNlEhkKEWF1dGhvcml6YXRpb25f",
+            "dXJsGAEgASgJIncKGENvbXBsZXRlT0F1dGhGbG93UmVxdWVzdBIuCg1jb25m",
+            "aWd1cmF0aW9uGAEgASgLMhcucHViLk9BdXRoQ29uZmlndXJhdGlvbhIUCgxy",
+            "ZWRpcmVjdF91cmwYAiABKAkSFQoNcmVkaXJlY3RfYm9keRgDIAEoCSJaChJP",
+            "QXV0aENvbmZpZ3VyYXRpb24SEQoJY2xpZW50X2lkGAEgASgJEhUKDWNsaWVu",
+            "dF9zZWNyZXQYAiABKAkSGgoSY29uZmlndXJhdGlvbl9qc29uGAMgASgJIjUK",
+            "GUNvbXBsZXRlT0F1dGhGbG93UmVzcG9uc2USGAoQb2F1dGhfc3RhdGVfanNv",
+            "bhgBIAEoCSqSAQoMUHJvcGVydHlUeXBlEgoKBlNUUklORxAAEggKBEJPT0wQ",
+            "AhILCgdJTlRFR0VSEAMSCQoFRkxPQVQQBBILCgdERUNJTUFMEAUSCAoEREFU",
+            "RRAGEggKBFRJTUUQBxIMCghEQVRFVElNRRAIEggKBFRFWFQQCRIICgRCTE9C",
+            "EAoSCAoESlNPThALEgcKA1hNTBAMMusFCglQdWJsaXNoZXISNgoHQ29ubmVj",
+            "dBITLnB1Yi5Db25uZWN0UmVxdWVzdBoULnB1Yi5Db25uZWN0UmVzcG9uc2Ui",
+            "ABI/Cg5Db25uZWN0U2Vzc2lvbhITLnB1Yi5Db25uZWN0UmVxdWVzdBoULnB1",
+            "Yi5Db25uZWN0UmVzcG9uc2UiADABEksKDkRpc2NvdmVyU2hhcGVzEhoucHVi",
+            "LkRpc2NvdmVyU2hhcGVzUmVxdWVzdBobLnB1Yi5EaXNjb3ZlclNoYXBlc1Jl",
+            "c3BvbnNlIgASNQoNUHVibGlzaFN0cmVhbRITLnB1Yi5QdWJsaXNoUmVxdWVz",
+            "dBoLLnB1Yi5SZWNvcmQiADABEj8KCkRpc2Nvbm5lY3QSFi5wdWIuRGlzY29u",
+            "bmVjdFJlcXVlc3QaFy5wdWIuRGlzY29ubmVjdFJlc3BvbnNlIgASWgoTQ29u",
+            "ZmlndXJlQ29ubmVjdGlvbhIfLnB1Yi5Db25maWd1cmVDb25uZWN0aW9uUmVx",
+            "dWVzdBogLnB1Yi5Db25maWd1cmVDb25uZWN0aW9uUmVzcG9uc2UiABJLCg5D",
+            "b25maWd1cmVRdWVyeRIaLnB1Yi5Db25maWd1cmVRdWVyeVJlcXVlc3QaGy5w",
+            "dWIuQ29uZmlndXJlUXVlcnlSZXNwb25zZSIAElQKEUNvbmZpZ3VyZVJlYWxU",
+            "aW1lEh0ucHViLkNvbmZpZ3VyZVJlYWxUaW1lUmVxdWVzdBoeLnB1Yi5Db25m",
+            "aWd1cmVSZWFsVGltZVJlc3BvbnNlIgASSwoOQmVnaW5PQXV0aEZsb3cSGi5w",
+            "dWIuQmVnaW5PQXV0aEZsb3dSZXF1ZXN0GhsucHViLkJlZ2luT0F1dGhGbG93",
+            "UmVzcG9uc2UiABJUChFDb21wbGV0ZU9BdXRoRmxvdxIdLnB1Yi5Db21wbGV0",
+            "ZU9BdXRoRmxvd1JlcXVlc3QaHi5wdWIuQ29tcGxldGVPQXV0aEZsb3dSZXNw",
+            "b25zZSIAYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Pub.PropertyType), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConnectRequest), global::Pub.ConnectRequest.Parser, new[]{ "SettingsJson" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConnectResponse), global::Pub.ConnectResponse.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.PublishRequest), global::Pub.PublishRequest.Parser, new[]{ "Shape", "Limit", "Filters" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConnectRequest), global::Pub.ConnectRequest.Parser, new[]{ "SettingsJson", "OauthConfiguration", "OauthStateJson" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConnectResponse), global::Pub.ConnectResponse.Parser, new[]{ "SettingsError", "ConnectionError", "OauthError", "OauthStateJson" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.PublishRequest), global::Pub.PublishRequest.Parser, new[]{ "Shape", "Limit", "Filters", "ConnectionSettingsJson", "RealTimeSettingsJson", "RealTimeStateJson" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.PublishFilter), global::Pub.PublishFilter.Parser, new[]{ "Kind", "PropertyId", "Value" }, null, new[]{ typeof(global::Pub.PublishFilter.Types.Kind) }, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.DiscoverShapesRequest), global::Pub.DiscoverShapesRequest.Parser, new[]{ "Mode", "ToRefresh", "SampleSize" }, null, new[]{ typeof(global::Pub.DiscoverShapesRequest.Types.Mode) }, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.DiscoverShapesResponse), global::Pub.DiscoverShapesResponse.Parser, new[]{ "Shapes" }, null, null, null),
@@ -76,7 +120,20 @@ namespace Pub {
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.Property), global::Pub.Property.Parser, new[]{ "Id", "Name", "Description", "Type", "IsKey", "IsCreateCounter", "IsUpdateCounter", "PublisherMetaJson", "TypeAtSource", "IsNullable" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.DisconnectRequest), global::Pub.DisconnectRequest.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pub.DisconnectResponse), global::Pub.DisconnectResponse.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.Record), global::Pub.Record.Parser, new[]{ "Action", "DataJson" }, null, new[]{ typeof(global::Pub.Record.Types.Action) }, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.Record), global::Pub.Record.Parser, new[]{ "Action", "DataJson", "RealTimeStateJson" }, null, new[]{ typeof(global::Pub.Record.Types.Action) }, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureQueryRequest), global::Pub.ConfigureQueryRequest.Parser, new[]{ "Form" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureQueryResponse), global::Pub.ConfigureQueryResponse.Parser, new[]{ "Form", "Shape" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureConnectionRequest), global::Pub.ConfigureConnectionRequest.Parser, new[]{ "Form", "ConnectRequest" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureConnectionResponse), global::Pub.ConfigureConnectionResponse.Parser, new[]{ "Form", "ConnectResponse" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureRealTimeRequest), global::Pub.ConfigureRealTimeRequest.Parser, new[]{ "Form" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigureRealTimeResponse), global::Pub.ConfigureRealTimeResponse.Parser, new[]{ "Form" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigurationFormRequest), global::Pub.ConfigurationFormRequest.Parser, new[]{ "DataJson", "StateJson" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.ConfigurationFormResponse), global::Pub.ConfigurationFormResponse.Parser, new[]{ "SchemaJson", "UiJson", "StateJson", "DataJson", "DataErrorsJson", "Errors" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.BeginOAuthFlowRequest), global::Pub.BeginOAuthFlowRequest.Parser, new[]{ "Configuration", "RedirectUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.BeginOAuthFlowResponse), global::Pub.BeginOAuthFlowResponse.Parser, new[]{ "AuthorizationUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.CompleteOAuthFlowRequest), global::Pub.CompleteOAuthFlowRequest.Parser, new[]{ "Configuration", "RedirectUrl", "RedirectBody" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.OAuthConfiguration), global::Pub.OAuthConfiguration.Parser, new[]{ "ClientId", "ClientSecret", "ConfigurationJson" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pub.CompleteOAuthFlowResponse), global::Pub.CompleteOAuthFlowResponse.Parser, new[]{ "OauthStateJson" }, null, null, null)
           }));
     }
     #endregion
@@ -163,6 +220,8 @@ namespace Pub {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ConnectRequest(ConnectRequest other) : this() {
       settingsJson_ = other.settingsJson_;
+      oauthConfiguration_ = other.oauthConfiguration_ != null ? other.oauthConfiguration_.Clone() : null;
+      oauthStateJson_ = other.oauthStateJson_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -186,6 +245,35 @@ namespace Pub {
       }
     }
 
+    /// <summary>Field number for the "oauth_configuration" field.</summary>
+    public const int OauthConfigurationFieldNumber = 3;
+    private global::Pub.OAuthConfiguration oauthConfiguration_;
+    /// <summary>
+    /// OAuth configuration information which the plugin may need to
+    /// obtain an access token using the OAuth state.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.OAuthConfiguration OauthConfiguration {
+      get { return oauthConfiguration_; }
+      set {
+        oauthConfiguration_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "oauth_state_json" field.</summary>
+    public const int OauthStateJsonFieldNumber = 4;
+    private string oauthStateJson_ = "";
+    /// <summary>
+    /// The OAuth state returned from the last Connect, ConnectSession, or CompleteOAuthFlow.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string OauthStateJson {
+      get { return oauthStateJson_; }
+      set {
+        oauthStateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ConnectRequest);
@@ -200,6 +288,8 @@ namespace Pub {
         return true;
       }
       if (SettingsJson != other.SettingsJson) return false;
+      if (!object.Equals(OauthConfiguration, other.OauthConfiguration)) return false;
+      if (OauthStateJson != other.OauthStateJson) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -207,6 +297,8 @@ namespace Pub {
     public override int GetHashCode() {
       int hash = 1;
       if (SettingsJson.Length != 0) hash ^= SettingsJson.GetHashCode();
+      if (oauthConfiguration_ != null) hash ^= OauthConfiguration.GetHashCode();
+      if (OauthStateJson.Length != 0) hash ^= OauthStateJson.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -224,6 +316,14 @@ namespace Pub {
         output.WriteRawTag(18);
         output.WriteString(SettingsJson);
       }
+      if (oauthConfiguration_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(OauthConfiguration);
+      }
+      if (OauthStateJson.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(OauthStateJson);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -234,6 +334,12 @@ namespace Pub {
       int size = 0;
       if (SettingsJson.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SettingsJson);
+      }
+      if (oauthConfiguration_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(OauthConfiguration);
+      }
+      if (OauthStateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OauthStateJson);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -248,6 +354,15 @@ namespace Pub {
       }
       if (other.SettingsJson.Length != 0) {
         SettingsJson = other.SettingsJson;
+      }
+      if (other.oauthConfiguration_ != null) {
+        if (oauthConfiguration_ == null) {
+          oauthConfiguration_ = new global::Pub.OAuthConfiguration();
+        }
+        OauthConfiguration.MergeFrom(other.OauthConfiguration);
+      }
+      if (other.OauthStateJson.Length != 0) {
+        OauthStateJson = other.OauthStateJson;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -264,6 +379,17 @@ namespace Pub {
             SettingsJson = input.ReadString();
             break;
           }
+          case 26: {
+            if (oauthConfiguration_ == null) {
+              oauthConfiguration_ = new global::Pub.OAuthConfiguration();
+            }
+            input.ReadMessage(oauthConfiguration_);
+            break;
+          }
+          case 34: {
+            OauthStateJson = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -271,7 +397,7 @@ namespace Pub {
   }
 
   /// <summary>
-  /// ConnectResponse has no data; if the connect fails, the plugin should return an error.
+  /// Connection result information.
   /// </summary>
   public sealed partial class ConnectResponse : pb::IMessage<ConnectResponse> {
     private static readonly pb::MessageParser<ConnectResponse> _parser = new pb::MessageParser<ConnectResponse>(() => new ConnectResponse());
@@ -298,12 +424,77 @@ namespace Pub {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ConnectResponse(ConnectResponse other) : this() {
+      settingsError_ = other.settingsError_;
+      connectionError_ = other.connectionError_;
+      oauthError_ = other.oauthError_;
+      oauthStateJson_ = other.oauthStateJson_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ConnectResponse Clone() {
       return new ConnectResponse(this);
+    }
+
+    /// <summary>Field number for the "settings_error" field.</summary>
+    public const int SettingsErrorFieldNumber = 1;
+    private string settingsError_ = "";
+    /// <summary>
+    /// If connection settings are invalid, this should contain the problem.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SettingsError {
+      get { return settingsError_; }
+      set {
+        settingsError_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "connection_error" field.</summary>
+    public const int ConnectionErrorFieldNumber = 2;
+    private string connectionError_ = "";
+    /// <summary>
+    /// If the connection settings appear valid, connecting to the target system failed,
+    /// this should contain the error from the target system.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ConnectionError {
+      get { return connectionError_; }
+      set {
+        connectionError_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "oauth_error" field.</summary>
+    public const int OauthErrorFieldNumber = 3;
+    private string oauthError_ = "";
+    /// <summary>
+    /// If the OAuth state is invalid or expired, this should contain a description
+    /// of the problem.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string OauthError {
+      get { return oauthError_; }
+      set {
+        oauthError_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "oauth_state_json" field.</summary>
+    public const int OauthStateJsonFieldNumber = 4;
+    private string oauthStateJson_ = "";
+    /// <summary>
+    /// The OAuth data which should be stored securely and passed next time
+    /// a connection is requested. This is returned by Connect because
+    /// forming the connection may have used up a refresh token and 
+    /// the new refresh token must now be stored.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string OauthStateJson {
+      get { return oauthStateJson_; }
+      set {
+        oauthStateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -319,12 +510,20 @@ namespace Pub {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (SettingsError != other.SettingsError) return false;
+      if (ConnectionError != other.ConnectionError) return false;
+      if (OauthError != other.OauthError) return false;
+      if (OauthStateJson != other.OauthStateJson) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (SettingsError.Length != 0) hash ^= SettingsError.GetHashCode();
+      if (ConnectionError.Length != 0) hash ^= ConnectionError.GetHashCode();
+      if (OauthError.Length != 0) hash ^= OauthError.GetHashCode();
+      if (OauthStateJson.Length != 0) hash ^= OauthStateJson.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -338,6 +537,22 @@ namespace Pub {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
+      if (SettingsError.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SettingsError);
+      }
+      if (ConnectionError.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(ConnectionError);
+      }
+      if (OauthError.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(OauthError);
+      }
+      if (OauthStateJson.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(OauthStateJson);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -346,6 +561,18 @@ namespace Pub {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (SettingsError.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SettingsError);
+      }
+      if (ConnectionError.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ConnectionError);
+      }
+      if (OauthError.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OauthError);
+      }
+      if (OauthStateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OauthStateJson);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -356,6 +583,18 @@ namespace Pub {
     public void MergeFrom(ConnectResponse other) {
       if (other == null) {
         return;
+      }
+      if (other.SettingsError.Length != 0) {
+        SettingsError = other.SettingsError;
+      }
+      if (other.ConnectionError.Length != 0) {
+        ConnectionError = other.ConnectionError;
+      }
+      if (other.OauthError.Length != 0) {
+        OauthError = other.OauthError;
+      }
+      if (other.OauthStateJson.Length != 0) {
+        OauthStateJson = other.OauthStateJson;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -368,6 +607,22 @@ namespace Pub {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            SettingsError = input.ReadString();
+            break;
+          }
+          case 18: {
+            ConnectionError = input.ReadString();
+            break;
+          }
+          case 26: {
+            OauthError = input.ReadString();
+            break;
+          }
+          case 34: {
+            OauthStateJson = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -402,6 +657,9 @@ namespace Pub {
       shape_ = other.shape_ != null ? other.shape_.Clone() : null;
       limit_ = other.limit_;
       filters_ = other.filters_.Clone();
+      connectionSettingsJson_ = other.connectionSettingsJson_;
+      realTimeSettingsJson_ = other.realTimeSettingsJson_;
+      realTimeStateJson_ = other.realTimeStateJson_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -451,6 +709,49 @@ namespace Pub {
       get { return filters_; }
     }
 
+    /// <summary>Field number for the "connection_settings_json" field.</summary>
+    public const int ConnectionSettingsJsonFieldNumber = 5;
+    private string connectionSettingsJson_ = "";
+    /// <summary>
+    /// Settings for connecting, if not already connected.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ConnectionSettingsJson {
+      get { return connectionSettingsJson_; }
+      set {
+        connectionSettingsJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "real_time_settings_json" field.</summary>
+    public const int RealTimeSettingsJsonFieldNumber = 6;
+    private string realTimeSettingsJson_ = "";
+    /// <summary>
+    /// Settings for real time publishing, if any.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RealTimeSettingsJson {
+      get { return realTimeSettingsJson_; }
+      set {
+        realTimeSettingsJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "real_time_state_json" field.</summary>
+    public const int RealTimeStateJsonFieldNumber = 7;
+    private string realTimeStateJson_ = "";
+    /// <summary>
+    /// State object from the last published record from the
+    /// connection used for this publish request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RealTimeStateJson {
+      get { return realTimeStateJson_; }
+      set {
+        realTimeStateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as PublishRequest);
@@ -467,6 +768,9 @@ namespace Pub {
       if (!object.Equals(Shape, other.Shape)) return false;
       if (Limit != other.Limit) return false;
       if(!filters_.Equals(other.filters_)) return false;
+      if (ConnectionSettingsJson != other.ConnectionSettingsJson) return false;
+      if (RealTimeSettingsJson != other.RealTimeSettingsJson) return false;
+      if (RealTimeStateJson != other.RealTimeStateJson) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -476,6 +780,9 @@ namespace Pub {
       if (shape_ != null) hash ^= Shape.GetHashCode();
       if (Limit != 0) hash ^= Limit.GetHashCode();
       hash ^= filters_.GetHashCode();
+      if (ConnectionSettingsJson.Length != 0) hash ^= ConnectionSettingsJson.GetHashCode();
+      if (RealTimeSettingsJson.Length != 0) hash ^= RealTimeSettingsJson.GetHashCode();
+      if (RealTimeStateJson.Length != 0) hash ^= RealTimeStateJson.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -498,6 +805,18 @@ namespace Pub {
         output.WriteUInt32(Limit);
       }
       filters_.WriteTo(output, _repeated_filters_codec);
+      if (ConnectionSettingsJson.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(ConnectionSettingsJson);
+      }
+      if (RealTimeSettingsJson.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(RealTimeSettingsJson);
+      }
+      if (RealTimeStateJson.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(RealTimeStateJson);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -513,6 +832,15 @@ namespace Pub {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Limit);
       }
       size += filters_.CalculateSize(_repeated_filters_codec);
+      if (ConnectionSettingsJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ConnectionSettingsJson);
+      }
+      if (RealTimeSettingsJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RealTimeSettingsJson);
+      }
+      if (RealTimeStateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RealTimeStateJson);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -534,6 +862,15 @@ namespace Pub {
         Limit = other.Limit;
       }
       filters_.Add(other.filters_);
+      if (other.ConnectionSettingsJson.Length != 0) {
+        ConnectionSettingsJson = other.ConnectionSettingsJson;
+      }
+      if (other.RealTimeSettingsJson.Length != 0) {
+        RealTimeSettingsJson = other.RealTimeSettingsJson;
+      }
+      if (other.RealTimeStateJson.Length != 0) {
+        RealTimeStateJson = other.RealTimeStateJson;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -558,6 +895,18 @@ namespace Pub {
           }
           case 26: {
             filters_.AddEntriesFrom(input, _repeated_filters_codec);
+            break;
+          }
+          case 42: {
+            ConnectionSettingsJson = input.ReadString();
+            break;
+          }
+          case 50: {
+            RealTimeSettingsJson = input.ReadString();
+            break;
+          }
+          case 58: {
+            RealTimeStateJson = input.ReadString();
             break;
           }
         }
@@ -2289,6 +2638,7 @@ namespace Pub {
     public Record(Record other) : this() {
       action_ = other.action_;
       dataJson_ = other.dataJson_;
+      realTimeStateJson_ = other.realTimeStateJson_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2326,6 +2676,21 @@ namespace Pub {
       }
     }
 
+    /// <summary>Field number for the "real_time_state_json" field.</summary>
+    public const int RealTimeStateJsonFieldNumber = 3;
+    private string realTimeStateJson_ = "";
+    /// <summary>
+    /// State which should be preserved and passed back to the next
+    /// call of PublishStream.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RealTimeStateJson {
+      get { return realTimeStateJson_; }
+      set {
+        realTimeStateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Record);
@@ -2341,6 +2706,7 @@ namespace Pub {
       }
       if (Action != other.Action) return false;
       if (DataJson != other.DataJson) return false;
+      if (RealTimeStateJson != other.RealTimeStateJson) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2349,6 +2715,7 @@ namespace Pub {
       int hash = 1;
       if (Action != 0) hash ^= Action.GetHashCode();
       if (DataJson.Length != 0) hash ^= DataJson.GetHashCode();
+      if (RealTimeStateJson.Length != 0) hash ^= RealTimeStateJson.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2370,6 +2737,10 @@ namespace Pub {
         output.WriteRawTag(18);
         output.WriteString(DataJson);
       }
+      if (RealTimeStateJson.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RealTimeStateJson);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2383,6 +2754,9 @@ namespace Pub {
       }
       if (DataJson.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DataJson);
+      }
+      if (RealTimeStateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RealTimeStateJson);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2400,6 +2774,9 @@ namespace Pub {
       }
       if (other.DataJson.Length != 0) {
         DataJson = other.DataJson;
+      }
+      if (other.RealTimeStateJson.Length != 0) {
+        RealTimeStateJson = other.RealTimeStateJson;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2420,6 +2797,10 @@ namespace Pub {
             DataJson = input.ReadString();
             break;
           }
+          case 26: {
+            RealTimeStateJson = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -2437,6 +2818,2210 @@ namespace Pub {
 
     }
     #endregion
+
+  }
+
+  public sealed partial class ConfigureQueryRequest : pb::IMessage<ConfigureQueryRequest> {
+    private static readonly pb::MessageParser<ConfigureQueryRequest> _parser = new pb::MessageParser<ConfigureQueryRequest>(() => new ConfigureQueryRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureQueryRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[12]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryRequest(ConfigureQueryRequest other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryRequest Clone() {
+      return new ConfigureQueryRequest(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormRequest form_;
+    /// <summary>
+    /// The form state for the request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormRequest Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureQueryRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureQueryRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureQueryRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormRequest();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormRequest();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigureQueryResponse : pb::IMessage<ConfigureQueryResponse> {
+    private static readonly pb::MessageParser<ConfigureQueryResponse> _parser = new pb::MessageParser<ConfigureQueryResponse>(() => new ConfigureQueryResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureQueryResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[13]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryResponse(ConfigureQueryResponse other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      shape_ = other.shape_ != null ? other.shape_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureQueryResponse Clone() {
+      return new ConfigureQueryResponse(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormResponse form_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormResponse Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "shape" field.</summary>
+    public const int ShapeFieldNumber = 2;
+    private global::Pub.Shape shape_;
+    /// <summary>
+    /// The schema that this query will produce.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.Shape Shape {
+      get { return shape_; }
+      set {
+        shape_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureQueryResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureQueryResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      if (!object.Equals(Shape, other.Shape)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (shape_ != null) hash ^= Shape.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (shape_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Shape);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (shape_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Shape);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureQueryResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormResponse();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      if (other.shape_ != null) {
+        if (shape_ == null) {
+          shape_ = new global::Pub.Shape();
+        }
+        Shape.MergeFrom(other.Shape);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormResponse();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+          case 18: {
+            if (shape_ == null) {
+              shape_ = new global::Pub.Shape();
+            }
+            input.ReadMessage(shape_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigureConnectionRequest : pb::IMessage<ConfigureConnectionRequest> {
+    private static readonly pb::MessageParser<ConfigureConnectionRequest> _parser = new pb::MessageParser<ConfigureConnectionRequest>(() => new ConfigureConnectionRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureConnectionRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionRequest(ConfigureConnectionRequest other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      connectRequest_ = other.connectRequest_ != null ? other.connectRequest_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionRequest Clone() {
+      return new ConfigureConnectionRequest(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormRequest form_;
+    /// <summary>
+    /// The form state for the request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormRequest Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "connect_request" field.</summary>
+    public const int ConnectRequestFieldNumber = 2;
+    private global::Pub.ConnectRequest connectRequest_;
+    /// <summary>
+    /// An embedded ConnectRequest to support passing
+    /// OAuth secrets into the connection configuration operation.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConnectRequest ConnectRequest {
+      get { return connectRequest_; }
+      set {
+        connectRequest_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureConnectionRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureConnectionRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      if (!object.Equals(ConnectRequest, other.ConnectRequest)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (connectRequest_ != null) hash ^= ConnectRequest.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (connectRequest_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(ConnectRequest);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (connectRequest_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ConnectRequest);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureConnectionRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormRequest();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      if (other.connectRequest_ != null) {
+        if (connectRequest_ == null) {
+          connectRequest_ = new global::Pub.ConnectRequest();
+        }
+        ConnectRequest.MergeFrom(other.ConnectRequest);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormRequest();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+          case 18: {
+            if (connectRequest_ == null) {
+              connectRequest_ = new global::Pub.ConnectRequest();
+            }
+            input.ReadMessage(connectRequest_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigureConnectionResponse : pb::IMessage<ConfigureConnectionResponse> {
+    private static readonly pb::MessageParser<ConfigureConnectionResponse> _parser = new pb::MessageParser<ConfigureConnectionResponse>(() => new ConfigureConnectionResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureConnectionResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionResponse(ConfigureConnectionResponse other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      connectResponse_ = other.connectResponse_ != null ? other.connectResponse_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureConnectionResponse Clone() {
+      return new ConfigureConnectionResponse(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormResponse form_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormResponse Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "connect_response" field.</summary>
+    public const int ConnectResponseFieldNumber = 2;
+    private global::Pub.ConnectResponse connectResponse_;
+    /// <summary>
+    /// An embedded ConnectResponse to support returning
+    /// updated OAuth secrets from the connection configuration operation
+    /// if the secrets have been updated.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConnectResponse ConnectResponse {
+      get { return connectResponse_; }
+      set {
+        connectResponse_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureConnectionResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureConnectionResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      if (!object.Equals(ConnectResponse, other.ConnectResponse)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (connectResponse_ != null) hash ^= ConnectResponse.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (connectResponse_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(ConnectResponse);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (connectResponse_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ConnectResponse);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureConnectionResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormResponse();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      if (other.connectResponse_ != null) {
+        if (connectResponse_ == null) {
+          connectResponse_ = new global::Pub.ConnectResponse();
+        }
+        ConnectResponse.MergeFrom(other.ConnectResponse);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormResponse();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+          case 18: {
+            if (connectResponse_ == null) {
+              connectResponse_ = new global::Pub.ConnectResponse();
+            }
+            input.ReadMessage(connectResponse_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigureRealTimeRequest : pb::IMessage<ConfigureRealTimeRequest> {
+    private static readonly pb::MessageParser<ConfigureRealTimeRequest> _parser = new pb::MessageParser<ConfigureRealTimeRequest>(() => new ConfigureRealTimeRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureRealTimeRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[16]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeRequest(ConfigureRealTimeRequest other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeRequest Clone() {
+      return new ConfigureRealTimeRequest(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormRequest form_;
+    /// <summary>
+    /// The form state for the request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormRequest Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureRealTimeRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureRealTimeRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureRealTimeRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormRequest();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormRequest();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigureRealTimeResponse : pb::IMessage<ConfigureRealTimeResponse> {
+    private static readonly pb::MessageParser<ConfigureRealTimeResponse> _parser = new pb::MessageParser<ConfigureRealTimeResponse>(() => new ConfigureRealTimeResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigureRealTimeResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[17]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeResponse(ConfigureRealTimeResponse other) : this() {
+      form_ = other.form_ != null ? other.form_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigureRealTimeResponse Clone() {
+      return new ConfigureRealTimeResponse(this);
+    }
+
+    /// <summary>Field number for the "form" field.</summary>
+    public const int FormFieldNumber = 1;
+    private global::Pub.ConfigurationFormResponse form_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.ConfigurationFormResponse Form {
+      get { return form_; }
+      set {
+        form_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigureRealTimeResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigureRealTimeResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Form, other.Form)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (form_ != null) hash ^= Form.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (form_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Form);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (form_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Form);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigureRealTimeResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.form_ != null) {
+        if (form_ == null) {
+          form_ = new global::Pub.ConfigurationFormResponse();
+        }
+        Form.MergeFrom(other.Form);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (form_ == null) {
+              form_ = new global::Pub.ConfigurationFormResponse();
+            }
+            input.ReadMessage(form_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigurationFormRequest : pb::IMessage<ConfigurationFormRequest> {
+    private static readonly pb::MessageParser<ConfigurationFormRequest> _parser = new pb::MessageParser<ConfigurationFormRequest>(() => new ConfigurationFormRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigurationFormRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[18]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormRequest(ConfigurationFormRequest other) : this() {
+      dataJson_ = other.dataJson_;
+      stateJson_ = other.stateJson_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormRequest Clone() {
+      return new ConfigurationFormRequest(this);
+    }
+
+    /// <summary>Field number for the "data_json" field.</summary>
+    public const int DataJsonFieldNumber = 1;
+    private string dataJson_ = "";
+    /// <summary>
+    /// JSON object containing the current values of the settings
+    /// as entered into the UI.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DataJson {
+      get { return dataJson_; }
+      set {
+        dataJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "state_json" field.</summary>
+    public const int StateJsonFieldNumber = 2;
+    private string stateJson_ = "";
+    /// <summary>
+    /// Opaque state object from the most recent Configure*Response.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string StateJson {
+      get { return stateJson_; }
+      set {
+        stateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigurationFormRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigurationFormRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (DataJson != other.DataJson) return false;
+      if (StateJson != other.StateJson) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (DataJson.Length != 0) hash ^= DataJson.GetHashCode();
+      if (StateJson.Length != 0) hash ^= StateJson.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (DataJson.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(DataJson);
+      }
+      if (StateJson.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(StateJson);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (DataJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DataJson);
+      }
+      if (StateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(StateJson);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigurationFormRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.DataJson.Length != 0) {
+        DataJson = other.DataJson;
+      }
+      if (other.StateJson.Length != 0) {
+        StateJson = other.StateJson;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            DataJson = input.ReadString();
+            break;
+          }
+          case 18: {
+            StateJson = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ConfigurationFormResponse : pb::IMessage<ConfigurationFormResponse> {
+    private static readonly pb::MessageParser<ConfigurationFormResponse> _parser = new pb::MessageParser<ConfigurationFormResponse>(() => new ConfigurationFormResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConfigurationFormResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[19]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormResponse(ConfigurationFormResponse other) : this() {
+      schemaJson_ = other.schemaJson_;
+      uiJson_ = other.uiJson_;
+      stateJson_ = other.stateJson_;
+      dataJson_ = other.dataJson_;
+      dataErrorsJson_ = other.dataErrorsJson_;
+      errors_ = other.errors_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConfigurationFormResponse Clone() {
+      return new ConfigurationFormResponse(this);
+    }
+
+    /// <summary>Field number for the "schema_json" field.</summary>
+    public const int SchemaJsonFieldNumber = 1;
+    private string schemaJson_ = "";
+    /// <summary>
+    /// The JSONSchema which should be used to build the form.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SchemaJson {
+      get { return schemaJson_; }
+      set {
+        schemaJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "ui_json" field.</summary>
+    public const int UiJsonFieldNumber = 2;
+    private string uiJson_ = "";
+    /// <summary>
+    /// The UI hints which should be provided to the form.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string UiJson {
+      get { return uiJson_; }
+      set {
+        uiJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "state_json" field.</summary>
+    public const int StateJsonFieldNumber = 3;
+    private string stateJson_ = "";
+    /// <summary>
+    /// The state object which should be passed in any future Configure*Request as part of this configuration session.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string StateJson {
+      get { return stateJson_; }
+      set {
+        stateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "data_json" field.</summary>
+    public const int DataJsonFieldNumber = 4;
+    private string dataJson_ = "";
+    /// <summary>
+    /// Current values from the form.    
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DataJson {
+      get { return dataJson_; }
+      set {
+        dataJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "data_errors_json" field.</summary>
+    public const int DataErrorsJsonFieldNumber = 5;
+    private string dataErrorsJson_ = "";
+    /// <summary>
+    /// Errors which should be displayed attached to fields in the form,
+    /// in the form of a JSON object with the same shape as the data object,
+    /// but the values are arrays of strings containing the error messages.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DataErrorsJson {
+      get { return dataErrorsJson_; }
+      set {
+        dataErrorsJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "errors" field.</summary>
+    public const int ErrorsFieldNumber = 6;
+    private static readonly pb::FieldCodec<string> _repeated_errors_codec
+        = pb::FieldCodec.ForString(50);
+    private readonly pbc::RepeatedField<string> errors_ = new pbc::RepeatedField<string>();
+    /// <summary>
+    /// Generic errors which should be displayed at the bottom of the form,
+    /// not associated with any specific fields.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<string> Errors {
+      get { return errors_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConfigurationFormResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConfigurationFormResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (SchemaJson != other.SchemaJson) return false;
+      if (UiJson != other.UiJson) return false;
+      if (StateJson != other.StateJson) return false;
+      if (DataJson != other.DataJson) return false;
+      if (DataErrorsJson != other.DataErrorsJson) return false;
+      if(!errors_.Equals(other.errors_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (SchemaJson.Length != 0) hash ^= SchemaJson.GetHashCode();
+      if (UiJson.Length != 0) hash ^= UiJson.GetHashCode();
+      if (StateJson.Length != 0) hash ^= StateJson.GetHashCode();
+      if (DataJson.Length != 0) hash ^= DataJson.GetHashCode();
+      if (DataErrorsJson.Length != 0) hash ^= DataErrorsJson.GetHashCode();
+      hash ^= errors_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (SchemaJson.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SchemaJson);
+      }
+      if (UiJson.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(UiJson);
+      }
+      if (StateJson.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(StateJson);
+      }
+      if (DataJson.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(DataJson);
+      }
+      if (DataErrorsJson.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(DataErrorsJson);
+      }
+      errors_.WriteTo(output, _repeated_errors_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (SchemaJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SchemaJson);
+      }
+      if (UiJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UiJson);
+      }
+      if (StateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(StateJson);
+      }
+      if (DataJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DataJson);
+      }
+      if (DataErrorsJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DataErrorsJson);
+      }
+      size += errors_.CalculateSize(_repeated_errors_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConfigurationFormResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.SchemaJson.Length != 0) {
+        SchemaJson = other.SchemaJson;
+      }
+      if (other.UiJson.Length != 0) {
+        UiJson = other.UiJson;
+      }
+      if (other.StateJson.Length != 0) {
+        StateJson = other.StateJson;
+      }
+      if (other.DataJson.Length != 0) {
+        DataJson = other.DataJson;
+      }
+      if (other.DataErrorsJson.Length != 0) {
+        DataErrorsJson = other.DataErrorsJson;
+      }
+      errors_.Add(other.errors_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            SchemaJson = input.ReadString();
+            break;
+          }
+          case 18: {
+            UiJson = input.ReadString();
+            break;
+          }
+          case 26: {
+            StateJson = input.ReadString();
+            break;
+          }
+          case 34: {
+            DataJson = input.ReadString();
+            break;
+          }
+          case 42: {
+            DataErrorsJson = input.ReadString();
+            break;
+          }
+          case 50: {
+            errors_.AddEntriesFrom(input, _repeated_errors_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class BeginOAuthFlowRequest : pb::IMessage<BeginOAuthFlowRequest> {
+    private static readonly pb::MessageParser<BeginOAuthFlowRequest> _parser = new pb::MessageParser<BeginOAuthFlowRequest>(() => new BeginOAuthFlowRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<BeginOAuthFlowRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[20]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowRequest(BeginOAuthFlowRequest other) : this() {
+      configuration_ = other.configuration_ != null ? other.configuration_.Clone() : null;
+      redirectUrl_ = other.redirectUrl_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowRequest Clone() {
+      return new BeginOAuthFlowRequest(this);
+    }
+
+    /// <summary>Field number for the "configuration" field.</summary>
+    public const int ConfigurationFieldNumber = 1;
+    private global::Pub.OAuthConfiguration configuration_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.OAuthConfiguration Configuration {
+      get { return configuration_; }
+      set {
+        configuration_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "redirect_url" field.</summary>
+    public const int RedirectUrlFieldNumber = 2;
+    private string redirectUrl_ = "";
+    /// <summary>
+    /// The URL that the auth server should send the authorization token to.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RedirectUrl {
+      get { return redirectUrl_; }
+      set {
+        redirectUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as BeginOAuthFlowRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(BeginOAuthFlowRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Configuration, other.Configuration)) return false;
+      if (RedirectUrl != other.RedirectUrl) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (configuration_ != null) hash ^= Configuration.GetHashCode();
+      if (RedirectUrl.Length != 0) hash ^= RedirectUrl.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (configuration_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Configuration);
+      }
+      if (RedirectUrl.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(RedirectUrl);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (configuration_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Configuration);
+      }
+      if (RedirectUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RedirectUrl);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(BeginOAuthFlowRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.configuration_ != null) {
+        if (configuration_ == null) {
+          configuration_ = new global::Pub.OAuthConfiguration();
+        }
+        Configuration.MergeFrom(other.Configuration);
+      }
+      if (other.RedirectUrl.Length != 0) {
+        RedirectUrl = other.RedirectUrl;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (configuration_ == null) {
+              configuration_ = new global::Pub.OAuthConfiguration();
+            }
+            input.ReadMessage(configuration_);
+            break;
+          }
+          case 18: {
+            RedirectUrl = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class BeginOAuthFlowResponse : pb::IMessage<BeginOAuthFlowResponse> {
+    private static readonly pb::MessageParser<BeginOAuthFlowResponse> _parser = new pb::MessageParser<BeginOAuthFlowResponse>(() => new BeginOAuthFlowResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<BeginOAuthFlowResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[21]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowResponse(BeginOAuthFlowResponse other) : this() {
+      authorizationUrl_ = other.authorizationUrl_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BeginOAuthFlowResponse Clone() {
+      return new BeginOAuthFlowResponse(this);
+    }
+
+    /// <summary>Field number for the "authorization_url" field.</summary>
+    public const int AuthorizationUrlFieldNumber = 1;
+    private string authorizationUrl_ = "";
+    /// <summary>
+    /// The URL the user should use to start the authorization process.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string AuthorizationUrl {
+      get { return authorizationUrl_; }
+      set {
+        authorizationUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as BeginOAuthFlowResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(BeginOAuthFlowResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (AuthorizationUrl != other.AuthorizationUrl) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (AuthorizationUrl.Length != 0) hash ^= AuthorizationUrl.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (AuthorizationUrl.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(AuthorizationUrl);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (AuthorizationUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(AuthorizationUrl);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(BeginOAuthFlowResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.AuthorizationUrl.Length != 0) {
+        AuthorizationUrl = other.AuthorizationUrl;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            AuthorizationUrl = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class CompleteOAuthFlowRequest : pb::IMessage<CompleteOAuthFlowRequest> {
+    private static readonly pb::MessageParser<CompleteOAuthFlowRequest> _parser = new pb::MessageParser<CompleteOAuthFlowRequest>(() => new CompleteOAuthFlowRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<CompleteOAuthFlowRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[22]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowRequest(CompleteOAuthFlowRequest other) : this() {
+      configuration_ = other.configuration_ != null ? other.configuration_.Clone() : null;
+      redirectUrl_ = other.redirectUrl_;
+      redirectBody_ = other.redirectBody_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowRequest Clone() {
+      return new CompleteOAuthFlowRequest(this);
+    }
+
+    /// <summary>Field number for the "configuration" field.</summary>
+    public const int ConfigurationFieldNumber = 1;
+    private global::Pub.OAuthConfiguration configuration_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Pub.OAuthConfiguration Configuration {
+      get { return configuration_; }
+      set {
+        configuration_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "redirect_url" field.</summary>
+    public const int RedirectUrlFieldNumber = 2;
+    private string redirectUrl_ = "";
+    /// <summary>
+    /// The URL that the OAuth flow redirected the user to after authentication.
+    /// If the response_mode was 'query' this will contain the token.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RedirectUrl {
+      get { return redirectUrl_; }
+      set {
+        redirectUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "redirect_body" field.</summary>
+    public const int RedirectBodyFieldNumber = 3;
+    private string redirectBody_ = "";
+    /// <summary>
+    /// The body that the OAuth flow caused to be posted if the response_mode
+    /// for the redirect was 'form_post'.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string RedirectBody {
+      get { return redirectBody_; }
+      set {
+        redirectBody_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as CompleteOAuthFlowRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(CompleteOAuthFlowRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Configuration, other.Configuration)) return false;
+      if (RedirectUrl != other.RedirectUrl) return false;
+      if (RedirectBody != other.RedirectBody) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (configuration_ != null) hash ^= Configuration.GetHashCode();
+      if (RedirectUrl.Length != 0) hash ^= RedirectUrl.GetHashCode();
+      if (RedirectBody.Length != 0) hash ^= RedirectBody.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (configuration_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Configuration);
+      }
+      if (RedirectUrl.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(RedirectUrl);
+      }
+      if (RedirectBody.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RedirectBody);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (configuration_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Configuration);
+      }
+      if (RedirectUrl.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RedirectUrl);
+      }
+      if (RedirectBody.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RedirectBody);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(CompleteOAuthFlowRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.configuration_ != null) {
+        if (configuration_ == null) {
+          configuration_ = new global::Pub.OAuthConfiguration();
+        }
+        Configuration.MergeFrom(other.Configuration);
+      }
+      if (other.RedirectUrl.Length != 0) {
+        RedirectUrl = other.RedirectUrl;
+      }
+      if (other.RedirectBody.Length != 0) {
+        RedirectBody = other.RedirectBody;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (configuration_ == null) {
+              configuration_ = new global::Pub.OAuthConfiguration();
+            }
+            input.ReadMessage(configuration_);
+            break;
+          }
+          case 18: {
+            RedirectUrl = input.ReadString();
+            break;
+          }
+          case 26: {
+            RedirectBody = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class OAuthConfiguration : pb::IMessage<OAuthConfiguration> {
+    private static readonly pb::MessageParser<OAuthConfiguration> _parser = new pb::MessageParser<OAuthConfiguration>(() => new OAuthConfiguration());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<OAuthConfiguration> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[23]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public OAuthConfiguration() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public OAuthConfiguration(OAuthConfiguration other) : this() {
+      clientId_ = other.clientId_;
+      clientSecret_ = other.clientSecret_;
+      configurationJson_ = other.configurationJson_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public OAuthConfiguration Clone() {
+      return new OAuthConfiguration(this);
+    }
+
+    /// <summary>Field number for the "client_id" field.</summary>
+    public const int ClientIdFieldNumber = 1;
+    private string clientId_ = "";
+    /// <summary>
+    /// Client ID to use for resolving codes.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ClientId {
+      get { return clientId_; }
+      set {
+        clientId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "client_secret" field.</summary>
+    public const int ClientSecretFieldNumber = 2;
+    private string clientSecret_ = "";
+    /// <summary>
+    /// Client secret to use for resolving codes.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ClientSecret {
+      get { return clientSecret_; }
+      set {
+        clientSecret_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "configuration_json" field.</summary>
+    public const int ConfigurationJsonFieldNumber = 3;
+    private string configurationJson_ = "";
+    /// <summary>
+    /// The configuration blob stored for this plugin type,
+    /// which can contain any data that should not be hard coded into the plugin.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ConfigurationJson {
+      get { return configurationJson_; }
+      set {
+        configurationJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as OAuthConfiguration);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(OAuthConfiguration other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ClientId != other.ClientId) return false;
+      if (ClientSecret != other.ClientSecret) return false;
+      if (ConfigurationJson != other.ConfigurationJson) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ClientId.Length != 0) hash ^= ClientId.GetHashCode();
+      if (ClientSecret.Length != 0) hash ^= ClientSecret.GetHashCode();
+      if (ConfigurationJson.Length != 0) hash ^= ConfigurationJson.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ClientId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ClientId);
+      }
+      if (ClientSecret.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(ClientSecret);
+      }
+      if (ConfigurationJson.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(ConfigurationJson);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ClientId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ClientId);
+      }
+      if (ClientSecret.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ClientSecret);
+      }
+      if (ConfigurationJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ConfigurationJson);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(OAuthConfiguration other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ClientId.Length != 0) {
+        ClientId = other.ClientId;
+      }
+      if (other.ClientSecret.Length != 0) {
+        ClientSecret = other.ClientSecret;
+      }
+      if (other.ConfigurationJson.Length != 0) {
+        ConfigurationJson = other.ConfigurationJson;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            ClientId = input.ReadString();
+            break;
+          }
+          case 18: {
+            ClientSecret = input.ReadString();
+            break;
+          }
+          case 26: {
+            ConfigurationJson = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class CompleteOAuthFlowResponse : pb::IMessage<CompleteOAuthFlowResponse> {
+    private static readonly pb::MessageParser<CompleteOAuthFlowResponse> _parser = new pb::MessageParser<CompleteOAuthFlowResponse>(() => new CompleteOAuthFlowResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<CompleteOAuthFlowResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Pub.PublisherReflection.Descriptor.MessageTypes[24]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowResponse(CompleteOAuthFlowResponse other) : this() {
+      oauthStateJson_ = other.oauthStateJson_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CompleteOAuthFlowResponse Clone() {
+      return new CompleteOAuthFlowResponse(this);
+    }
+
+    /// <summary>Field number for the "oauth_state_json" field.</summary>
+    public const int OauthStateJsonFieldNumber = 1;
+    private string oauthStateJson_ = "";
+    /// <summary>
+    /// JSON data containing the OAuth information the plugin wants
+    /// to be passed to any connect request.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string OauthStateJson {
+      get { return oauthStateJson_; }
+      set {
+        oauthStateJson_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as CompleteOAuthFlowResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(CompleteOAuthFlowResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (OauthStateJson != other.OauthStateJson) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (OauthStateJson.Length != 0) hash ^= OauthStateJson.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (OauthStateJson.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(OauthStateJson);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (OauthStateJson.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OauthStateJson);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(CompleteOAuthFlowResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.OauthStateJson.Length != 0) {
+        OauthStateJson = other.OauthStateJson;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            OauthStateJson = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
 
   }
 

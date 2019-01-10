@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Google.Protobuf.Collections;
 using Grpc.Core;
 using Newtonsoft.Json;
@@ -23,7 +24,104 @@ namespace Plugin_Zoho.Plugin
             _injectedClient = client != null ? client : new HttpClient();
             _server = new ServerStatus();
         }
-        
+
+        /// <summary>
+        /// Creates an authorization url for oauth requests
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<BeginOAuthFlowResponse> BeginOAuthFlow(BeginOAuthFlowRequest request,
+            ServerCallContext context)
+        {
+            // params for auth url
+            var scope = "ZohoCRM.users.all,ZohoCRM.org.all,ZohoCRM.settings.all,ZohoCRM.modules.all";
+            var clientId = request.Configuration.ClientId;
+            var responseType = "code";
+            var accessType = "offline";
+            var redirectUrl = "http://go-between.n5o.red/hub/plugins/plugin-zoho/1.0.0/oauth/redirect";
+            
+            // build auth url
+            var authUrl = String.Format("https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}",
+                scope,
+                clientId,
+                responseType,
+                accessType,
+                redirectUrl);
+            
+            // return auth url
+            var oAuthResponse = new BeginOAuthFlowResponse
+            {
+                AuthorizationUrl = authUrl
+            };
+            
+            return Task.FromResult(oAuthResponse);
+        }
+
+        /// <summary>
+        /// Gets auth token and refresh tokens from auth code
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override async Task<CompleteOAuthFlowResponse> CompleteOAuthFlow(CompleteOAuthFlowRequest request, ServerCallContext context)
+        {
+            // get code from redirect url
+            string code;
+            
+            try
+            {
+                var uri = new Uri(request.RedirectUrl);
+                code = HttpUtility.ParseQueryString(uri.Query).Get("code");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
+            
+            // token url parameters
+            var redirectUrl = "http://go-between.n5o.red/hub/plugins/plugin-zoho/1.0.0/oauth/redirect";
+            var clientId = request.Configuration.ClientId;
+            var clientSecret = request.Configuration.ClientSecret;
+            var grantType = "authorization_code";
+            
+            // build token url
+            var tokenUrl = String.Format("https://accounts.zoho.com/oauth/v2/token?code={0}&redirect_uri={1}&client_id={2}&client_secret={3}&grant_type={4}",
+                code,
+                redirectUrl,
+                clientId,
+                clientSecret,
+                grantType
+                );
+
+            // get tokens
+            var oAuthState = new OAuthState();
+            try
+            {
+                var response = await _injectedClient.PostAsync(tokenUrl, null);
+                response.EnsureSuccessStatusCode();
+
+                var content = JsonConvert.DeserializeObject<TokenResponse>(await response.Content.ReadAsStringAsync());
+
+                oAuthState.AuthToken = content.access_token;
+                oAuthState.RefreshToken = content.refresh_token;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
+
+            // return oauth state json
+            var oAuthResponse = new CompleteOAuthFlowResponse
+            {
+                OauthStateJson = JsonConvert.SerializeObject(oAuthState)
+            };
+
+            return oAuthResponse;
+        }
+
         /// <summary>
         /// Establishes a connection with Zoho CRM. Creates an authenticated http client and tests it.
         /// </summary>
