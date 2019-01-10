@@ -17,6 +17,7 @@ namespace Plugin_Zoho.Plugin
     {
         private RequestHelper _client;
         private readonly HttpClient _injectedClient;
+        private string _redirectUrl;
         private readonly ServerStatus _server;
 
         public Plugin(HttpClient client = null)
@@ -34,26 +35,32 @@ namespace Plugin_Zoho.Plugin
         public override Task<BeginOAuthFlowResponse> BeginOAuthFlow(BeginOAuthFlowRequest request,
             ServerCallContext context)
         {
+            Logger.Info("Getting Auth URL...");
+            
             // params for auth url
             var scope = "ZohoCRM.users.all,ZohoCRM.org.all,ZohoCRM.settings.all,ZohoCRM.modules.all";
             var clientId = request.Configuration.ClientId;
             var responseType = "code";
             var accessType = "offline";
-            var redirectUrl = "http://go-between.n5o.red/hub/plugins/plugin-zoho/1.0.0/oauth/redirect";
+            _redirectUrl = request.RedirectUrl;
+            var prompt = "consent";
             
             // build auth url
-            var authUrl = String.Format("https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}",
+            var authUrl = String.Format("https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}&prompt={5}",
                 scope,
                 clientId,
                 responseType,
                 accessType,
-                redirectUrl);
+                _redirectUrl,
+                prompt);
             
             // return auth url
             var oAuthResponse = new BeginOAuthFlowResponse
             {
                 AuthorizationUrl = authUrl
             };
+            
+            Logger.Info($"Created Auth URL: {authUrl}");
             
             return Task.FromResult(oAuthResponse);
         }
@@ -66,6 +73,8 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         public override async Task<CompleteOAuthFlowResponse> CompleteOAuthFlow(CompleteOAuthFlowRequest request, ServerCallContext context)
         {
+            Logger.Info("Getting Auth and Refresh Token...");
+            
             // get code from redirect url
             string code;
             
@@ -79,9 +88,14 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 throw;
             }
+
+            if (String.IsNullOrEmpty(_redirectUrl))
+            {
+                Logger.Error("Begin OAutFlow must be called first");
+                throw new Exception("Begin OAutFlow must be called first");
+            }
             
             // token url parameters
-            var redirectUrl = "http://go-between.n5o.red/hub/plugins/plugin-zoho/1.0.0/oauth/redirect";
             var clientId = request.Configuration.ClientId;
             var clientSecret = request.Configuration.ClientSecret;
             var grantType = "authorization_code";
@@ -89,7 +103,7 @@ namespace Plugin_Zoho.Plugin
             // build token url
             var tokenUrl = String.Format("https://accounts.zoho.com/oauth/v2/token?code={0}&redirect_uri={1}&client_id={2}&client_secret={3}&grant_type={4}",
                 code,
-                redirectUrl,
+                _redirectUrl,
                 clientId,
                 clientSecret,
                 grantType
@@ -118,6 +132,8 @@ namespace Plugin_Zoho.Plugin
             {
                 OauthStateJson = JsonConvert.SerializeObject(oAuthState)
             };
+            
+            Logger.Info("Got Auth Token and Refresh Token");
 
             return oAuthResponse;
         }

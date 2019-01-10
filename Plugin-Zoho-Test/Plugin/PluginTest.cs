@@ -14,6 +14,116 @@ namespace Plugin_Zoho_Test.Plugin
     public class PluginTest
     {
         [Fact]
+        public async Task BeginOAuthFlowTest()
+        {
+            // setup
+            var mockHttp = new MockHttpMessageHandler();
+            
+            Server server = new Server
+            {
+                Services = { Publisher.BindService(new Plugin_Zoho.Plugin.Plugin(mockHttp.ToHttpClient())) },
+                Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
+            };
+            server.Start();
+
+            var port = server.Ports.First().BoundPort;
+            
+            var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
+            var client = new Publisher.PublisherClient(channel);
+            
+            var request = new BeginOAuthFlowRequest()
+            {
+                Configuration = new OAuthConfiguration
+                {
+                    ClientId = "client",
+                    ClientSecret = "secret",
+                    ConfigurationJson = "{}"
+                },
+                RedirectUrl = "http://test.com"
+            };
+            
+            var scope = "ZohoCRM.users.all,ZohoCRM.org.all,ZohoCRM.settings.all,ZohoCRM.modules.all";
+            var clientId = request.Configuration.ClientId;
+            var responseType = "code";
+            var accessType = "offline";
+            var redirectUrl = request.RedirectUrl;
+            var prompt = "consent";
+            
+            var authUrl = String.Format("https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}&prompt={5}",
+                scope,
+                clientId,
+                responseType,
+                accessType,
+                redirectUrl,
+                prompt);
+
+            // act
+            var response = client.BeginOAuthFlow(request);
+
+            // assert
+            Assert.IsType<BeginOAuthFlowResponse>(response);
+            Assert.Equal(authUrl, response.AuthorizationUrl);
+            
+            // cleanup
+            await channel.ShutdownAsync();
+            await server.ShutdownAsync();
+        }
+        
+        [Fact]
+        public async Task CompleteOAuthFlowTest()
+        {
+            // setup
+            var mockHttp = new MockHttpMessageHandler();
+            
+            mockHttp.When("https://accounts.zoho.com/oauth/v2/token?code=authcode&redirect_uri=http://test.com&client_id=client&client_secret=secret&grant_type=authorization_code")
+                .Respond("application/json", "{\"access_token\":\"authtoken\",\"refresh_token\":\"refreshtoken\",\"expires_in_sec\":3600,\"api_domain\":\"testdomain\",\"token_type\":\"Bearer\",\"expires_in\":3600000}");
+
+            Server server = new Server
+            {
+                Services = { Publisher.BindService(new Plugin_Zoho.Plugin.Plugin(mockHttp.ToHttpClient())) },
+                Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
+            };
+            server.Start();
+
+            var port = server.Ports.First().BoundPort;
+            
+            var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
+            var client = new Publisher.PublisherClient(channel);
+            
+            var beginRequest = new BeginOAuthFlowRequest()
+            {
+                Configuration = new OAuthConfiguration
+                {
+                    ClientId = "client",
+                    ClientSecret = "secret",
+                    ConfigurationJson = "{}"
+                },
+                RedirectUrl = "http://test.com"
+            };
+            
+            client.BeginOAuthFlow(beginRequest);
+            
+            var completeRequest = new CompleteOAuthFlowRequest
+            {
+               Configuration = beginRequest.Configuration,
+               RedirectUrl = "http://test.com?code=authcode",
+               RedirectBody = ""
+            };
+
+            // act
+            var response = client.CompleteOAuthFlow(completeRequest);
+
+            // assert
+            Assert.IsType<CompleteOAuthFlowResponse>(response);
+            Assert.Contains("authtoken", response.OauthStateJson);
+            Assert.Contains("refreshtoken", response.OauthStateJson);
+            
+            // cleanup
+            await channel.ShutdownAsync();
+            await server.ShutdownAsync();
+        }
+        
+        [Fact]
         public async Task ConnectTest()
         {
             // setup
