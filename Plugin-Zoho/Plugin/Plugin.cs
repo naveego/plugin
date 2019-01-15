@@ -237,15 +237,18 @@ namespace Plugin_Zoho.Plugin
         {
             Logger.Info("Connecting session...");
             
+            // create task to wait for disconnect to be called
             _tcs?.SetResult(true);
             _tcs = new TaskCompletionSource<bool>();
             
+            // call connect method
             var response = await Connect(request, context);
 
             await responseStream.WriteAsync(response);
 
             Logger.Info("Session connected.");
 
+            // wait for disconnect to be called
             await _tcs.Task;
         }
 
@@ -258,7 +261,6 @@ namespace Plugin_Zoho.Plugin
         /// <returns>Discovered shapes</returns>
         public override async Task<DiscoverShapesResponse> DiscoverShapes(DiscoverShapesRequest request, ServerCallContext context)
         {
-            Logger.SetLogLevel(Logger.LogLevel.Debug);
             Logger.Info("Discovering Shapes...");
             
             DiscoverShapesResponse discoverShapesResponse = new DiscoverShapesResponse();
@@ -397,6 +399,7 @@ namespace Plugin_Zoho.Plugin
             _server.Connected = false;
             _server.Settings = null;
 
+            // alert connection session to close
             if (_tcs != null)
             {
                 _tcs.SetResult(true);

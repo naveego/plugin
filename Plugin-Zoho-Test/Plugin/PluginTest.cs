@@ -13,6 +13,21 @@ namespace Plugin_Zoho_Test.Plugin
 {
     public class PluginTest
     {
+        private ConnectRequest GetConnectSettings()
+        {
+            return new ConnectRequest
+            {
+                SettingsJson = "",
+                OauthConfiguration = new OAuthConfiguration
+                {
+                    ClientId = "client",
+                    ClientSecret = "secret",
+                    ConfigurationJson = "{}"
+                },
+                OauthStateJson = "{\"RefreshToken\":\"refresh\",\"AuthToken\":\"\"}"
+            };
+        }
+        
         [Fact]
         public async Task BeginOAuthFlowTest()
         {
@@ -75,7 +90,7 @@ namespace Plugin_Zoho_Test.Plugin
             // setup
             var mockHttp = new MockHttpMessageHandler();
             
-            mockHttp.When("https://accounts.zoho.com/oauth/v2/token?code=authcode&redirect_uri=http://test.com&client_id=client&client_secret=secret&grant_type=authorization_code")
+            mockHttp.When("https://accounts.zoho.com/oauth/v2/token?code=authcode&redirect_uri=http://test.com/&client_id=client&client_secret=secret&grant_type=authorization_code")
                 .Respond("application/json", "{\"access_token\":\"authtoken\",\"refresh_token\":\"refreshtoken\",\"expires_in_sec\":3600,\"api_domain\":\"testdomain\",\"token_type\":\"Bearer\",\"expires_in\":3600000}");
 
             Server server = new Server
@@ -90,22 +105,14 @@ namespace Plugin_Zoho_Test.Plugin
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
             
-            var beginRequest = new BeginOAuthFlowRequest()
-            {
-                Configuration = new OAuthConfiguration
-                {
-                    ClientId = "client",
-                    ClientSecret = "secret",
-                    ConfigurationJson = "{}"
-                },
-                RedirectUrl = "http://test.com"
-            };
-            
-            client.BeginOAuthFlow(beginRequest);
-            
             var completeRequest = new CompleteOAuthFlowRequest
             {
-               Configuration = beginRequest.Configuration,
+               Configuration = new OAuthConfiguration
+               {
+                   ClientId = "client",
+                   ClientSecret = "secret",
+                   ConfigurationJson = "{}"
+               },
                RedirectUrl = "http://test.com?code=authcode",
                RedirectBody = ""
             };
@@ -117,6 +124,52 @@ namespace Plugin_Zoho_Test.Plugin
             Assert.IsType<CompleteOAuthFlowResponse>(response);
             Assert.Contains("authtoken", response.OauthStateJson);
             Assert.Contains("refreshtoken", response.OauthStateJson);
+            
+            // cleanup
+            await channel.ShutdownAsync();
+            await server.ShutdownAsync();
+        }
+        
+        [Fact]
+        public async Task ConnectSessionTest()
+        {
+            // setup
+            var mockHttp = new MockHttpMessageHandler();
+            
+            mockHttp.When("https://accounts.zoho.com/oauth/v2/token?refresh_token=refresh&client_id=client&client_secret=secret&grant_type=refresh_token")
+                .Respond("application/json", "{\"access_token\":\"mocktoken\",\"expires_in_sec\":3600,\"api_domain\":\"testdomain\",\"token_type\":\"Bearer\",\"expires_in\":3600000}");
+
+            mockHttp.When("https://www.zohoapis.com/crm/v2/settings/modules")
+                .Respond("application/json", "{\"modules\":[{\"global_search_supported\":true,\"deletable\":true,\"creatable\":true,\"modified_time\":null,\"plural_label\":\"Leads\",\"presence_sub_menu\":true,\"id\":\"3656031000000002175\",\"visibility\":1,\"convertable\":true,\"editable\":true,\"emailTemplate_support\":true,\"profiles\":[{\"name\":\"Administrator\",\"id\":\"3656031000000026011\"},{\"name\":\"Standard\",\"id\":\"3656031000000026014\"}],\"filter_supported\":true,\"web_link\":null,\"sequence_number\":2,\"singular_label\":\"Lead\",\"viewable\":true,\"api_supported\":true,\"api_name\":\"Leads\",\"quick_create\":true,\"modified_by\":null,\"generated_type\":\"default\",\"feeds_required\":false,\"scoring_supported\":true,\"arguments\":[],\"module_name\":\"Leads\",\"business_card_field_limit\":5,\"parent_module\":{}},]}");
+            
+            Server server = new Server
+            {
+                Services = { Publisher.BindService(new Plugin_Zoho.Plugin.Plugin(mockHttp.ToHttpClient())) },
+                Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
+            };
+            server.Start();
+
+            var port = server.Ports.First().BoundPort;
+            
+            var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
+            var client = new Publisher.PublisherClient(channel);
+
+            var request = GetConnectSettings();
+            var disconnectRequest = new DisconnectRequest();
+
+            // act
+            var response = client.ConnectSession(request);
+            var responseStream = response.ResponseStream;
+            var records = new List<ConnectResponse>();
+
+            while (await responseStream.MoveNext())
+            {
+                records.Add(responseStream.Current);
+                client.Disconnect(disconnectRequest);
+            }
+
+            // assert
+            Assert.Single(records);
             
             // cleanup
             await channel.ShutdownAsync();
@@ -146,11 +199,8 @@ namespace Plugin_Zoho_Test.Plugin
             
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
-            
-            var request = new ConnectRequest
-            {
-                SettingsJson = "{\"ClientId\": \"client\",\"ClientSecret\": \"secret\",\"RefreshToken\": \"refresh\"}"
-            };
+
+            var request = GetConnectSettings();
 
             // act
             var response = client.Connect(request);
@@ -196,10 +246,7 @@ namespace Plugin_Zoho_Test.Plugin
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
             
-            var connectRequest = new ConnectRequest
-            {
-                SettingsJson = "{\"ClientId\": \"client\",\"ClientSecret\": \"secret\",\"RefreshToken\": \"refresh\"}"
-            };
+            var connectRequest = GetConnectSettings();
             
             var request = new DiscoverShapesRequest
             {
@@ -252,10 +299,7 @@ namespace Plugin_Zoho_Test.Plugin
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
             
-            var connectRequest = new ConnectRequest
-            {
-                SettingsJson = "{\"ClientId\": \"client\",\"ClientSecret\": \"secret\",\"RefreshToken\": \"refresh\"}"
-            };
+            var connectRequest = GetConnectSettings();
             
             var request = new DiscoverShapesRequest
             {
@@ -302,10 +346,7 @@ namespace Plugin_Zoho_Test.Plugin
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
             
-            var connectRequest = new ConnectRequest
-            {
-                SettingsJson = "{\"ClientId\": \"client\",\"ClientSecret\": \"secret\",\"RefreshToken\": \"refresh\"}"
-            };
+            var connectRequest = GetConnectSettings();
             
             var request = new PublishRequest()
             {
@@ -357,10 +398,7 @@ namespace Plugin_Zoho_Test.Plugin
             var channel = new Channel($"localhost:{port}", ChannelCredentials.Insecure);
             var client = new Publisher.PublisherClient(channel);
             
-            var connectRequest = new ConnectRequest
-            {
-                SettingsJson = "{\"ClientId\": \"client\",\"ClientSecret\": \"secret\",\"RefreshToken\": \"refresh\"}"
-            };
+            var connectRequest = GetConnectSettings();
             
             var request = new PublishRequest()
             {
