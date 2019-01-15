@@ -38,17 +38,17 @@ service Publisher {
 
     // Configures settings for real time publishing (change detection).
     // This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
-    rpc ConfigureRealTime (ConfigureRealTimeRequest) returns (ConfigureRealTimeResponse) {        
+    rpc ConfigureRealTime (ConfigureRealTimeRequest) returns (ConfigureRealTimeResponse) {
     }
 
     // Invoked to begin an OAuth flow. This must be implemented if the plugin 
     // manifest has `canUseOAuth` set to true.
-    rpc BeginOAuthFlow (BeginOAuthFlowRequest) returns (BeginOAuthFlowResponse){        
+    rpc BeginOAuthFlow (BeginOAuthFlowRequest) returns (BeginOAuthFlowResponse){
     }
 
     // Invoked to complete an OAuth flow. This must be implemented if the plugin 
     // manifest has `canUseOAuth` set to true.
-    rpc CompleteOAuthFlow (CompleteOAuthFlowRequest) returns (CompleteOAuthFlowResponse){        
+    rpc CompleteOAuthFlow (CompleteOAuthFlowRequest) returns (CompleteOAuthFlowResponse){
     }
 }
 
@@ -77,13 +77,13 @@ message ConnectResponse {
 
     // If the OAuth state is invalid or expired, this should contain a description
     // of the problem.
-    string oauth_error = 3; 
+    string oauth_error = 3;
 
     // The OAuth data which should be stored securely and passed next time
     // a connection is requested. This is returned by Connect because
     // forming the connection may have used up a refresh token and 
     // the new refresh token must now be stored.
-    string oauth_state_json = 4;    
+    string oauth_state_json = 4;
 }
 
 message PublishRequest {
@@ -247,6 +247,9 @@ message Record {
         INSERT = 1;
         UPDATE = 2;
         DELETE = 3;
+        // This action indicates that there is no data in this record;
+        // instead the real time state field on this record should be persisted.
+        REAL_TIME_STATE_COMMIT = 4;
     }
     // Action for this record. Default value is UPSERT if the plugin 
     // cannot determine what the action should be relative to data alreay acquired.
@@ -255,7 +258,7 @@ message Record {
     string data_json = 2;
 
     // State which should be preserved and passed back to the next
-    // call of PublishStream.
+    // call of PublishStream. Only considered if action indicates this is a state commit.
     string real_time_state_json = 3;
 }
 
@@ -336,7 +339,7 @@ message BeginOAuthFlowRequest {
     OAuthConfiguration configuration = 1;
 
     // The URL that the auth server should send the authorization token to.
-    string redirect_url = 2;    
+    string redirect_url = 2;
 }
 
 message BeginOAuthFlowResponse {
@@ -355,17 +358,17 @@ message CompleteOAuthFlowRequest {
 }
 
 message OAuthConfiguration {
-      // Client ID to use for resolving codes.
+    // Client ID to use for resolving codes.
     string client_id = 1;
     // Client secret to use for resolving codes.
     string client_secret = 2;
     // The configuration blob stored for this plugin type,
     // which can contain any data that should not be hard coded into the plugin.
-    string configuration_json = 3;  
+    string configuration_json = 3;
 }
 
 message CompleteOAuthFlowResponse {
     // JSON data containing the OAuth information the plugin wants
     // to be passed to any connect request.
-    string oauth_state_json = 1; 
+    string oauth_state_json = 1;
 }

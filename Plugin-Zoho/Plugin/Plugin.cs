@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Google.Protobuf.Collections;
@@ -17,8 +18,8 @@ namespace Plugin_Zoho.Plugin
     {
         private RequestHelper _client;
         private readonly HttpClient _injectedClient;
-        private string _redirectUrl;
         private readonly ServerStatus _server;
+        private TaskCompletionSource<bool> _tcs;
 
         public Plugin(HttpClient client = null)
         {
@@ -42,7 +43,7 @@ namespace Plugin_Zoho.Plugin
             var clientId = request.Configuration.ClientId;
             var responseType = "code";
             var accessType = "offline";
-            _redirectUrl = request.RedirectUrl;
+            var redirectUrl = request.RedirectUrl;
             var prompt = "consent";
             
             // build auth url
@@ -51,7 +52,7 @@ namespace Plugin_Zoho.Plugin
                 clientId,
                 responseType,
                 accessType,
-                _redirectUrl,
+                redirectUrl,
                 prompt);
             
             // return auth url
@@ -77,10 +78,10 @@ namespace Plugin_Zoho.Plugin
             
             // get code from redirect url
             string code;
+            var uri = new Uri(request.RedirectUrl);
             
             try
             {
-                var uri = new Uri(request.RedirectUrl);
                 code = HttpUtility.ParseQueryString(uri.Query).Get("code");
             }
             catch (Exception e)
@@ -88,14 +89,9 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 throw;
             }
-
-            if (String.IsNullOrEmpty(_redirectUrl))
-            {
-                Logger.Error("Begin OAutFlow must be called first");
-                throw new Exception("Begin OAutFlow must be called first");
-            }
             
             // token url parameters
+            var redirectUrl = String.Format("{0}{1}{2}{3}", uri.Scheme, Uri.SchemeDelimiter, uri.Authority, uri.AbsolutePath);
             var clientId = request.Configuration.ClientId;
             var clientSecret = request.Configuration.ClientSecret;
             var grantType = "authorization_code";
@@ -103,7 +99,7 @@ namespace Plugin_Zoho.Plugin
             // build token url
             var tokenUrl = String.Format("https://accounts.zoho.com/oauth/v2/token?code={0}&redirect_uri={1}&client_id={2}&client_secret={3}&grant_type={4}",
                 code,
-                _redirectUrl,
+                redirectUrl,
                 clientId,
                 clientSecret,
                 grantType
@@ -149,17 +145,49 @@ namespace Plugin_Zoho.Plugin
             _server.Connected = false;
             
             Logger.Info("Connecting...");
+            Logger.Info("Got OAuth State: " + request.OauthStateJson);
+            Logger.Info("Got OAuthConfig " + JsonConvert.SerializeObject(request.OauthConfiguration));
+
+            OAuthState oAuthState;
+            try
+            {
+                oAuthState = JsonConvert.DeserializeObject<OAuthState>(request.OauthStateJson);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return new ConnectResponse
+                {
+                    OauthStateJson = request.OauthStateJson,
+                    ConnectionError = "",
+                    OauthError = e.Message,
+                    SettingsError = ""
+                };
+            }
+
+            var settings = new Settings
+            {
+                ClientId = request.OauthConfiguration.ClientId,
+                ClientSecret = request.OauthConfiguration.ClientSecret,
+                RefreshToken = oAuthState.RefreshToken
+            };
             
             // validate settings passed in
             try
             {
-                _server.Settings = JsonConvert.DeserializeObject<Settings>(request.SettingsJson);
+                _server.Settings = settings;
                 _server.Settings.Validate();
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                throw;
+                return new ConnectResponse
+                {
+                    OauthStateJson = request.OauthStateJson,
+                    ConnectionError = "",
+                    OauthError = "",
+                    SettingsError = e.Message
+                };
             }
             
             // create new authenticated request helper with validated settings
@@ -186,11 +214,41 @@ namespace Plugin_Zoho.Plugin
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                throw;
+                
+                return new ConnectResponse
+                {
+                    OauthStateJson = request.OauthStateJson,
+                    ConnectionError = e.Message,
+                    OauthError = "",
+                    SettingsError = ""
+                };
             }
             
-            return new ConnectResponse();
+            return new ConnectResponse
+            {
+                OauthStateJson = request.OauthStateJson,
+                ConnectionError = "",
+                OauthError = "",
+                SettingsError = ""
+            };
         }
+
+        public override async Task ConnectSession(ConnectRequest request, IServerStreamWriter<ConnectResponse> responseStream, ServerCallContext context)
+        {
+            Logger.Info("Connecting session...");
+            
+            _tcs?.SetResult(true);
+            _tcs = new TaskCompletionSource<bool>();
+            
+            var response = await Connect(request, context);
+
+            await responseStream.WriteAsync(response);
+
+            Logger.Info("Session connected.");
+
+            await _tcs.Task;
+        }
+
         
         /// <summary>
         /// Discovers shapes located in the users Zoho CRM instance
@@ -200,6 +258,7 @@ namespace Plugin_Zoho.Plugin
         /// <returns>Discovered shapes</returns>
         public override async Task<DiscoverShapesResponse> DiscoverShapes(DiscoverShapesRequest request, ServerCallContext context)
         {
+            Logger.SetLogLevel(Logger.LogLevel.Debug);
             Logger.Info("Discovering Shapes...");
             
             DiscoverShapesResponse discoverShapesResponse = new DiscoverShapesResponse();
@@ -208,8 +267,11 @@ namespace Plugin_Zoho.Plugin
             // get the modules present in Zoho
             try
             {
+                Logger.Debug("Getting modules...");
                 var response = await _client.GetAsync("https://www.zohoapis.com/crm/v2/settings/modules");
                 response.EnsureSuccessStatusCode();
+                
+                Logger.Debug(await response.Content.ReadAsStringAsync());
     
                 modulesResponse = JsonConvert.DeserializeObject<ModuleResponse>(await response.Content.ReadAsStringAsync());
             }
@@ -334,6 +396,12 @@ namespace Plugin_Zoho.Plugin
             // clear connection
             _server.Connected = false;
             _server.Settings = null;
+
+            if (_tcs != null)
+            {
+                _tcs.SetResult(true);
+                _tcs = null;
+            }
             
             Logger.Info("Disconnected");
             return Task.FromResult(new DisconnectResponse());
