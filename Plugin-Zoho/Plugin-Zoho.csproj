@@ -29,15 +29,15 @@
         <Copy SourceFiles="@(Icon)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\publish" />
         <Copy SourceFiles="@(Manifest)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\publish" />
         <Copy SourceFiles="@(License)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\publish" />
-        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\win10-x64.zip" />
-        <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\publish" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\win10-x64.zip" />
+        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\plugin-zoho_1.0.0_windows_amd64.zip" />
+        <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\publish" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\plugin-zoho_1.0.0_windows_amd64.zip" />
     </Target>
     <Target Name="ZipOSX" AfterTargets="Publish" Condition="$(Configuration) == 'Release' And Exists('$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish')">
         <Copy SourceFiles="@(Icon)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish" />
         <Copy SourceFiles="@(Manifest)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish" />
         <Copy SourceFiles="@(License)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish" />
-        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\osx-x64.zip" />
-        <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\osx-x64.zip" />
+        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\plugin-zoho_1.0.0_osx_amd64.zip" />
+        <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\publish" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\plugin-zoho_1.0.0_osx_amd64.zip" />
     </Target>
     <Target Name="ZipLinux" AfterTargets="Publish" Condition="$(Configuration) == 'Release' And Exists('$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\linux-x64\publish')">
         <Copy SourceFiles="@(Icon)" DestinationFolder="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\linux-x64\publish" />
@@ -47,8 +47,8 @@
         <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\linux-x64\publish" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\linux-x64\plugin-zoho_1.0.0_linux_amd64.zip" />
     </Target>
     <Target Name="CleanZip" AfterTargets="Clean">
-        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\win10-x64.zip" />
-        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\osx-x64.zip" />
+        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win10-x64\plugin-zoho_1.0.0_windows_amd64.zip" />
+        <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\osx-x64\plugin-zoho_1.0.0_osx_amd64" />
         <Delete Files="$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\linux-x64\plugin-zoho_1.0.0_linux_amd64.zip" />
     </Target>
 </Project>
