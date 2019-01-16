@@ -145,8 +145,8 @@ namespace Plugin_Zoho.Plugin
             _server.Connected = false;
             
             Logger.Info("Connecting...");
-            Logger.Info("Got OAuth State: " + request.OauthStateJson);
-            Logger.Info("Got OAuthConfig " + JsonConvert.SerializeObject(request.OauthConfiguration));
+            Logger.Info("Got OAuth State: " + !String.IsNullOrEmpty(request.OauthStateJson));
+            Logger.Info("Got OAuthConfig " + !String.IsNullOrEmpty(JsonConvert.SerializeObject(request.OauthConfiguration)));
 
             OAuthState oAuthState;
             try
