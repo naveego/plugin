@@ -116,6 +116,11 @@ namespace Plugin_Zoho.Plugin
 
                 oAuthState.AuthToken = content.access_token;
                 oAuthState.RefreshToken = content.refresh_token;
+
+                if (String.IsNullOrEmpty(oAuthState.RefreshToken))
+                {
+                    throw new Exception("Response did not contain a refresh token");
+                }
             }
             catch (Exception e)
             {
@@ -307,15 +312,20 @@ namespace Plugin_Zoho.Plugin
             if (request.Mode == DiscoverShapesRequest.Types.Mode.Refresh)
             {
                 var refreshShapes = request.ToRefresh;
-                var shapes = discoverShapesResponse.Shapes;
+                var shapes = JsonConvert.DeserializeObject<Shape[]>(JsonConvert.SerializeObject(discoverShapesResponse.Shapes));
                 discoverShapesResponse.Shapes.Clear(); 
                 discoverShapesResponse.Shapes.AddRange(shapes.Join(refreshShapes, shape => shape.Id, refresh => refresh.Id, (shape, refresh) => shape));
-
+                
+                Logger.Debug($"Shapes found: {JsonConvert.SerializeObject(shapes)}");
+                Logger.Debug($"Refresh requested on shapes: {JsonConvert.SerializeObject(refreshShapes)}");
+                
+                Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
                 return discoverShapesResponse;
             }
             // return all shapes otherwise
             else
             {
+                Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
                 return discoverShapesResponse;
             }
         }
