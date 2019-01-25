@@ -381,6 +381,12 @@ namespace Plugin_Zoho.Plugin
                         await responseStream.WriteAsync(recordOutput);
                         recordsCount++;
                     }
+                    
+                    // stop publishing if the limit flag is enabled and the limit has been reached
+                    if (limitFlag && recordsCount == limit)
+                    {
+                        break;
+                    }
 
                     // get next page
                     page++;
