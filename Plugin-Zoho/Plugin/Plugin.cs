@@ -461,12 +461,11 @@ namespace Plugin_Zoho.Plugin
                 // for each field in the shape add a new property
                 var fieldsResponse = JsonConvert.DeserializeObject<FieldsResponse>(await response.Content.ReadAsStringAsync());
 
-                for (var k = 0; k < fieldsResponse.fields.Length; k++)
+                foreach (var field in fieldsResponse.fields)
                 {
-                    var field = fieldsResponse.fields[k];
                     var property = new Property
                     {
-                        Id = k.ToString(),
+                        Id = field.field_label,
                         Name = field.field_label,
                         Type = GetPropertyType(field),
                         IsKey = false,
