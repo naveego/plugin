@@ -15,6 +15,7 @@ namespace Plugin_Zoho.Helper
             Off
         }
         
+        private static string _path = @"plugin-zoho-log.txt";
         private static LogLevel _level = LogLevel.Info;
         private static ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
         
@@ -29,7 +30,7 @@ namespace Plugin_Zoho.Helper
             try
             {
                 // Append text to the file
-                using (StreamWriter sw = File.AppendText(@"plugin.txt"))
+                using (StreamWriter sw = File.AppendText(_path))
                 {
                     sw.WriteLine($"{DateTime.Now} {message}");
                     sw.Close();
@@ -39,6 +40,20 @@ namespace Plugin_Zoho.Helper
             {
                 // Release lock
                 _readWriteLock.ExitWriteLock();
+            }
+        }
+        
+        /// <summary>
+        /// Deletes log file if it is older than 7 days
+        /// </summary>
+        public static void Clean()
+        {
+            if (File.Exists(_path))
+            {
+                if (DateTime.Compare(DateTime.Now.AddDays(7), File.GetCreationTime(_path)) >= 0)
+                {
+                    File.Delete(_path);
+                }
             }
         }
 

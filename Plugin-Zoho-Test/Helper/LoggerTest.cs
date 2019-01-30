@@ -6,11 +6,13 @@ namespace Plugin_Zoho_Test.Helper
 {
     public class LoggerTest
     {
+        private static string _path = @"plugin-zoho-log.txt";
+        
         [Fact]
         public void VerboseTest()
         {
             // setup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
             Logger.SetLogLevel(Logger.LogLevel.Verbose);
             
             // act
@@ -20,19 +22,19 @@ namespace Plugin_Zoho_Test.Helper
             Logger.Error("error");
 
             // assert
-            string[] lines = File.ReadAllLines(@"plugin.txt");
+            string[] lines = File.ReadAllLines(_path);
 
             Assert.Equal(4, lines.Length);
             
             // cleanup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
         }
         
         [Fact]
         public void DebugTest()
         {
             // setup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
             Logger.SetLogLevel(Logger.LogLevel.Debug);
             
             // act
@@ -42,19 +44,19 @@ namespace Plugin_Zoho_Test.Helper
             Logger.Error("error");
 
             // assert
-            string[] lines = File.ReadAllLines(@"plugin.txt");
+            string[] lines = File.ReadAllLines(_path);
 
             Assert.Equal(3, lines.Length);
             
             // cleanup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
         }
         
         [Fact]
         public void InfoTest()
         {
             // setup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
             Logger.SetLogLevel(Logger.LogLevel.Info);
             
             // act
@@ -64,19 +66,19 @@ namespace Plugin_Zoho_Test.Helper
             Logger.Error("error");
 
             // assert
-            string[] lines = File.ReadAllLines(@"plugin.txt");
+            string[] lines = File.ReadAllLines(_path);
 
             Assert.Equal(2, lines.Length);
             
             // cleanup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
         }
         
         [Fact]
         public void ErrorTest()
         {
             // setup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
             Logger.SetLogLevel(Logger.LogLevel.Error);
             
             // act
@@ -86,19 +88,19 @@ namespace Plugin_Zoho_Test.Helper
             Logger.Error("error");
 
             // assert
-            string[] lines = File.ReadAllLines(@"plugin.txt");
+            string[] lines = File.ReadAllLines(_path);
 
             Assert.Single(lines);
             
             // cleanup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
         }
         
         [Fact]
         public void OffTest()
         {
             // setup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
             Logger.SetLogLevel(Logger.LogLevel.Off);
             
             // act
@@ -108,12 +110,12 @@ namespace Plugin_Zoho_Test.Helper
             Logger.Error("error");
 
             // assert
-            string[] lines = File.Exists(@"plugin.txt") ? File.ReadAllLines(@"plugin.txt") : new string[0];
+            string[] lines = File.Exists(_path) ? File.ReadAllLines(_path) : new string[0];
 
             Assert.Empty(lines);
             
             // cleanup
-            File.Delete(@"plugin.txt");
+            File.Delete(_path);
         }
     }
 }
