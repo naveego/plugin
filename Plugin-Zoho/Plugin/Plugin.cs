@@ -465,14 +465,14 @@ namespace Plugin_Zoho.Plugin
                 {
                     var property = new Property
                     {
-                        Id = field.field_label,
+                        Id = field.api_name,
                         Name = field.field_label,
                         Type = GetPropertyType(field),
                         IsKey = false,
-                        IsCreateCounter = field.api_label == "Created_Time",
-                        IsUpdateCounter = field.api_label == "Modified_Time",
+                        IsCreateCounter = field.api_name == "Created_Time",
+                        IsUpdateCounter = field.api_name == "Modified_Time",
                         TypeAtSource = field.data_type,
-                        IsNullable = field.api_label == "Created_Time" || field.api_label == "Modified_Time"
+                        IsNullable = true
                     };
                 
                     shape.Properties.Add(property);
