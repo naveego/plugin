@@ -50,7 +50,7 @@ namespace Plugin_Zoho.Helper
         {
             if (File.Exists(_path))
             {
-                if (DateTime.Compare(DateTime.Now.AddDays(7), File.GetCreationTime(_path)) >= 0)
+                if ((File.GetCreationTime(_path) - DateTime.Now).TotalDays > 7)
                 {
                     File.Delete(_path);
                 }
