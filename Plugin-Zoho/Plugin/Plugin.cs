@@ -460,6 +460,20 @@ namespace Plugin_Zoho.Plugin
                 
                 // for each field in the shape add a new property
                 var fieldsResponse = JsonConvert.DeserializeObject<FieldsResponse>(await response.Content.ReadAsStringAsync());
+                
+                var key = new Property
+                {
+                    Id = "id",
+                    Name = "id",
+                    Type = PropertyType.String,
+                    IsKey = true,
+                    IsCreateCounter = false,
+                    IsUpdateCounter = false,
+                    TypeAtSource = "id",
+                    IsNullable = false
+                };
+                
+                shape.Properties.Add(key);
 
                 foreach (var field in fieldsResponse.fields)
                 {
