@@ -12,11 +12,13 @@ namespace Pub {
   {
     static readonly string __ServiceName = "pub.Publisher";
 
+    static readonly grpc::Marshaller<global::Pub.ConfigureRequest> __Marshaller_pub_ConfigureRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureResponse> __Marshaller_pub_ConfigureResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureResponse.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.ConnectRequest> __Marshaller_pub_ConnectRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConnectRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.ConnectResponse> __Marshaller_pub_ConnectResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConnectResponse.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Pub.DiscoverShapesRequest> __Marshaller_pub_DiscoverShapesRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DiscoverShapesRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Pub.DiscoverShapesResponse> __Marshaller_pub_DiscoverShapesResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DiscoverShapesResponse.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Pub.PublishRequest> __Marshaller_pub_PublishRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.PublishRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.DiscoverSchemasRequest> __Marshaller_pub_DiscoverSchemasRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DiscoverSchemasRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.DiscoverSchemasResponse> __Marshaller_pub_DiscoverSchemasResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DiscoverSchemasResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ReadRequest> __Marshaller_pub_ReadRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ReadRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.Record> __Marshaller_pub_Record = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.Record.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.DisconnectRequest> __Marshaller_pub_DisconnectRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DisconnectRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.DisconnectResponse> __Marshaller_pub_DisconnectResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.DisconnectResponse.Parser.ParseFrom);
@@ -30,6 +32,18 @@ namespace Pub {
     static readonly grpc::Marshaller<global::Pub.BeginOAuthFlowResponse> __Marshaller_pub_BeginOAuthFlowResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.BeginOAuthFlowResponse.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.CompleteOAuthFlowRequest> __Marshaller_pub_CompleteOAuthFlowRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.CompleteOAuthFlowRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Pub.CompleteOAuthFlowResponse> __Marshaller_pub_CompleteOAuthFlowResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.CompleteOAuthFlowResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureWriteRequest> __Marshaller_pub_ConfigureWriteRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureWriteRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.ConfigureWriteResponse> __Marshaller_pub_ConfigureWriteResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.ConfigureWriteResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.PrepareWriteRequest> __Marshaller_pub_PrepareWriteRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.PrepareWriteRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.PrepareWriteResponse> __Marshaller_pub_PrepareWriteResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.PrepareWriteResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Pub.RecordAck> __Marshaller_pub_RecordAck = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Pub.RecordAck.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::Pub.ConfigureRequest, global::Pub.ConfigureResponse> __Method_Configure = new grpc::Method<global::Pub.ConfigureRequest, global::Pub.ConfigureResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "Configure",
+        __Marshaller_pub_ConfigureRequest,
+        __Marshaller_pub_ConfigureResponse);
 
     static readonly grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse> __Method_Connect = new grpc::Method<global::Pub.ConnectRequest, global::Pub.ConnectResponse>(
         grpc::MethodType.Unary,
@@ -45,18 +59,32 @@ namespace Pub {
         __Marshaller_pub_ConnectRequest,
         __Marshaller_pub_ConnectResponse);
 
-    static readonly grpc::Method<global::Pub.DiscoverShapesRequest, global::Pub.DiscoverShapesResponse> __Method_DiscoverShapes = new grpc::Method<global::Pub.DiscoverShapesRequest, global::Pub.DiscoverShapesResponse>(
+    static readonly grpc::Method<global::Pub.DiscoverSchemasRequest, global::Pub.DiscoverSchemasResponse> __Method_DiscoverShapes = new grpc::Method<global::Pub.DiscoverSchemasRequest, global::Pub.DiscoverSchemasResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DiscoverShapes",
-        __Marshaller_pub_DiscoverShapesRequest,
-        __Marshaller_pub_DiscoverShapesResponse);
+        __Marshaller_pub_DiscoverSchemasRequest,
+        __Marshaller_pub_DiscoverSchemasResponse);
 
-    static readonly grpc::Method<global::Pub.PublishRequest, global::Pub.Record> __Method_PublishStream = new grpc::Method<global::Pub.PublishRequest, global::Pub.Record>(
+    static readonly grpc::Method<global::Pub.DiscoverSchemasRequest, global::Pub.DiscoverSchemasResponse> __Method_DiscoverSchemas = new grpc::Method<global::Pub.DiscoverSchemasRequest, global::Pub.DiscoverSchemasResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "DiscoverSchemas",
+        __Marshaller_pub_DiscoverSchemasRequest,
+        __Marshaller_pub_DiscoverSchemasResponse);
+
+    static readonly grpc::Method<global::Pub.ReadRequest, global::Pub.Record> __Method_PublishStream = new grpc::Method<global::Pub.ReadRequest, global::Pub.Record>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "PublishStream",
-        __Marshaller_pub_PublishRequest,
+        __Marshaller_pub_ReadRequest,
+        __Marshaller_pub_Record);
+
+    static readonly grpc::Method<global::Pub.ReadRequest, global::Pub.Record> __Method_ReadStream = new grpc::Method<global::Pub.ReadRequest, global::Pub.Record>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ReadStream",
+        __Marshaller_pub_ReadRequest,
         __Marshaller_pub_Record);
 
     static readonly grpc::Method<global::Pub.DisconnectRequest, global::Pub.DisconnectResponse> __Method_Disconnect = new grpc::Method<global::Pub.DisconnectRequest, global::Pub.DisconnectResponse>(
@@ -101,6 +129,27 @@ namespace Pub {
         __Marshaller_pub_CompleteOAuthFlowRequest,
         __Marshaller_pub_CompleteOAuthFlowResponse);
 
+    static readonly grpc::Method<global::Pub.ConfigureWriteRequest, global::Pub.ConfigureWriteResponse> __Method_ConfigureWrite = new grpc::Method<global::Pub.ConfigureWriteRequest, global::Pub.ConfigureWriteResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ConfigureWrite",
+        __Marshaller_pub_ConfigureWriteRequest,
+        __Marshaller_pub_ConfigureWriteResponse);
+
+    static readonly grpc::Method<global::Pub.PrepareWriteRequest, global::Pub.PrepareWriteResponse> __Method_PrepareWrite = new grpc::Method<global::Pub.PrepareWriteRequest, global::Pub.PrepareWriteResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "PrepareWrite",
+        __Marshaller_pub_PrepareWriteRequest,
+        __Marshaller_pub_PrepareWriteResponse);
+
+    static readonly grpc::Method<global::Pub.Record, global::Pub.RecordAck> __Method_WriteStream = new grpc::Method<global::Pub.Record, global::Pub.RecordAck>(
+        grpc::MethodType.DuplexStreaming,
+        __ServiceName,
+        "WriteStream",
+        __Marshaller_pub_Record,
+        __Marshaller_pub_RecordAck);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -111,7 +160,18 @@ namespace Pub {
     public abstract partial class PublisherBase
     {
       /// <summary>
-      /// Instructs the publisher to connect to its data source.
+      /// Configures the plugin.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.ConfigureResponse> Configure(global::Pub.ConfigureRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Instructs the plugin to connect to its data source.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
@@ -138,30 +198,53 @@ namespace Pub {
       }
 
       /// <summary>
-      /// Requests a listing of shapes this publisher can provide records for.
+      /// (DEPRECATED) Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
-      public virtual global::System.Threading.Tasks.Task<global::Pub.DiscoverShapesResponse> DiscoverShapes(global::Pub.DiscoverShapesRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Pub.DiscoverSchemasResponse> DiscoverShapes(global::Pub.DiscoverSchemasRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       /// <summary>
-      /// PublishString begins streaming records to the client from the plugin.
+      /// Requests a listing of schemas this publisher can provide records for.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.DiscoverSchemasResponse> DiscoverSchemas(global::Pub.DiscoverSchemasRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// (DEPRECATED) PublishStream begins streaming records to the client from the plugin.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
       /// <param name="responseStream">Used for sending responses back to the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>A task indicating completion of the handler.</returns>
-      public virtual global::System.Threading.Tasks.Task PublishStream(global::Pub.PublishRequest request, grpc::IServerStreamWriter<global::Pub.Record> responseStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task PublishStream(global::Pub.ReadRequest request, grpc::IServerStreamWriter<global::Pub.Record> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       /// <summary>
-      /// Tells the publisher to disconnect from its data source, stop any running publishes,
+      /// ReadStream begins streaming records to the client from the plugin.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      public virtual global::System.Threading.Tasks.Task ReadStream(global::Pub.ReadRequest request, grpc::IServerStreamWriter<global::Pub.Record> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Tells the plugin to disconnect from its data source, stop any running publishes,
       /// and gracefully prepare to be shut down.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
@@ -186,7 +269,7 @@ namespace Pub {
       }
 
       /// <summary>
-      /// Configures a query which can be used to publish a shape.
+      /// Configures a query which can be used to publish a schema.
       /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
@@ -233,6 +316,43 @@ namespace Pub {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// Configures a write back which can be used to write back a schema to the source.
+      /// This must be implemented if the plugin manifest has `canConfigureWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.ConfigureWriteResponse> ConfigureWrite(global::Pub.ConfigureWriteRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Invoked to begin a write back request
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Pub.PrepareWriteResponse> PrepareWrite(global::Pub.PrepareWriteRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Creates a stream of records to write back and opens a stream to receive acks for write backs
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="requestStream">Used for reading requests from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      public virtual global::System.Threading.Tasks.Task WriteStream(grpc::IAsyncStreamReader<global::Pub.Record> requestStream, grpc::IServerStreamWriter<global::Pub.RecordAck> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Client for Publisher</summary>
@@ -259,7 +379,51 @@ namespace Pub {
       }
 
       /// <summary>
-      /// Instructs the publisher to connect to its data source.
+      /// Configures the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureResponse Configure(global::Pub.ConfigureRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return Configure(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureResponse Configure(global::Pub.ConfigureRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_Configure, null, options, request);
+      }
+      /// <summary>
+      /// Configures the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureResponse> ConfigureAsync(global::Pub.ConfigureRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureResponse> ConfigureAsync(global::Pub.ConfigureRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_Configure, null, options, request);
+      }
+      /// <summary>
+      /// Instructs the plugin to connect to its data source.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -271,7 +435,7 @@ namespace Pub {
         return Connect(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Instructs the publisher to connect to its data source.
+      /// Instructs the plugin to connect to its data source.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
@@ -281,7 +445,7 @@ namespace Pub {
         return CallInvoker.BlockingUnaryCall(__Method_Connect, null, options, request);
       }
       /// <summary>
-      /// Instructs the publisher to connect to its data source.
+      /// Instructs the plugin to connect to its data source.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -293,7 +457,7 @@ namespace Pub {
         return ConnectAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Instructs the publisher to connect to its data source.
+      /// Instructs the plugin to connect to its data source.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
@@ -333,73 +497,139 @@ namespace Pub {
         return CallInvoker.AsyncServerStreamingCall(__Method_ConnectSession, null, options, request);
       }
       /// <summary>
-      /// Requests a listing of shapes this publisher can provide records for.
+      /// (DEPRECATED) Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
       /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
       /// <param name="cancellationToken">An optional token for canceling the call.</param>
       /// <returns>The response received from the server.</returns>
-      public virtual global::Pub.DiscoverShapesResponse DiscoverShapes(global::Pub.DiscoverShapesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Pub.DiscoverSchemasResponse DiscoverShapes(global::Pub.DiscoverSchemasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return DiscoverShapes(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Requests a listing of shapes this publisher can provide records for.
+      /// (DEPRECATED) Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
       /// <returns>The response received from the server.</returns>
-      public virtual global::Pub.DiscoverShapesResponse DiscoverShapes(global::Pub.DiscoverShapesRequest request, grpc::CallOptions options)
+      public virtual global::Pub.DiscoverSchemasResponse DiscoverShapes(global::Pub.DiscoverSchemasRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_DiscoverShapes, null, options, request);
       }
       /// <summary>
-      /// Requests a listing of shapes this publisher can provide records for.
+      /// (DEPRECATED) Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
       /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
       /// <param name="cancellationToken">An optional token for canceling the call.</param>
       /// <returns>The call object.</returns>
-      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverShapesResponse> DiscoverShapesAsync(global::Pub.DiscoverShapesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverSchemasResponse> DiscoverShapesAsync(global::Pub.DiscoverSchemasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return DiscoverShapesAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Requests a listing of shapes this publisher can provide records for.
+      /// (DEPRECATED) Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
       /// <returns>The call object.</returns>
-      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverShapesResponse> DiscoverShapesAsync(global::Pub.DiscoverShapesRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverSchemasResponse> DiscoverShapesAsync(global::Pub.DiscoverSchemasRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_DiscoverShapes, null, options, request);
       }
       /// <summary>
-      /// PublishString begins streaming records to the client from the plugin.
+      /// Requests a listing of schemas this publisher can provide records for.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.DiscoverSchemasResponse DiscoverSchemas(global::Pub.DiscoverSchemasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DiscoverSchemas(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Requests a listing of schemas this publisher can provide records for.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.DiscoverSchemasResponse DiscoverSchemas(global::Pub.DiscoverSchemasRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_DiscoverSchemas, null, options, request);
+      }
+      /// <summary>
+      /// Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
       /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
       /// <param name="cancellationToken">An optional token for canceling the call.</param>
       /// <returns>The call object.</returns>
-      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> PublishStream(global::Pub.PublishRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverSchemasResponse> DiscoverSchemasAsync(global::Pub.DiscoverSchemasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return PublishStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return DiscoverSchemasAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// PublishString begins streaming records to the client from the plugin.
+      /// Requests a listing of schemas this publisher can provide records for.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
       /// <returns>The call object.</returns>
-      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> PublishStream(global::Pub.PublishRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Pub.DiscoverSchemasResponse> DiscoverSchemasAsync(global::Pub.DiscoverSchemasRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_DiscoverSchemas, null, options, request);
+      }
+      /// <summary>
+      /// (DEPRECATED) PublishStream begins streaming records to the client from the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> PublishStream(global::Pub.ReadRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return PublishStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// (DEPRECATED) PublishStream begins streaming records to the client from the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> PublishStream(global::Pub.ReadRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_PublishStream, null, options, request);
       }
       /// <summary>
-      /// Tells the publisher to disconnect from its data source, stop any running publishes,
+      /// ReadStream begins streaming records to the client from the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> ReadStream(global::Pub.ReadRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ReadStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// ReadStream begins streaming records to the client from the plugin.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::Pub.Record> ReadStream(global::Pub.ReadRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_ReadStream, null, options, request);
+      }
+      /// <summary>
+      /// Tells the plugin to disconnect from its data source, stop any running publishes,
       /// and gracefully prepare to be shut down.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -412,7 +642,7 @@ namespace Pub {
         return Disconnect(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Tells the publisher to disconnect from its data source, stop any running publishes,
+      /// Tells the plugin to disconnect from its data source, stop any running publishes,
       /// and gracefully prepare to be shut down.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -423,7 +653,7 @@ namespace Pub {
         return CallInvoker.BlockingUnaryCall(__Method_Disconnect, null, options, request);
       }
       /// <summary>
-      /// Tells the publisher to disconnect from its data source, stop any running publishes,
+      /// Tells the plugin to disconnect from its data source, stop any running publishes,
       /// and gracefully prepare to be shut down.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -436,7 +666,7 @@ namespace Pub {
         return DisconnectAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Tells the publisher to disconnect from its data source, stop any running publishes,
+      /// Tells the plugin to disconnect from its data source, stop any running publishes,
       /// and gracefully prepare to be shut down.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -499,7 +729,7 @@ namespace Pub {
         return CallInvoker.AsyncUnaryCall(__Method_ConfigureConnection, null, options, request);
       }
       /// <summary>
-      /// Configures a query which can be used to publish a shape.
+      /// Configures a query which can be used to publish a schema.
       /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -512,7 +742,7 @@ namespace Pub {
         return ConfigureQuery(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Configures a query which can be used to publish a shape.
+      /// Configures a query which can be used to publish a schema.
       /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -523,7 +753,7 @@ namespace Pub {
         return CallInvoker.BlockingUnaryCall(__Method_ConfigureQuery, null, options, request);
       }
       /// <summary>
-      /// Configures a query which can be used to publish a shape.
+      /// Configures a query which can be used to publish a schema.
       /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -536,7 +766,7 @@ namespace Pub {
         return ConfigureQueryAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// Configures a query which can be used to publish a shape.
+      /// Configures a query which can be used to publish a schema.
       /// This must be implemented if the plugin manifest has `canConfigureQuery` set to true.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -690,6 +920,124 @@ namespace Pub {
       {
         return CallInvoker.AsyncUnaryCall(__Method_CompleteOAuthFlow, null, options, request);
       }
+      /// <summary>
+      /// Configures a write back which can be used to write back a schema to the source.
+      /// This must be implemented if the plugin manifest has `canConfigureWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureWriteResponse ConfigureWrite(global::Pub.ConfigureWriteRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureWrite(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a write back which can be used to write back a schema to the source.
+      /// This must be implemented if the plugin manifest has `canConfigureWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.ConfigureWriteResponse ConfigureWrite(global::Pub.ConfigureWriteRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ConfigureWrite, null, options, request);
+      }
+      /// <summary>
+      /// Configures a write back which can be used to write back a schema to the source.
+      /// This must be implemented if the plugin manifest has `canConfigureWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureWriteResponse> ConfigureWriteAsync(global::Pub.ConfigureWriteRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConfigureWriteAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Configures a write back which can be used to write back a schema to the source.
+      /// This must be implemented if the plugin manifest has `canConfigureWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.ConfigureWriteResponse> ConfigureWriteAsync(global::Pub.ConfigureWriteRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ConfigureWrite, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to begin a write back request
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.PrepareWriteResponse PrepareWrite(global::Pub.PrepareWriteRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return PrepareWrite(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to begin a write back request
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Pub.PrepareWriteResponse PrepareWrite(global::Pub.PrepareWriteRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_PrepareWrite, null, options, request);
+      }
+      /// <summary>
+      /// Invoked to begin a write back request
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.PrepareWriteResponse> PrepareWriteAsync(global::Pub.PrepareWriteRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return PrepareWriteAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Invoked to begin a write back request
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Pub.PrepareWriteResponse> PrepareWriteAsync(global::Pub.PrepareWriteRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_PrepareWrite, null, options, request);
+      }
+      /// <summary>
+      /// Creates a stream of records to write back and opens a stream to receive acks for write backs
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncDuplexStreamingCall<global::Pub.Record, global::Pub.RecordAck> WriteStream(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return WriteStream(new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Creates a stream of records to write back and opens a stream to receive acks for write backs
+      /// This must be implemented if the manifest has `canWrite` set to true.
+      /// </summary>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncDuplexStreamingCall<global::Pub.Record, global::Pub.RecordAck> WriteStream(grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_WriteStream, null, options);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override PublisherClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -702,16 +1050,22 @@ namespace Pub {
     public static grpc::ServerServiceDefinition BindService(PublisherBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_Configure, serviceImpl.Configure)
           .AddMethod(__Method_Connect, serviceImpl.Connect)
           .AddMethod(__Method_ConnectSession, serviceImpl.ConnectSession)
           .AddMethod(__Method_DiscoverShapes, serviceImpl.DiscoverShapes)
+          .AddMethod(__Method_DiscoverSchemas, serviceImpl.DiscoverSchemas)
           .AddMethod(__Method_PublishStream, serviceImpl.PublishStream)
+          .AddMethod(__Method_ReadStream, serviceImpl.ReadStream)
           .AddMethod(__Method_Disconnect, serviceImpl.Disconnect)
           .AddMethod(__Method_ConfigureConnection, serviceImpl.ConfigureConnection)
           .AddMethod(__Method_ConfigureQuery, serviceImpl.ConfigureQuery)
           .AddMethod(__Method_ConfigureRealTime, serviceImpl.ConfigureRealTime)
           .AddMethod(__Method_BeginOAuthFlow, serviceImpl.BeginOAuthFlow)
-          .AddMethod(__Method_CompleteOAuthFlow, serviceImpl.CompleteOAuthFlow).Build();
+          .AddMethod(__Method_CompleteOAuthFlow, serviceImpl.CompleteOAuthFlow)
+          .AddMethod(__Method_ConfigureWrite, serviceImpl.ConfigureWrite)
+          .AddMethod(__Method_PrepareWrite, serviceImpl.PrepareWrite)
+          .AddMethod(__Method_WriteStream, serviceImpl.WriteStream).Build();
     }
 
     /// <summary>Register service method implementations with a service binder. Useful when customizing the service binding logic.
@@ -720,16 +1074,22 @@ namespace Pub {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, PublisherBase serviceImpl)
     {
+      serviceBinder.AddMethod(__Method_Configure, serviceImpl.Configure);
       serviceBinder.AddMethod(__Method_Connect, serviceImpl.Connect);
       serviceBinder.AddMethod(__Method_ConnectSession, serviceImpl.ConnectSession);
       serviceBinder.AddMethod(__Method_DiscoverShapes, serviceImpl.DiscoverShapes);
+      serviceBinder.AddMethod(__Method_DiscoverSchemas, serviceImpl.DiscoverSchemas);
       serviceBinder.AddMethod(__Method_PublishStream, serviceImpl.PublishStream);
+      serviceBinder.AddMethod(__Method_ReadStream, serviceImpl.ReadStream);
       serviceBinder.AddMethod(__Method_Disconnect, serviceImpl.Disconnect);
       serviceBinder.AddMethod(__Method_ConfigureConnection, serviceImpl.ConfigureConnection);
       serviceBinder.AddMethod(__Method_ConfigureQuery, serviceImpl.ConfigureQuery);
       serviceBinder.AddMethod(__Method_ConfigureRealTime, serviceImpl.ConfigureRealTime);
       serviceBinder.AddMethod(__Method_BeginOAuthFlow, serviceImpl.BeginOAuthFlow);
       serviceBinder.AddMethod(__Method_CompleteOAuthFlow, serviceImpl.CompleteOAuthFlow);
+      serviceBinder.AddMethod(__Method_ConfigureWrite, serviceImpl.ConfigureWrite);
+      serviceBinder.AddMethod(__Method_PrepareWrite, serviceImpl.PrepareWrite);
+      serviceBinder.AddMethod(__Method_WriteStream, serviceImpl.WriteStream);
     }
 
   }

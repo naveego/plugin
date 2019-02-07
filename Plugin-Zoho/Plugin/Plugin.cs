@@ -2,10 +2,8 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Google.Protobuf.Collections;
 using Grpc.Core;
 using Newtonsoft.Json;
 using Plugin_Zoho.DataContracts;
@@ -264,11 +262,11 @@ namespace Plugin_Zoho.Plugin
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns>Discovered shapes</returns>
-        public override async Task<DiscoverShapesResponse> DiscoverShapes(DiscoverShapesRequest request, ServerCallContext context)
+        public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request, ServerCallContext context)
         {
             Logger.Info("Discovering Shapes...");
             
-            DiscoverShapesResponse discoverShapesResponse = new DiscoverShapesResponse();
+            DiscoverSchemasResponse discoverShapesResponse = new DiscoverSchemasResponse();
             ModuleResponse modulesResponse;
             
             // get the modules present in Zoho
@@ -298,7 +296,7 @@ namespace Plugin_Zoho.Plugin
 
                 await Task.WhenAll(tasks);
                     
-                discoverShapesResponse.Shapes.AddRange(tasks.Where(x => x.Result != null).Select(x => x.Result));
+                discoverShapesResponse.Schemas.AddRange(tasks.Where(x => x.Result != null).Select(x => x.Result));
             }
             catch (Exception e)
             {
@@ -306,28 +304,26 @@ namespace Plugin_Zoho.Plugin
                 throw;
             }
             
-            Logger.Info($"Shapes found: {discoverShapesResponse.Shapes.Count}");
+            Logger.Info($"Shapes found: {discoverShapesResponse.Schemas.Count}");
             
             // only return requested shapes if refresh mode selected
-            if (request.Mode == DiscoverShapesRequest.Types.Mode.Refresh)
+            if (request.Mode == DiscoverSchemasRequest.Types.Mode.Refresh)
             {
                 var refreshShapes = request.ToRefresh;
-                var shapes = JsonConvert.DeserializeObject<Shape[]>(JsonConvert.SerializeObject(discoverShapesResponse.Shapes));
-                discoverShapesResponse.Shapes.Clear(); 
-                discoverShapesResponse.Shapes.AddRange(shapes.Join(refreshShapes, shape => shape.Id, refresh => refresh.Id, (shape, refresh) => shape));
+                var shapes = JsonConvert.DeserializeObject<Schema[]>(JsonConvert.SerializeObject(discoverShapesResponse.Schemas));
+                discoverShapesResponse.Schemas.Clear(); 
+                discoverShapesResponse.Schemas.AddRange(shapes.Join(refreshShapes, shape => shape.Id, refresh => refresh.Id, (shape, refresh) => shape));
                 
                 Logger.Debug($"Shapes found: {JsonConvert.SerializeObject(shapes)}");
                 Logger.Debug($"Refresh requested on shapes: {JsonConvert.SerializeObject(refreshShapes)}");
                 
-                Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
+                Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
                 return discoverShapesResponse;
             }
+            
             // return all shapes otherwise
-            else
-            {
-                Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
-                return discoverShapesResponse;
-            }
+            Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
+            return discoverShapesResponse;
         }
         
         /// <summary>
@@ -337,9 +333,9 @@ namespace Plugin_Zoho.Plugin
         /// <param name="responseStream"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override async Task PublishStream(PublishRequest request, IServerStreamWriter<Record> responseStream, ServerCallContext context)
+        public override async Task ReadStream(ReadRequest request, IServerStreamWriter<Record> responseStream, ServerCallContext context)
         {
-            var shape = request.Shape;
+            var shape = request.Schema;
             var limit = request.Limit;
             var limitFlag = request.Limit != 0;
 
@@ -432,10 +428,10 @@ namespace Plugin_Zoho.Plugin
         /// <param name="module"></param>
         /// <param name="id"></param>
         /// <returns>returns a shape or null if unavailable</returns>
-        private async Task<Shape> GetShapeForModule(Module module, string id)
+        private async Task<Schema> GetShapeForModule(Module module, string id)
         {
             // base shape to be added to
-            var shape = new Shape
+            var shape = new Schema
             {
                 Id = id,
                 Name = module.api_name,
