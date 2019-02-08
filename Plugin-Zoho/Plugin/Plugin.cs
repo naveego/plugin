@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Grpc.Core;
@@ -22,7 +23,11 @@ namespace Plugin_Zoho.Plugin
         public Plugin(HttpClient client = null)
         {
             _injectedClient = client != null ? client : new HttpClient();
-            _server = new ServerStatus();
+            _server = new ServerStatus
+            {
+                Connected = false,
+                WriteConfigured = false
+            };
         }
 
         /// <summary>
@@ -35,7 +40,7 @@ namespace Plugin_Zoho.Plugin
             ServerCallContext context)
         {
             Logger.Info("Getting Auth URL...");
-            
+
             // params for auth url
             var scope = "ZohoCRM.users.all,ZohoCRM.org.all,ZohoCRM.settings.all,ZohoCRM.modules.all";
             var clientId = request.Configuration.ClientId;
@@ -43,24 +48,25 @@ namespace Plugin_Zoho.Plugin
             var accessType = "offline";
             var redirectUrl = request.RedirectUrl;
             var prompt = "consent";
-            
+
             // build auth url
-            var authUrl = String.Format("https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}&prompt={5}",
+            var authUrl = String.Format(
+                "https://accounts.zoho.com/oauth/v2/auth?scope={0}&client_id={1}&response_type={2}&access_type={3}&redirect_uri={4}&prompt={5}",
                 scope,
                 clientId,
                 responseType,
                 accessType,
                 redirectUrl,
                 prompt);
-            
+
             // return auth url
             var oAuthResponse = new BeginOAuthFlowResponse
             {
                 AuthorizationUrl = authUrl
             };
-            
+
             Logger.Info($"Created Auth URL: {authUrl}");
-            
+
             return Task.FromResult(oAuthResponse);
         }
 
@@ -70,14 +76,15 @@ namespace Plugin_Zoho.Plugin
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override async Task<CompleteOAuthFlowResponse> CompleteOAuthFlow(CompleteOAuthFlowRequest request, ServerCallContext context)
+        public override async Task<CompleteOAuthFlowResponse> CompleteOAuthFlow(CompleteOAuthFlowRequest request,
+            ServerCallContext context)
         {
             Logger.Info("Getting Auth and Refresh Token...");
-            
+
             // get code from redirect url
             string code;
             var uri = new Uri(request.RedirectUrl);
-            
+
             try
             {
                 code = HttpUtility.ParseQueryString(uri.Query).Get("code");
@@ -87,21 +94,23 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 throw;
             }
-            
+
             // token url parameters
-            var redirectUrl = String.Format("{0}{1}{2}{3}", uri.Scheme, Uri.SchemeDelimiter, uri.Authority, uri.AbsolutePath);
+            var redirectUrl = String.Format("{0}{1}{2}{3}", uri.Scheme, Uri.SchemeDelimiter, uri.Authority,
+                uri.AbsolutePath);
             var clientId = request.Configuration.ClientId;
             var clientSecret = request.Configuration.ClientSecret;
             var grantType = "authorization_code";
-            
+
             // build token url
-            var tokenUrl = String.Format("https://accounts.zoho.com/oauth/v2/token?code={0}&redirect_uri={1}&client_id={2}&client_secret={3}&grant_type={4}",
+            var tokenUrl = String.Format(
+                "https://accounts.zoho.com/oauth/v2/token?code={0}&redirect_uri={1}&client_id={2}&client_secret={3}&grant_type={4}",
                 code,
                 redirectUrl,
                 clientId,
                 clientSecret,
                 grantType
-                );
+            );
 
             // get tokens
             var oAuthState = new OAuthState();
@@ -131,7 +140,7 @@ namespace Plugin_Zoho.Plugin
             {
                 OauthStateJson = JsonConvert.SerializeObject(oAuthState)
             };
-            
+
             Logger.Info("Got Auth Token and Refresh Token");
 
             return oAuthResponse;
@@ -144,12 +153,13 @@ namespace Plugin_Zoho.Plugin
         /// <param name="context"></param>
         /// <returns>A message indicating connection success</returns>
         public override async Task<ConnectResponse> Connect(ConnectRequest request, ServerCallContext context)
-        {        
+        {
             _server.Connected = false;
-            
+
             Logger.Info("Connecting...");
             Logger.Info("Got OAuth State: " + !String.IsNullOrEmpty(request.OauthStateJson));
-            Logger.Info("Got OAuthConfig " + !String.IsNullOrEmpty(JsonConvert.SerializeObject(request.OauthConfiguration)));
+            Logger.Info("Got OAuthConfig " +
+                        !String.IsNullOrEmpty(JsonConvert.SerializeObject(request.OauthConfiguration)));
 
             OAuthState oAuthState;
             try
@@ -174,7 +184,7 @@ namespace Plugin_Zoho.Plugin
                 ClientSecret = request.OauthConfiguration.ClientSecret,
                 RefreshToken = oAuthState.RefreshToken
             };
-            
+
             // validate settings passed in
             try
             {
@@ -192,7 +202,7 @@ namespace Plugin_Zoho.Plugin
                     SettingsError = e.Message
                 };
             }
-            
+
             // create new authenticated request helper with validated settings
             try
             {
@@ -203,7 +213,7 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 throw;
             }
-            
+
             // attempt to call the Zoho api
             try
             {
@@ -211,13 +221,13 @@ namespace Plugin_Zoho.Plugin
                 response.EnsureSuccessStatusCode();
 
                 _server.Connected = true;
-                
+
                 Logger.Info("Connected to Zoho");
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                
+
                 return new ConnectResponse
                 {
                     OauthStateJson = request.OauthStateJson,
@@ -226,7 +236,7 @@ namespace Plugin_Zoho.Plugin
                     SettingsError = ""
                 };
             }
-            
+
             return new ConnectResponse
             {
                 OauthStateJson = request.OauthStateJson,
@@ -236,14 +246,15 @@ namespace Plugin_Zoho.Plugin
             };
         }
 
-        public override async Task ConnectSession(ConnectRequest request, IServerStreamWriter<ConnectResponse> responseStream, ServerCallContext context)
+        public override async Task ConnectSession(ConnectRequest request,
+            IServerStreamWriter<ConnectResponse> responseStream, ServerCallContext context)
         {
             Logger.Info("Connecting session...");
-            
+
             // create task to wait for disconnect to be called
             _tcs?.SetResult(true);
             _tcs = new TaskCompletionSource<bool>();
-            
+
             // call connect method
             var response = await Connect(request, context);
 
@@ -255,37 +266,39 @@ namespace Plugin_Zoho.Plugin
             await _tcs.Task;
         }
 
-        
+
         /// <summary>
         /// Discovers shapes located in the users Zoho CRM instance
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns>Discovered shapes</returns>
-        public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request, ServerCallContext context)
+        public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request,
+            ServerCallContext context)
         {
             Logger.Info("Discovering Shapes...");
-            
+
             DiscoverSchemasResponse discoverShapesResponse = new DiscoverSchemasResponse();
             ModuleResponse modulesResponse;
-            
+
             // get the modules present in Zoho
             try
             {
                 Logger.Debug("Getting modules...");
                 var response = await _client.GetAsync("https://www.zohoapis.com/crm/v2/settings/modules");
                 response.EnsureSuccessStatusCode();
-                
+
                 Logger.Debug(await response.Content.ReadAsStringAsync());
-    
-                modulesResponse = JsonConvert.DeserializeObject<ModuleResponse>(await response.Content.ReadAsStringAsync());
+
+                modulesResponse =
+                    JsonConvert.DeserializeObject<ModuleResponse>(await response.Content.ReadAsStringAsync());
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message);
                 throw;
             }
-            
+
             // attempt to get a shape for each module found
             try
             {
@@ -295,7 +308,7 @@ namespace Plugin_Zoho.Plugin
                     .ToArray();
 
                 await Task.WhenAll(tasks);
-                    
+
                 discoverShapesResponse.Schemas.AddRange(tasks.Where(x => x.Result != null).Select(x => x.Result));
             }
             catch (Exception e)
@@ -303,29 +316,32 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 throw;
             }
-            
+
             Logger.Info($"Shapes found: {discoverShapesResponse.Schemas.Count}");
-            
+
             // only return requested shapes if refresh mode selected
             if (request.Mode == DiscoverSchemasRequest.Types.Mode.Refresh)
             {
                 var refreshShapes = request.ToRefresh;
-                var shapes = JsonConvert.DeserializeObject<Schema[]>(JsonConvert.SerializeObject(discoverShapesResponse.Schemas));
-                discoverShapesResponse.Schemas.Clear(); 
-                discoverShapesResponse.Schemas.AddRange(shapes.Join(refreshShapes, shape => shape.Id, refresh => refresh.Id, (shape, refresh) => shape));
-                
+                var shapes =
+                    JsonConvert.DeserializeObject<Schema[]>(
+                        JsonConvert.SerializeObject(discoverShapesResponse.Schemas));
+                discoverShapesResponse.Schemas.Clear();
+                discoverShapesResponse.Schemas.AddRange(shapes.Join(refreshShapes, shape => shape.Id,
+                    refresh => refresh.Id, (shape, refresh) => shape));
+
                 Logger.Debug($"Shapes found: {JsonConvert.SerializeObject(shapes)}");
                 Logger.Debug($"Refresh requested on shapes: {JsonConvert.SerializeObject(refreshShapes)}");
-                
+
                 Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
                 return discoverShapesResponse;
             }
-            
+
             // return all shapes otherwise
             Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
             return discoverShapesResponse;
         }
-        
+
         /// <summary>
         /// Publishes a stream of data for a given shape
         /// </summary>
@@ -333,31 +349,34 @@ namespace Plugin_Zoho.Plugin
         /// <param name="responseStream"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override async Task ReadStream(ReadRequest request, IServerStreamWriter<Record> responseStream, ServerCallContext context)
+        public override async Task ReadStream(ReadRequest request, IServerStreamWriter<Record> responseStream,
+            ServerCallContext context)
         {
             var shape = request.Schema;
             var limit = request.Limit;
             var limitFlag = request.Limit != 0;
 
             Logger.Info($"Publishing records for shape: {shape.Name}");
-            
+
             try
             {
                 RecordsResponse recordsResponse;
                 int page = 1;
                 int recordsCount = 0;
-                
+
                 // Publish records for the given shape
                 do
                 {
                     // get records for shape page by page
-                    var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}", shape.Name, page));
+                    var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}",
+                        shape.Name, page));
                     response.EnsureSuccessStatusCode();
-    
-                    recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
-                    
+
+                    recordsResponse =
+                        JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+
                     Logger.Debug($"data: {JsonConvert.SerializeObject(recordsResponse.data)}");
-                    
+
                     // publish each record in the page
                     foreach (var record in recordsResponse.data)
                     {
@@ -372,12 +391,12 @@ namespace Plugin_Zoho.Plugin
                         {
                             break;
                         }
-                        
+
                         // publish record
                         await responseStream.WriteAsync(recordOutput);
                         recordsCount++;
                     }
-                    
+
                     // stop publishing if the limit flag is enabled and the limit has been reached
                     if (limitFlag && recordsCount == limit)
                     {
@@ -389,8 +408,93 @@ namespace Plugin_Zoho.Plugin
                 }
                 // keep fetching while there are more pages and the plugin is still connected
                 while (recordsResponse.info.more_records && _server.Connected);
-                
+
                 Logger.Info($"Published {recordsCount} records");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Prepares the plugin to handle a write request
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task<PrepareWriteResponse> PrepareWrite(PrepareWriteRequest request, ServerCallContext context)
+        {
+            _server.WriteConfigured = false;
+
+            var writeSettings = new WriteSettings
+            {
+                CommitSLA = request.CommitSlaSeconds,
+                Schema = request.Schema
+            };
+
+            _server.WriteSettings = writeSettings;
+            _server.WriteConfigured = true;
+
+            return Task.FromResult(new PrepareWriteResponse());
+        }
+
+        /// <summary>
+        /// Takes in records and writes them out to the Zoho instance then sends acks back to the client
+        /// </summary>
+        /// <param name="requestStream"></param>
+        /// <param name="responseStream"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override async Task WriteStream(IAsyncStreamReader<Record> requestStream,
+            IServerStreamWriter<RecordAck> responseStream, ServerCallContext context)
+        {
+            try
+            {
+                Logger.Info("Writing records to Zoho...");
+                var schema = _server.WriteSettings.Schema;
+                var sla = _server.WriteSettings.CommitSLA;
+                var inCount = 0;
+                var outCount = 0;
+                
+                // get next record to publish while connected and configured
+                while (await requestStream.MoveNext(CancellationToken.None) && _server.Connected && _server.WriteConfigured)
+                {
+                    var record = requestStream.Current;
+                    inCount++;
+                    
+                    // send record to source system
+                    // timeout if it takes longer than the sla
+                    var task = Task.Run(() => PutRecord(schema,record));
+                    if (task.Wait(TimeSpan.FromSeconds(sla)))
+                    {
+                        // send ack
+                        var ack = new RecordAck
+                        {
+                            CorrelationId = record.CorrelationId,
+                            Error = task.Result
+                        };
+                        await responseStream.WriteAsync(ack);
+                        
+                        if (String.IsNullOrEmpty(task.Result))
+                        {
+                            outCount++;
+                        }
+                    }
+                    else
+                    {
+                        // send timeout ack
+                        var ack = new RecordAck
+                        {
+                            CorrelationId = record.CorrelationId,
+                            Error = "timed out"
+                        };
+                        await responseStream.WriteAsync(ack);
+                    }
+                }
+                
+                Logger.Info($"Wrote {outCount} of {inCount} records to Zoho.");
             }
             catch (Exception e)
             {
@@ -417,7 +521,7 @@ namespace Plugin_Zoho.Plugin
                 _tcs.SetResult(true);
                 _tcs = null;
             }
-            
+
             Logger.Info("Disconnected");
             return Task.FromResult(new DisconnectResponse());
         }
@@ -435,28 +539,34 @@ namespace Plugin_Zoho.Plugin
             {
                 Id = id,
                 Name = module.api_name,
-                Description = module.module_name
+                Description = module.module_name,
+                PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
+                {
+                    Custom = module.generated_type == "custom"
+                })
             };
-            
+
             try
             {
                 Logger.Debug($"Getting fields for: {module.module_name}");
-            
+
                 // get fields for module
-                var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/settings/fields?module={0}", module.api_name));
-                
+                var response = await _client.GetAsync(
+                    String.Format("https://www.zohoapis.com/crm/v2/settings/fields?module={0}", module.api_name));
+
                 // if response is empty or call did not succeed return null
                 if (response.StatusCode == HttpStatusCode.NoContent || !response.IsSuccessStatusCode)
                 {
                     Logger.Debug($"No fields for: {module.module_name}");
                     return null;
                 }
-                
+
                 Logger.Debug($"Got fields for: {module.module_name}");
-                
+
                 // for each field in the shape add a new property
-                var fieldsResponse = JsonConvert.DeserializeObject<FieldsResponse>(await response.Content.ReadAsStringAsync());
-                
+                var fieldsResponse =
+                    JsonConvert.DeserializeObject<FieldsResponse>(await response.Content.ReadAsStringAsync());
+
                 var key = new Property
                 {
                     Id = "id",
@@ -468,7 +578,7 @@ namespace Plugin_Zoho.Plugin
                     TypeAtSource = "id",
                     IsNullable = false
                 };
-                
+
                 shape.Properties.Add(key);
 
                 foreach (var field in fieldsResponse.fields)
@@ -484,10 +594,10 @@ namespace Plugin_Zoho.Plugin
                         TypeAtSource = field.data_type,
                         IsNullable = true
                     };
-                
+
                     shape.Properties.Add(property);
                 }
-                
+
                 Logger.Debug($"Added shape for: {module.module_name}");
                 return shape;
             }
@@ -532,6 +642,30 @@ namespace Plugin_Zoho.Plugin
                     }
                 default:
                     return PropertyType.String;
+            }
+        }
+
+        private async Task<string> PutRecord(Schema schema, Record record)
+        {
+            try
+            {
+                var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
+                var modulename = schema.Name;
+                if (metaJson != null && metaJson.Custom)
+                {
+                    modulename = "Custom";
+                }
+                
+                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", modulename);
+                var response = await _client.PutAsync(uri, record.DataJson);
+                
+                response.EnsureSuccessStatusCode();
+                return "";
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return e.Message;
             }
         }
     }
