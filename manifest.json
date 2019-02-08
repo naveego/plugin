@@ -2,6 +2,7 @@
   "id": "plugin-zoho",
   "displayName": "Zoho Publisher",
   "description": "Publisher which pulls data from a Zoho instance",
+  "apiVersion": "2",
   "versionDescription": "Version 1",
   "version": "1.0.0",
   "iconFile": "icon.jpg",
@@ -12,6 +13,7 @@
   "canProduceMultipleSchemas": true,
   "canAcceptQueryBasedSchemas": false,
   "canUseOAuth": true,
+  "canWrite": true,
   "configSchema": {
     "ui": {
       "ui:order": [
