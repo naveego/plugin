@@ -645,18 +645,24 @@ namespace Plugin_Zoho.Plugin
             }
         }
 
+        /// <summary>
+        /// Writes a record out to Zoho
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
         private async Task<string> PutRecord(Schema schema, Record record)
         {
             try
             {
                 var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
-                var modulename = schema.Name;
+                var moduleName = schema.Name;
                 if (metaJson != null && metaJson.Custom)
                 {
-                    modulename = "Custom";
+                    moduleName = "Custom";
                 }
                 
-                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", modulename);
+                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
                 var response = await _client.PutAsync(uri, record.DataJson);
                 
                 response.EnsureSuccessStatusCode();
