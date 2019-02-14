@@ -673,10 +673,13 @@ namespace Plugin_Zoho.Plugin
                 
                 var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
                 var srcObj = recordsResponse.data[0];
+                
+                // get modified key from schema
+                var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
 
                 // if source is newer than request then exit
-                if (DateTime.Parse((string) recObj["Modified_Time"]) <=
-                    DateTime.Parse((string) srcObj["Modified_Time"]))
+                if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
+                    DateTime.Parse((string) srcObj[modifiedKey.Id]))
                 {
                     return "source system is newer than requested write back";
                 }

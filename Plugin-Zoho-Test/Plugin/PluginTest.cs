@@ -533,7 +533,18 @@ namespace Plugin_Zoho_Test.Plugin
 
             var prepareRequest = new PrepareWriteRequest()
             {
-                Schema = new Schema {Name = "Leads"},
+                Schema = new Schema
+                {
+                    Name = "Leads",
+                    Properties =
+                    {
+                        new Property
+                        {
+                            Id = "Modified_Time",
+                            IsUpdateCounter = true
+                        }
+                    }
+                },
                 CommitSlaSeconds = 1
             };
             
