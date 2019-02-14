@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -653,17 +655,58 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         private async Task<string> PutRecord(Schema schema, Record record)
         {
+            string moduleName;
+            Dictionary<string, object> recObj;
+            
             try
             {
+                // check if source has newer record than write back record
+                moduleName = schema.Name;
+                recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
+                var id = recObj["id"];
+                
+                // build and send request
+                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id);
+
+                var response = await _client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                
+                var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+                var srcObj = recordsResponse.data[0];
+
+                // if source is newer than request then exit
+                if (DateTime.Parse((string) recObj["Modified_Time"]) <=
+                    DateTime.Parse((string) srcObj["Modified_Time"]))
+                {
+                    return "source system is newer than requested write back";
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return e.Message;
+            }
+            try
+            {
+                // get information from schema
                 var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
-                var moduleName = schema.Name;
                 if (metaJson != null && metaJson.Custom)
                 {
                     moduleName = "Custom";
                 }
                 
+                // build and send request
                 var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
-                var response = await _client.PutAsync(uri, record.DataJson);
+                
+                var putRequestObj = new PutRequest
+                {
+                    data = new [] {recObj},
+                    trigger = new string[0]
+                };
+
+                var content = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
+                
+                var response = await _client.PutAsync(uri, content);
                 
                 response.EnsureSuccessStatusCode();
                 return "";

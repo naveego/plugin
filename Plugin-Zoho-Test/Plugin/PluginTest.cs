@@ -511,6 +511,9 @@ namespace Plugin_Zoho_Test.Plugin
             mockHttp.When("https://www.zohoapis.com/crm/v2/settings/modules")
                 .Respond("application/json",
                     "{\"modules\":[{\"global_search_supported\":true,\"deletable\":true,\"creatable\":true,\"modified_time\":null,\"plural_label\":\"Leads\",\"presence_sub_menu\":true,\"id\":\"3656031000000002175\",\"visibility\":1,\"convertable\":true,\"editable\":true,\"emailTemplate_support\":true,\"profiles\":[{\"name\":\"Administrator\",\"id\":\"3656031000000026011\"},{\"name\":\"Standard\",\"id\":\"3656031000000026014\"}],\"filter_supported\":true,\"web_link\":null,\"sequence_number\":2,\"singular_label\":\"Lead\",\"viewable\":true,\"api_supported\":true,\"api_name\":\"Leads\",\"quick_create\":true,\"modified_by\":null,\"generated_type\":\"default\",\"feeds_required\":false,\"scoring_supported\":true,\"arguments\":[],\"module_name\":\"Leads\",\"business_card_field_limit\":5,\"parent_module\":{}},]}");
+            mockHttp.When("https://www.zohoapis.com/crm/v2/Leads/1")
+                .Respond("application/json",
+                    "{\"data\": [{\"id\": 1,\"Modified_Time\": \"2/13/2019\"}]}");
             mockHttp.When("https://www.zohoapis.com/crm/v2/Leads")
                 .Respond(HttpStatusCode.OK);
             
@@ -540,7 +543,7 @@ namespace Plugin_Zoho_Test.Plugin
                 {
                     Action = Record.Types.Action.Upsert,
                     CorrelationId = "test",
-                    DataJson = "{}"
+                    DataJson = "{\"id\":1,\"Modified_Time\":\"2/14/2019\"}"
                 }}
             };
             

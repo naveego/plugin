@@ -1,10 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Plugin_Zoho.DataContracts;
 
 namespace Plugin_Zoho.Helper
 {
@@ -56,7 +53,7 @@ namespace Plugin_Zoho.Helper
             }
         }
 
-        public async Task<HttpResponseMessage> PutAsync(string uri, string json)
+        public async Task<HttpResponseMessage> PutAsync(string uri, StringContent json)
         {
             string token;
 
@@ -78,14 +75,7 @@ namespace Plugin_Zoho.Helper
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var putRequestObj = new PutRequest
-                {
-                    data = new [] {JsonConvert.DeserializeObject(json)},
-                    trigger = new string[0]
-                };
-
-                var content = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
-                var response = await client.PutAsync(uri, content);
+                var response = await client.PutAsync(uri, json);
 
                 return response;
             }
