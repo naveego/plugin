@@ -545,7 +545,8 @@ namespace Plugin_Zoho.Plugin
                 PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
                 {
                     Custom = module.generated_type == "custom"
-                })
+                }),
+                DataFlowDirection = Schema.Types.DataFlowDirection.ReadWrite
             };
 
             try
