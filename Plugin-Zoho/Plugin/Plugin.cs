@@ -314,7 +314,7 @@ namespace Plugin_Zoho.Plugin
                 var refreshShapes = request.ToRefresh;
                 var shapes = JsonConvert.DeserializeObject<Shape[]>(JsonConvert.SerializeObject(discoverShapesResponse.Shapes));
                 discoverShapesResponse.Shapes.Clear(); 
-                discoverShapesResponse.Shapes.AddRange(shapes.Join(refreshShapes, shape => shape.Id, refresh => refresh.Id, (shape, refresh) => shape));
+                discoverShapesResponse.Shapes.AddRange(shapes.Join(refreshShapes, GetModuleName, GetModuleName, (shape, refresh) => shape));
                 
                 Logger.Debug($"Shapes found: {JsonConvert.SerializeObject(shapes)}");
                 Logger.Debug($"Refresh requested on shapes: {JsonConvert.SerializeObject(refreshShapes)}");
@@ -323,11 +323,8 @@ namespace Plugin_Zoho.Plugin
                 return discoverShapesResponse;
             }
             // return all shapes otherwise
-            else
-            {
-                Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
-                return discoverShapesResponse;
-            }
+            Logger.Info($"Shapes returned: {discoverShapesResponse.Shapes.Count}");
+            return discoverShapesResponse;
         }
         
         /// <summary>
