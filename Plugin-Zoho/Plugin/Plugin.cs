@@ -376,8 +376,8 @@ namespace Plugin_Zoho.Plugin
                         moduleName, page));
                     response.EnsureSuccessStatusCode();
 
-                    // if response is empty or call did not succeed return null
-                    if (response.StatusCode == HttpStatusCode.NoContent || !response.IsSuccessStatusCode)
+                    // if response is empty or call did not succeed return no records
+                    if (!IsSuccessAndNotEmpty(response))
                     {
                         Logger.Info($"No records for: {schema.Name}");
                         return;
@@ -565,7 +565,7 @@ namespace Plugin_Zoho.Plugin
                     String.Format("https://www.zohoapis.com/crm/v2/settings/fields?module={0}", module.api_name));
 
                 // if response is empty or call did not succeed return null
-                if (response.StatusCode == HttpStatusCode.NoContent || !response.IsSuccessStatusCode)
+                if (!IsSuccessAndNotEmpty(response))
                 {
                     Logger.Debug($"No fields for: {module.module_name}");
                     return null;
@@ -678,19 +678,20 @@ namespace Plugin_Zoho.Plugin
                 var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id);
 
                 var response = await _client.GetAsync(uri);
-                response.EnsureSuccessStatusCode();
-                
-                var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
-                var srcObj = recordsResponse.data[0];
-                
-                // get modified key from schema
-                var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
-
-                // if source is newer than request then exit
-                if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
-                    DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                if (IsSuccessAndNotEmpty(response))
                 {
-                    return "source system is newer than requested write back";
+                    var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+                    var srcObj = recordsResponse.data[0];
+                
+                    // get modified key from schema
+                    var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
+
+                    // if source is newer than request then exit
+                    if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
+                        DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                    {
+                        return "source system is newer than requested write back";
+                    }
                 }
             }
             catch (Exception e)
@@ -737,6 +738,16 @@ namespace Plugin_Zoho.Plugin
             }
 
             return moduleName;
+        }
+
+        /// <summary>
+        /// Checks if a http response message is not empty and did not fail
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool IsSuccessAndNotEmpty(HttpResponseMessage response)
+        {
+            return response.StatusCode != HttpStatusCode.NoContent || response.IsSuccessStatusCode;
         }
     }
 }
