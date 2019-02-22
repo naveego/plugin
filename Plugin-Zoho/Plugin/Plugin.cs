@@ -329,8 +329,7 @@ namespace Plugin_Zoho.Plugin
                     JsonConvert.DeserializeObject<Schema[]>(
                         JsonConvert.SerializeObject(discoverSchemasResponse.Schemas));
                 discoverSchemasResponse.Schemas.Clear();
-                discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, schema => schema.Id,
-                    refresh => refresh.Id, (schema, refresh) => schema));
+                discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, GetModuleName, GetModuleName, (shape, refresh) => shape));
 
                 Logger.Debug($"Schemas found: {JsonConvert.SerializeObject(schemas)}");
                 Logger.Debug($"Refresh requested on schemas: {JsonConvert.SerializeObject(refreshSchemas)}");
@@ -547,7 +546,7 @@ namespace Plugin_Zoho.Plugin
             var schema = new Schema
             {
                 Id = module.api_name,
-                Name = module.module_name,
+                Name = module.api_name,
                 Description = module.module_name,
                 PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
                 {
@@ -747,7 +746,7 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         private bool IsSuccessAndNotEmpty(HttpResponseMessage response)
         {
-            return response.StatusCode != HttpStatusCode.NoContent || response.IsSuccessStatusCode;
+            return response.StatusCode != HttpStatusCode.NoContent && response.IsSuccessStatusCode;
         }
     }
 }

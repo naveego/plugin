@@ -4,7 +4,7 @@
   "description": "Publisher which pulls data from a Zoho instance",
   "apiVersion": "2",
   "versionDescription": "Version 1",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "iconFile": "icon.jpg",
   "executable": "Plugin-Zoho",
   "kind": "publisher",
