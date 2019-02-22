@@ -54,17 +54,17 @@ service Publisher {
 
     // Configures settings for real time publishing (change detection).
     // This must be implemented if the plugin manifest has `canPublishRealTime` set to true.
-    rpc ConfigureRealTime (ConfigureRealTimeRequest) returns (ConfigureRealTimeResponse) {        
+    rpc ConfigureRealTime (ConfigureRealTimeRequest) returns (ConfigureRealTimeResponse) {
     }
 
     // Invoked to begin an OAuth flow. This must be implemented if the plugin 
     // manifest has `canUseOAuth` set to true.
-    rpc BeginOAuthFlow (BeginOAuthFlowRequest) returns (BeginOAuthFlowResponse){        
+    rpc BeginOAuthFlow (BeginOAuthFlowRequest) returns (BeginOAuthFlowResponse){
     }
 
     // Invoked to complete an OAuth flow. This must be implemented if the plugin 
     // manifest has `canUseOAuth` set to true.
-    rpc CompleteOAuthFlow (CompleteOAuthFlowRequest) returns (CompleteOAuthFlowResponse){        
+    rpc CompleteOAuthFlow (CompleteOAuthFlowRequest) returns (CompleteOAuthFlowResponse){
     }
 
     // Configures a write back which can be used to write back a schema to the source.
@@ -129,13 +129,13 @@ message ConnectResponse {
 
     // If the OAuth state is invalid or expired, this should contain a description
     // of the problem.
-    string oauth_error = 3; 
+    string oauth_error = 3;
 
     // The OAuth data which should be stored securely and passed next time
     // a connection is requested. This is returned by Connect because
     // forming the connection may have used up a refresh token and 
     // the new refresh token must now be stored.
-    string oauth_state_json = 4;    
+    string oauth_state_json = 4;
 }
 
 message ReadRequest {
@@ -205,7 +205,8 @@ message DiscoverSchemasResponse {
 message Schema {
     enum DataFlowDirection {
         READ = 0;
-        WRITE =1;
+        WRITE = 1;
+        READ_WRITE = 2;
     }
     // ID that the plugin uses to uniquely identify this schema.
     string id = 1;
@@ -415,7 +416,7 @@ message BeginOAuthFlowRequest {
     OAuthConfiguration configuration = 1;
 
     // The URL that the auth server should send the authorization token to.
-    string redirect_url = 2;    
+    string redirect_url = 2;
 }
 
 message BeginOAuthFlowResponse {
@@ -434,19 +435,19 @@ message CompleteOAuthFlowRequest {
 }
 
 message OAuthConfiguration {
-      // Client ID to use for resolving codes.
+    // Client ID to use for resolving codes.
     string client_id = 1;
     // Client secret to use for resolving codes.
     string client_secret = 2;
     // The configuration blob stored for this plugin type,
     // which can contain any data that should not be hard coded into the plugin.
-    string configuration_json = 3;  
+    string configuration_json = 3;
 }
 
 message CompleteOAuthFlowResponse {
     // JSON data containing the OAuth information the plugin wants
     // to be passed to any connect request.
-    string oauth_state_json = 1; 
+    string oauth_state_json = 1;
 }
 
 message ConfigureWriteRequest {

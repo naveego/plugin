@@ -278,7 +278,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request,
             ServerCallContext context)
         {
-            Logger.Info("Discovering Shapes...");
+            Logger.Info("Discovering Schemas...");
 
             DiscoverSchemasResponse discoverShapesResponse = new DiscoverSchemasResponse();
             ModuleResponse modulesResponse;
@@ -306,7 +306,7 @@ namespace Plugin_Zoho.Plugin
             {
                 Logger.Info($"Shapes attempted: {modulesResponse.modules.Length}");
 
-                var tasks = modulesResponse.modules.Select((x, i) => GetShapeForModule(x, i.ToString()))
+                var tasks = modulesResponse.modules.Select(GetShapeForModule)
                     .ToArray();
 
                 await Task.WhenAll(tasks);
@@ -354,11 +354,19 @@ namespace Plugin_Zoho.Plugin
         public override async Task ReadStream(ReadRequest request, IServerStreamWriter<Record> responseStream,
             ServerCallContext context)
         {
-            var shape = request.Schema;
+            var schema = request.Schema;
             var limit = request.Limit;
             var limitFlag = request.Limit != 0;
 
-            Logger.Info($"Publishing records for shape: {shape.Name}");
+            Logger.Info($"Publishing records for shape: {schema.Name}");
+            
+            // get information from schema
+            var moduleName = schema.Id;
+            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
+            if (metaJson != null && metaJson.Custom)
+            {
+                moduleName = "Custom";
+            }
 
             try
             {
@@ -368,10 +376,10 @@ namespace Plugin_Zoho.Plugin
 
                 // Publish records for the given shape
                 do
-                {
+                {                
                     // get records for shape page by page
                     var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}",
-                        shape.Name, page));
+                        moduleName, page));
                     response.EnsureSuccessStatusCode();
 
                     recordsResponse =
@@ -534,13 +542,13 @@ namespace Plugin_Zoho.Plugin
         /// <param name="module"></param>
         /// <param name="id"></param>
         /// <returns>returns a shape or null if unavailable</returns>
-        private async Task<Schema> GetShapeForModule(Module module, string id)
+        private async Task<Schema> GetShapeForModule(Module module)
         {
             // base shape to be added to
             var shape = new Schema
             {
-                Id = id,
-                Name = module.api_name,
+                Id = module.api_name,
+                Name = module.module_name,
                 Description = module.module_name,
                 PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
                 {
@@ -656,13 +664,19 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         private async Task<string> PutRecord(Schema schema, Record record)
         {
-            string moduleName;
             Dictionary<string, object> recObj;
+            
+            // get information from schema
+            var moduleName = schema.Id;
+            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
+            if (metaJson != null && metaJson.Custom)
+            {
+                moduleName = "Custom";
+            }
             
             try
             {
                 // check if source has newer record than write back record
-                moduleName = schema.Name;
                 recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
                 var id = recObj["id"];
                 
@@ -691,14 +705,7 @@ namespace Plugin_Zoho.Plugin
                 return e.Message;
             }
             try
-            {
-                // get information from schema
-                var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
-                if (metaJson != null && metaJson.Custom)
-                {
-                    moduleName = "Custom";
-                }
-                
+            {   
                 // build and send request
                 var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
                 
