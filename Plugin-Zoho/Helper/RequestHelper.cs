@@ -52,6 +52,39 @@ namespace Plugin_Zoho.Helper
                 throw;
             }
         }
+        
+        public async Task<HttpResponseMessage> PostAsync(string uri, StringContent json)
+        {
+            string token;
+
+            // get the token
+            try
+            {
+                token = await _authenticator.GetToken();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
+            
+            // add token to the request and execute the request
+            try
+            {
+                var client = _client;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.PostAsync(uri, json);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                throw;
+            }
+        }
 
         public async Task<HttpResponseMessage> PutAsync(string uri, StringContent json)
         {

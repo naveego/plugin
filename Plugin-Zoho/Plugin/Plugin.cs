@@ -701,7 +701,7 @@ namespace Plugin_Zoho.Plugin
             try
             {   
                 // build and send request
-                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
+                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/upsert", moduleName);
                 
                 var putRequestObj = new PutRequest
                 {
@@ -711,7 +711,7 @@ namespace Plugin_Zoho.Plugin
 
                 var content = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
                 
-                var response = await _client.PutAsync(uri, content);
+                var response = await _client.PostAsync(uri, content);
                 
                 response.EnsureSuccessStatusCode();
                 return "";
