@@ -293,7 +293,7 @@ namespace Plugin_Zoho.Plugin
             {
                 Logger.Info($"Shapes attempted: {modulesResponse.modules.Length}");
 
-                var tasks = modulesResponse.modules.Select((x, i) => GetShapeForModule(x, i.ToString()))
+                var tasks = modulesResponse.modules.Select(GetShapeForModule)
                     .ToArray();
 
                 await Task.WhenAll(tasks);
@@ -345,6 +345,9 @@ namespace Plugin_Zoho.Plugin
 
             Logger.Info($"Publishing records for shape: {shape.Name}");
             
+            // get information from schema
+            var moduleName = GetModuleName(shape);
+            
             try
             {
                 RecordsResponse recordsResponse;
@@ -355,8 +358,15 @@ namespace Plugin_Zoho.Plugin
                 do
                 {
                     // get records for shape page by page
-                    var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}", shape.Name, page));
+                    var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}", moduleName, page));
                     response.EnsureSuccessStatusCode();
+                    
+                    // if response is empty or call did not succeed return no records
+                    if (!IsSuccessAndNotEmpty(response))
+                    {
+                        Logger.Info($"No records for: {shape.Name}");
+                        return;
+                    }
     
                     recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
                     
@@ -430,16 +440,19 @@ namespace Plugin_Zoho.Plugin
         /// Gets a shape for a given module
         /// </summary>
         /// <param name="module"></param>
-        /// <param name="id"></param>
         /// <returns>returns a shape or null if unavailable</returns>
-        private async Task<Shape> GetShapeForModule(Module module, string id)
+        private async Task<Shape> GetShapeForModule(Module module)
         {
             // base shape to be added to
             var shape = new Shape
             {
-                Id = id,
+                Id = module.api_name,
                 Name = module.api_name,
-                Description = module.module_name
+                Description = module.module_name,
+                PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
+                {
+                    Module = module.api_name
+                })
             };
             
             try
@@ -450,7 +463,7 @@ namespace Plugin_Zoho.Plugin
                 var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/settings/fields?module={0}", module.api_name));
                 
                 // if response is empty or call did not succeed return null
-                if (response.StatusCode == HttpStatusCode.NoContent || !response.IsSuccessStatusCode)
+                if (!IsSuccessAndNotEmpty(response))
                 {
                     Logger.Debug($"No fields for: {module.module_name}");
                     return null;
@@ -537,6 +550,32 @@ namespace Plugin_Zoho.Plugin
                 default:
                     return PropertyType.String;
             }
+        }
+        
+        /// <summary>
+        /// Conversion function that has legacy support for old schemas and correct support for new schemas
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        private string GetModuleName(Shape schema){
+            var moduleName = schema.Name;
+            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
+            if (metaJson != null && !string.IsNullOrEmpty(metaJson.Module))
+            {
+                moduleName = metaJson.Module;
+            }
+
+            return moduleName;
+        }
+
+        /// <summary>
+        /// Checks if a http response message is not empty and did not fail
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool IsSuccessAndNotEmpty(HttpResponseMessage response)
+        {
+            return response.StatusCode != HttpStatusCode.NoContent && response.IsSuccessStatusCode;
         }
     }
 }
