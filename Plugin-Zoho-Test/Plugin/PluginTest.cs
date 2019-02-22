@@ -514,7 +514,7 @@ namespace Plugin_Zoho_Test.Plugin
             mockHttp.When("https://www.zohoapis.com/crm/v2/Leads/1")
                 .Respond("application/json",
                     "{\"data\": [{\"id\": 1,\"Modified_Time\": \"2/13/2019\"}]}");
-            mockHttp.When("https://www.zohoapis.com/crm/v2/Leads")
+            mockHttp.When("https://www.zohoapis.com/crm/v2/Leads/upsert")
                 .Respond(HttpStatusCode.OK);
             
             Server server = new Server
