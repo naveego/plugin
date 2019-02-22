@@ -270,17 +270,17 @@ namespace Plugin_Zoho.Plugin
 
 
         /// <summary>
-        /// Discovers shapes located in the users Zoho CRM instance
+        /// Discovers schemas located in the users Zoho CRM instance
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
-        /// <returns>Discovered shapes</returns>
+        /// <returns>Discovered schemas</returns>
         public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request,
             ServerCallContext context)
         {
             Logger.Info("Discovering Schemas...");
 
-            DiscoverSchemasResponse discoverShapesResponse = new DiscoverSchemasResponse();
+            DiscoverSchemasResponse discoverSchemasResponse = new DiscoverSchemasResponse();
             ModuleResponse modulesResponse;
 
             // get the modules present in Zoho
@@ -301,17 +301,17 @@ namespace Plugin_Zoho.Plugin
                 throw;
             }
 
-            // attempt to get a shape for each module found
+            // attempt to get a schema for each module found
             try
             {
-                Logger.Info($"Shapes attempted: {modulesResponse.modules.Length}");
+                Logger.Info($"Schemas attempted: {modulesResponse.modules.Length}");
 
-                var tasks = modulesResponse.modules.Select(GetShapeForModule)
+                var tasks = modulesResponse.modules.Select(GetSchemaForModule)
                     .ToArray();
 
                 await Task.WhenAll(tasks);
 
-                discoverShapesResponse.Schemas.AddRange(tasks.Where(x => x.Result != null).Select(x => x.Result));
+                discoverSchemasResponse.Schemas.AddRange(tasks.Where(x => x.Result != null).Select(x => x.Result));
             }
             catch (Exception e)
             {
@@ -319,33 +319,33 @@ namespace Plugin_Zoho.Plugin
                 throw;
             }
 
-            Logger.Info($"Shapes found: {discoverShapesResponse.Schemas.Count}");
+            Logger.Info($"Schemas found: {discoverSchemasResponse.Schemas.Count}");
 
-            // only return requested shapes if refresh mode selected
+            // only return requested schemas if refresh mode selected
             if (request.Mode == DiscoverSchemasRequest.Types.Mode.Refresh)
             {
-                var refreshShapes = request.ToRefresh;
-                var shapes =
+                var refreshSchemas = request.ToRefresh;
+                var schemas =
                     JsonConvert.DeserializeObject<Schema[]>(
-                        JsonConvert.SerializeObject(discoverShapesResponse.Schemas));
-                discoverShapesResponse.Schemas.Clear();
-                discoverShapesResponse.Schemas.AddRange(shapes.Join(refreshShapes, shape => shape.Id,
-                    refresh => refresh.Id, (shape, refresh) => shape));
+                        JsonConvert.SerializeObject(discoverSchemasResponse.Schemas));
+                discoverSchemasResponse.Schemas.Clear();
+                discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, schema => schema.Id,
+                    refresh => refresh.Id, (schema, refresh) => schema));
 
-                Logger.Debug($"Shapes found: {JsonConvert.SerializeObject(shapes)}");
-                Logger.Debug($"Refresh requested on shapes: {JsonConvert.SerializeObject(refreshShapes)}");
+                Logger.Debug($"Schemas found: {JsonConvert.SerializeObject(schemas)}");
+                Logger.Debug($"Refresh requested on schemas: {JsonConvert.SerializeObject(refreshSchemas)}");
 
-                Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
-                return discoverShapesResponse;
+                Logger.Info($"Schemas returned: {discoverSchemasResponse.Schemas.Count}");
+                return discoverSchemasResponse;
             }
 
-            // return all shapes otherwise
-            Logger.Info($"Shapes returned: {discoverShapesResponse.Schemas.Count}");
-            return discoverShapesResponse;
+            // return all schemas otherwise
+            Logger.Info($"Schemas returned: {discoverSchemasResponse.Schemas.Count}");
+            return discoverSchemasResponse;
         }
 
         /// <summary>
-        /// Publishes a stream of data for a given shape
+        /// Publishes a stream of data for a given schema
         /// </summary>
         /// <param name="request"></param>
         /// <param name="responseStream"></param>
@@ -358,33 +358,33 @@ namespace Plugin_Zoho.Plugin
             var limit = request.Limit;
             var limitFlag = request.Limit != 0;
 
-            Logger.Info($"Publishing records for shape: {schema.Name}");
+            Logger.Info($"Publishing records for schema: {schema.Name}");
             
             // get information from schema
-            var moduleName = schema.Id;
-            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
-            if (metaJson != null && metaJson.Custom)
-            {
-                moduleName = "Custom";
-            }
+            var moduleName = GetModuleName(schema);
 
             try
             {
                 RecordsResponse recordsResponse;
                 int page = 1;
                 int recordsCount = 0;
-
-                // Publish records for the given shape
+                // Publish records for the given schema
                 do
                 {                
-                    // get records for shape page by page
+                    // get records for schema page by page
                     var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}",
                         moduleName, page));
                     response.EnsureSuccessStatusCode();
 
-                    recordsResponse =
-                        JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
-
+                    // if response is empty or call did not succeed return null
+                    if (response.StatusCode == HttpStatusCode.NoContent || !response.IsSuccessStatusCode)
+                    {
+                        Logger.Info($"No records for: {schema.Name}");
+                        return;
+                    }
+                    
+                    recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+                    
                     Logger.Debug($"data: {JsonConvert.SerializeObject(recordsResponse.data)}");
 
                     // publish each record in the page
@@ -537,22 +537,21 @@ namespace Plugin_Zoho.Plugin
         }
 
         /// <summary>
-        /// Gets a shape for a given module
+        /// Gets a schema for a given module
         /// </summary>
         /// <param name="module"></param>
-        /// <param name="id"></param>
-        /// <returns>returns a shape or null if unavailable</returns>
-        private async Task<Schema> GetShapeForModule(Module module)
+        /// <returns>returns a schema or null if unavailable</returns>
+        private async Task<Schema> GetSchemaForModule(Module module)
         {
-            // base shape to be added to
-            var shape = new Schema
+            // base schema to be added to
+            var schema = new Schema
             {
                 Id = module.api_name,
                 Name = module.module_name,
                 Description = module.module_name,
                 PublisherMetaJson = JsonConvert.SerializeObject(new PublisherMetaJson
                 {
-                    Custom = module.generated_type == "custom"
+                    Module = module.api_name
                 }),
                 DataFlowDirection = Schema.Types.DataFlowDirection.ReadWrite
             };
@@ -574,7 +573,7 @@ namespace Plugin_Zoho.Plugin
 
                 Logger.Debug($"Got fields for: {module.module_name}");
 
-                // for each field in the shape add a new property
+                // for each field in the schema add a new property
                 var fieldsResponse =
                     JsonConvert.DeserializeObject<FieldsResponse>(await response.Content.ReadAsStringAsync());
 
@@ -590,7 +589,7 @@ namespace Plugin_Zoho.Plugin
                     IsNullable = false
                 };
 
-                shape.Properties.Add(key);
+                schema.Properties.Add(key);
 
                 foreach (var field in fieldsResponse.fields)
                 {
@@ -606,11 +605,11 @@ namespace Plugin_Zoho.Plugin
                         IsNullable = true
                     };
 
-                    shape.Properties.Add(property);
+                    schema.Properties.Add(property);
                 }
 
-                Logger.Debug($"Added shape for: {module.module_name}");
-                return shape;
+                Logger.Debug($"Added schema for: {module.module_name}");
+                return schema;
             }
             catch (Exception e)
             {
@@ -667,12 +666,7 @@ namespace Plugin_Zoho.Plugin
             Dictionary<string, object> recObj;
             
             // get information from schema
-            var moduleName = schema.Id;
-            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
-            if (metaJson != null && metaJson.Custom)
-            {
-                moduleName = "Custom";
-            }
+            var moduleName = GetModuleName(schema);
             
             try
             {
@@ -727,6 +721,22 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 return e.Message;
             }
+        }
+        
+        /// <summary>
+        /// Conversion function that has legacy support for old schemas and correct support for new schemas
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        private string GetModuleName(Schema schema){
+            var moduleName = schema.Name;
+            var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
+            if (metaJson != null && !string.IsNullOrEmpty(metaJson.Module))
+            {
+                moduleName = metaJson.Module;
+            }
+
+            return moduleName;
         }
     }
 }
