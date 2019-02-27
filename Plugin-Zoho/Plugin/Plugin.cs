@@ -468,7 +468,7 @@ namespace Plugin_Zoho.Plugin
                 var outCount = 0;
                 
                 // get next record to publish while connected and configured
-                while (await requestStream.MoveNext(CancellationToken.None) && _server.Connected && _server.WriteConfigured)
+                while (await requestStream.MoveNext(context.CancellationToken) && _server.Connected && _server.WriteConfigured)
                 {
                     var record = requestStream.Current;
                     inCount++;
