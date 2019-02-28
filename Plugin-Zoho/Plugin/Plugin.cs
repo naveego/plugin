@@ -435,6 +435,7 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         public override Task<PrepareWriteResponse> PrepareWrite(PrepareWriteRequest request, ServerCallContext context)
         {
+            Logger.Info("Preparing write...");
             _server.WriteConfigured = false;
 
             var writeSettings = new WriteSettings
@@ -446,6 +447,7 @@ namespace Plugin_Zoho.Plugin
             _server.WriteSettings = writeSettings;
             _server.WriteConfigured = true;
 
+            Logger.Info("Write prepared.");
             return Task.FromResult(new PrepareWriteResponse());
         }
 
@@ -714,6 +716,8 @@ namespace Plugin_Zoho.Plugin
                 var response = await _client.PostAsync(uri, content);
                 
                 response.EnsureSuccessStatusCode();
+                
+                Logger.Info("Modified 1 record.");
                 return "";
             }
             catch (Exception e)
