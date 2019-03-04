@@ -691,12 +691,15 @@ namespace Plugin_Zoho.Plugin
 
                     if (recObj.ContainsKey(modifiedKey.Id) && srcObj.ContainsKey(modifiedKey.Id))
                     {
-                        // if source is newer than request then exit
-                        if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
-                            DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                        if (recObj[modifiedKey.Id] != null && srcObj[modifiedKey.Id] != null)
                         {
-                            Logger.Info($"Source is newer for record {record.DataJson}");
-                            return "source system is newer than requested write back";
+                            // if source is newer than request then exit
+                            if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
+                                DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                            {
+                                Logger.Info($"Source is newer for record {record.DataJson}");
+                                return "source system is newer than requested write back";
+                            }
                         }
                     }
                 }
