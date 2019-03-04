@@ -475,6 +475,8 @@ namespace Plugin_Zoho.Plugin
                     var record = requestStream.Current;
                     inCount++;
                     
+                    Logger.Info($"Got record: {record.DataJson}");
+                    
                     // send record to source system
                     // timeout if it takes longer than the sla
                     var task = Task.Run(() => PutRecord(schema,record));
@@ -687,11 +689,15 @@ namespace Plugin_Zoho.Plugin
                     // get modified key from schema
                     var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
 
-                    // if source is newer than request then exit
-                    if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
-                        DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                    if (recObj.ContainsKey(modifiedKey.Id) && srcObj.ContainsKey(modifiedKey.Id))
                     {
-                        return "source system is newer than requested write back";
+                        // if source is newer than request then exit
+                        if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
+                            DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                        {
+                            Logger.Info($"Source is newer for record {record.DataJson}");
+                            return "source system is newer than requested write back";
+                        }
                     }
                 }
             }
