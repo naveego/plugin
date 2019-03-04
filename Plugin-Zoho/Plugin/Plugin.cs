@@ -475,7 +475,7 @@ namespace Plugin_Zoho.Plugin
                     var record = requestStream.Current;
                     inCount++;
                     
-                    Logger.Info($"Got record: {record.DataJson}");
+                    Logger.Debug($"Got record: {record.DataJson}");
                     
                     // send record to source system
                     // timeout if it takes longer than the sla
