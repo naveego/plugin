@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Plugin_Zoho.DataContracts
 {
@@ -12,7 +13,7 @@ namespace Plugin_Zoho.DataContracts
     
     public class RecordsResponse
     {
-        public Object[] data { get; set; }
+        public List<Dictionary<string,object>> data { get; set; }
         public Info info { get; set; }
     }
 }
