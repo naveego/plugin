@@ -675,30 +675,34 @@ namespace Plugin_Zoho.Plugin
             {
                 // check if source has newer record than write back record
                 recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
-                var id = recObj["id"];
-                
-                // build and send request
-                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id);
 
-                var response = await _client.GetAsync(uri);
-                if (IsSuccessAndNotEmpty(response))
+                if (recObj.ContainsKey("id"))
                 {
-                    var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
-                    var srcObj = recordsResponse.data[0];
+                    var id = recObj["id"];
                 
-                    // get modified key from schema
-                    var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
+                    // build and send request
+                    var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id);
 
-                    if (recObj.ContainsKey(modifiedKey.Id) && srcObj.ContainsKey(modifiedKey.Id))
+                    var response = await _client.GetAsync(uri);
+                    if (IsSuccessAndNotEmpty(response))
                     {
-                        if (recObj[modifiedKey.Id] != null && srcObj[modifiedKey.Id] != null)
+                        var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+                        var srcObj = recordsResponse.data[0];
+                
+                        // get modified key from schema
+                        var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
+
+                        if (recObj.ContainsKey(modifiedKey.Id) && srcObj.ContainsKey(modifiedKey.Id))
                         {
-                            // if source is newer than request then exit
-                            if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
-                                DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                            if (recObj[modifiedKey.Id] != null && srcObj[modifiedKey.Id] != null)
                             {
-                                Logger.Info($"Source is newer for record {record.DataJson}");
-                                return "source system is newer than requested write back";
+                                // if source is newer than request then exit
+                                if (DateTime.Parse((string) recObj[modifiedKey.Id]) <=
+                                    DateTime.Parse((string) srcObj[modifiedKey.Id]))
+                                {
+                                    Logger.Info($"Source is newer for record {record.DataJson}");
+                                    return "source system is newer than requested write back";
+                                }
                             }
                         }
                     }
