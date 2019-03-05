@@ -681,7 +681,7 @@ namespace Plugin_Zoho.Plugin
                     var id = recObj["id"];
                 
                     // build and send request
-                    var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id);
+                    var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id ?? "null");
 
                     var response = await _client.GetAsync(uri);
                     if (IsSuccessAndNotEmpty(response))
