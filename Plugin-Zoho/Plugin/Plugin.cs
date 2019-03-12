@@ -389,6 +389,18 @@ namespace Plugin_Zoho.Plugin
                     // publish each record in the page
                     foreach (var record in recordsResponse.data)
                     {
+                        foreach (var property in schema.Properties)
+                        {
+                            if (property.Type == PropertyType.String)
+                            {
+                                var value = record[property.Id];
+                                if (!(value is string))
+                                {
+                                    record[property.Id] = JsonConvert.SerializeObject(value);
+                                }
+                            }
+                        }
+                        
                         var recordOutput = new Record
                         {
                             Action = Record.Types.Action.Upsert,
@@ -654,6 +666,10 @@ namespace Plugin_Zoho.Plugin
                         return PropertyType.String;
                     }
                 default:
+                    if (field.data_type == "userlookup")
+                    {
+                        return PropertyType.Json;
+                    }
                     return PropertyType.String;
             }
         }
