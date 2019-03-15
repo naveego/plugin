@@ -391,14 +391,24 @@ namespace Plugin_Zoho.Plugin
                     {
                         foreach (var property in schema.Properties)
                         {
-                            if (property.Type == PropertyType.String)
+                            object value;
+                            switch (property.Type)
                             {
-                                var value = record[property.Id];
-                                if (!(value is string))
-                                {
-                                    record[property.Id] = JsonConvert.SerializeObject(value);
-                                }
-                            }
+                                case PropertyType.String:
+                                    value = record[property.Id];
+                                    if (!(value is string))
+                                    {
+                                        record[property.Id] = JsonConvert.SerializeObject(value);
+                                    }
+                                    break;
+                                case PropertyType.Json:
+                                    value = record[property.Id];
+                                    record[property.Id] = new ReadRecordObject
+                                    {
+                                        Data = value
+                                    };
+                                    break;
+                            }    
                         }
                         
                         var recordOutput = new Record
