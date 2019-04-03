@@ -389,6 +389,8 @@ namespace Plugin_Zoho.Plugin
                     // publish each record in the page
                     foreach (var record in recordsResponse.data)
                     {
+                        var outRecord = new Dictionary<string, object>();
+                        
                         foreach (var property in schema.Properties)
                         {
                             object value;
@@ -408,13 +410,15 @@ namespace Plugin_Zoho.Plugin
                                         Data = value
                                     };
                                     break;
-                            }    
+                            }
+
+                            outRecord.Add(property.Id, record.ContainsKey(property.Id) ? record[property.Id] : null);
                         }
                         
                         var recordOutput = new Record
                         {
                             Action = Record.Types.Action.Upsert,
-                            DataJson = JsonConvert.SerializeObject(record)
+                            DataJson = JsonConvert.SerializeObject(outRecord)
                         };
 
                         // stop publishing if the limit flag is enabled and the limit has been reached
