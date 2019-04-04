@@ -705,6 +705,8 @@ namespace Plugin_Zoho.Plugin
             {
                 // check if source has newer record than write back record
                 recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
+                
+                Logger.Info(record.DataJson);
 
                 if (recObj.ContainsKey("id"))
                 {
@@ -754,11 +756,25 @@ namespace Plugin_Zoho.Plugin
                     trigger = new string[0]
                 };
 
-                var content = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
+                var json = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
                 
-                var response = await _client.PostAsync(uri, content);
+                var response = await _client.PostAsync(uri, json);
                 
                 response.EnsureSuccessStatusCode();
+
+                var upsertResponse = JsonConvert.DeserializeObject<UpsertResponse>(await response.Content.ReadAsStringAsync());
+                var upsertObj = upsertResponse.Data.FirstOrDefault();
+
+
+                if (upsertObj != null)
+                {
+                    if (upsertObj.Code == "error")
+                    {
+                        return upsertObj.Code;
+                    }
+                }
+                
+                Logger.Info(await response.Content.ReadAsStringAsync());
                 
                 Logger.Info("Modified 1 record.");
                 return "";
