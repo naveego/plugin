@@ -770,11 +770,10 @@ namespace Plugin_Zoho.Plugin
                 {
                     if (upsertObj.Code == "error")
                     {
+                        Logger.Error(upsertObj.Code);
                         return upsertObj.Code;
                     }
                 }
-                
-                Logger.Info(await response.Content.ReadAsStringAsync());
                 
                 Logger.Info("Modified 1 record.");
                 return "";
