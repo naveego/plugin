@@ -762,16 +762,19 @@ namespace Plugin_Zoho.Plugin
                 
                 response.EnsureSuccessStatusCode();
 
+                Logger.Info(await response.Content.ReadAsStringAsync());
+                
                 var upsertResponse = JsonConvert.DeserializeObject<UpsertResponse>(await response.Content.ReadAsStringAsync());
                 var upsertObj = upsertResponse.Data.FirstOrDefault();
 
 
                 if (upsertObj != null)
                 {
-                    if (upsertObj.Code == "error")
+                    if (upsertObj.Status == "error")
                     {
-                        Logger.Error(upsertObj.Code);
-                        return upsertObj.Code;
+                        var error = $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
+                        Logger.Error(error);
+                        return error;
                     }
                 }
                 
