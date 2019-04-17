@@ -7,6 +7,8 @@ namespace Plugin_Zoho.Helper
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string RefreshToken{ get; set; }
+        public bool InsertOnly { get; set; }
+        public bool WorkflowTrigger { get; set; }
 
         /// <summary>
         /// Validates the settings input object
