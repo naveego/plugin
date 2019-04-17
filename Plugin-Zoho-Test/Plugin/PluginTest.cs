@@ -17,7 +17,7 @@ namespace Plugin_Zoho_Test.Plugin
         {
             return new ConnectRequest
             {
-                SettingsJson = "",
+                SettingsJson = "{\"InsertOnly\":false,\"WorkflowTrigger\":false}",
                 OauthConfiguration = new OAuthConfiguration
                 {
                     ClientId = "client",

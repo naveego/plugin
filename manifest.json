@@ -3,8 +3,8 @@
   "displayName": "Zoho Publisher",
   "description": "Publisher which pulls data from a Zoho instance",
   "apiVersion": "2",
-  "versionDescription": "Version 1",
-  "version": "1.2.0",
+  "versionDescription": "Version 2",
+  "version": "2.8.0",
   "iconFile": "icon.jpg",
   "executable": "Plugin-Zoho",
   "kind": "publisher",
@@ -17,17 +17,26 @@
   "configSchema": {
     "ui": {
       "ui:order": [
-        "auth"
-      ],
-      "auth": {
-        "ui:widget": "Auth"
-      }
+        "InsertOnly",
+        "WorkflowTrigger"
+      ]
     },
     "schema": {
       "type": "object",
       "properties": {
+        "InsertOnly" : {
+          "type": "boolean",
+          "title": "Insert only",
+          "description": "Select to force all writes to be inserts instead of upserts"
+        },
+        "WorkflowTrigger": {
+          "type": "boolean",
+          "title": "Workflow trigger",
+          "description": "Select have workflow trigger sent with all insert/upsert requests"
+        }
       },
       "required": [
+        
       ]
     }
   }

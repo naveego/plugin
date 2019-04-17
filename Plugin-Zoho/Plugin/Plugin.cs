@@ -180,11 +180,30 @@ namespace Plugin_Zoho.Plugin
                 };
             }
 
+            FormSettings formSettings;
+            try
+            {
+                formSettings = JsonConvert.DeserializeObject<FormSettings>(request.SettingsJson);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return new ConnectResponse
+                {
+                    OauthStateJson = request.OauthStateJson,
+                    ConnectionError = "",
+                    OauthError = "",
+                    SettingsError = e.Message
+                };
+            }
+
             var settings = new Settings
             {
                 ClientId = request.OauthConfiguration.ClientId,
                 ClientSecret = request.OauthConfiguration.ClientSecret,
-                RefreshToken = oAuthState.RefreshToken
+                RefreshToken = oAuthState.RefreshToken,
+                InsertOnly = formSettings.InsertOnly,
+                WorkflowTrigger = formSettings.WorkflowTrigger
             };
 
             // validate settings passed in
@@ -329,7 +348,8 @@ namespace Plugin_Zoho.Plugin
                     JsonConvert.DeserializeObject<Schema[]>(
                         JsonConvert.SerializeObject(discoverSchemasResponse.Schemas));
                 discoverSchemasResponse.Schemas.Clear();
-                discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, GetModuleName, GetModuleName, (shape, refresh) => shape));
+                discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, GetModuleName, GetModuleName,
+                    (shape, refresh) => shape));
 
                 Logger.Debug($"Schemas found: {JsonConvert.SerializeObject(schemas)}");
                 Logger.Debug($"Refresh requested on schemas: {JsonConvert.SerializeObject(refreshSchemas)}");
@@ -358,7 +378,7 @@ namespace Plugin_Zoho.Plugin
             var limitFlag = request.Limit != 0;
 
             Logger.Info($"Publishing records for schema: {schema.Name}");
-            
+
             // get information from schema
             var moduleName = GetModuleName(schema);
 
@@ -369,7 +389,7 @@ namespace Plugin_Zoho.Plugin
                 int recordsCount = 0;
                 // Publish records for the given schema
                 do
-                {                
+                {
                     // get records for schema page by page
                     var response = await _client.GetAsync(String.Format("https://www.zohoapis.com/crm/v2/{0}?page={1}",
                         moduleName, page));
@@ -381,16 +401,17 @@ namespace Plugin_Zoho.Plugin
                         Logger.Info($"No records for: {schema.Name}");
                         return;
                     }
-                    
-                    recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
-                    
+
+                    recordsResponse =
+                        JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+
                     Logger.Debug($"data: {JsonConvert.SerializeObject(recordsResponse.data)}");
 
                     // publish each record in the page
                     foreach (var record in recordsResponse.data)
                     {
                         var outRecord = new Dictionary<string, object>();
-                        
+
                         foreach (var property in schema.Properties)
                         {
                             object value;
@@ -402,6 +423,7 @@ namespace Plugin_Zoho.Plugin
                                     {
                                         record[property.Id] = JsonConvert.SerializeObject(value);
                                     }
+
                                     break;
                                 case PropertyType.Json:
                                     value = record[property.Id];
@@ -414,7 +436,7 @@ namespace Plugin_Zoho.Plugin
 
                             outRecord.Add(property.Id, record.ContainsKey(property.Id) ? record[property.Id] : null);
                         }
-                        
+
                         var recordOutput = new Record
                         {
                             Action = Record.Types.Action.Upsert,
@@ -494,18 +516,19 @@ namespace Plugin_Zoho.Plugin
                 var sla = _server.WriteSettings.CommitSLA;
                 var inCount = 0;
                 var outCount = 0;
-                
+
                 // get next record to publish while connected and configured
-                while (await requestStream.MoveNext(context.CancellationToken) && _server.Connected && _server.WriteConfigured)
+                while (await requestStream.MoveNext(context.CancellationToken) && _server.Connected &&
+                       _server.WriteConfigured)
                 {
                     var record = requestStream.Current;
                     inCount++;
-                    
+
                     Logger.Debug($"Got record: {record.DataJson}");
-                    
+
                     // send record to source system
                     // timeout if it takes longer than the sla
-                    var task = Task.Run(() => PutRecord(schema,record));
+                    var task = Task.Run(() => PutRecord(schema, record));
                     if (task.Wait(TimeSpan.FromSeconds(sla)))
                     {
                         // send ack
@@ -515,7 +538,7 @@ namespace Plugin_Zoho.Plugin
                             Error = task.Result
                         };
                         await responseStream.WriteAsync(ack);
-                        
+
                         if (String.IsNullOrEmpty(task.Result))
                         {
                             outCount++;
@@ -532,7 +555,7 @@ namespace Plugin_Zoho.Plugin
                         await responseStream.WriteAsync(ack);
                     }
                 }
-                
+
                 Logger.Info($"Wrote {outCount} of {inCount} records to Zoho.");
             }
             catch (Exception e)
@@ -684,6 +707,7 @@ namespace Plugin_Zoho.Plugin
                     {
                         return PropertyType.Json;
                     }
+
                     return PropertyType.String;
             }
         }
@@ -696,31 +720,38 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         private async Task<string> PutRecord(Schema schema, Record record)
         {
-            Dictionary<string, object> recObj;
+            // insert only is set
+            if (_server.Settings.InsertOnly)
+            {
+                return await InsertRecord(schema, record);
+            }
             
+            Dictionary<string, object> recObj;
+
             // get information from schema
             var moduleName = GetModuleName(schema);
-            
+
             try
             {
                 // check if source has newer record than write back record
                 recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
-                
+
                 Logger.Info(record.DataJson);
 
                 if (recObj.ContainsKey("id"))
                 {
                     var id = recObj["id"];
-                
+
                     // build and send request
                     var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/{1}", moduleName, id ?? "null");
 
                     var response = await _client.GetAsync(uri);
                     if (IsSuccessAndNotEmpty(response))
                     {
-                        var recordsResponse = JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
+                        var recordsResponse =
+                            JsonConvert.DeserializeObject<RecordsResponse>(await response.Content.ReadAsStringAsync());
                         var srcObj = recordsResponse.data[0];
-                
+
                         // get modified key from schema
                         var modifiedKey = schema.Properties.First(x => x.IsUpdateCounter);
 
@@ -745,26 +776,36 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 return e.Message;
             }
+
             try
-            {   
+            {
                 // build and send request
                 var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}/upsert", moduleName);
+
+                var trigger = new List<string>();
+
+                if (_server.Settings.WorkflowTrigger)
+                {
+                    trigger.Add("workflow");
+                }
                 
                 var putRequestObj = new PutRequest
                 {
-                    data = new [] {recObj},
-                    trigger = new string[0]
+                    data = new[] {recObj},
+                    trigger = trigger
                 };
 
-                var json = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8, "application/json");
-                
+                var json = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8,
+                    "application/json");
+
                 var response = await _client.PostAsync(uri, json);
-                
+
                 response.EnsureSuccessStatusCode();
 
                 Logger.Info(await response.Content.ReadAsStringAsync());
-                
-                var upsertResponse = JsonConvert.DeserializeObject<UpsertResponse>(await response.Content.ReadAsStringAsync());
+
+                var upsertResponse =
+                    JsonConvert.DeserializeObject<UpsertResponse>(await response.Content.ReadAsStringAsync());
                 var upsertObj = upsertResponse.Data.FirstOrDefault();
 
 
@@ -772,12 +813,13 @@ namespace Plugin_Zoho.Plugin
                 {
                     if (upsertObj.Status == "error")
                     {
-                        var error = $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
+                        var error =
+                            $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
                         Logger.Error(error);
                         return error;
                     }
                 }
-                
+
                 Logger.Info("Modified 1 record.");
                 return "";
             }
@@ -787,13 +829,79 @@ namespace Plugin_Zoho.Plugin
                 return e.Message;
             }
         }
-        
+
+        /// <summary>
+        /// Inserts a record to Zoho
+        /// </summary>
+        /// <param name="schema"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        private async Task<string> InsertRecord(Schema schema, Record record)
+        {
+            // get information from schema
+            var moduleName = GetModuleName(schema);
+            
+            try
+            {
+                // build and send request
+                var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
+                
+                var recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
+                var trigger = new List<string>();
+
+                if (_server.Settings.WorkflowTrigger)
+                {
+                    trigger.Add("workflow");
+                }
+
+                var putRequestObj = new PutRequest
+                {
+                    data = new[] {recObj},
+                    trigger = trigger
+                };
+
+                var json = new StringContent(JsonConvert.SerializeObject(putRequestObj), Encoding.UTF8,
+                    "application/json");
+
+                var response = await _client.PostAsync(uri, json);
+
+                response.EnsureSuccessStatusCode();
+
+                Logger.Info(await response.Content.ReadAsStringAsync());
+
+                var upsertResponse =
+                    JsonConvert.DeserializeObject<UpsertResponse>(await response.Content.ReadAsStringAsync());
+                var upsertObj = upsertResponse.Data.FirstOrDefault();
+
+
+                if (upsertObj != null)
+                {
+                    if (upsertObj.Status == "error")
+                    {
+                        var error =
+                            $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
+                        Logger.Error(error);
+                        return error;
+                    }
+                }
+
+                Logger.Info("Created 1 record.");
+                return "";
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return e.Message;
+            }
+        }
+
         /// <summary>
         /// Conversion function that has legacy support for old schemas and correct support for new schemas
         /// </summary>
         /// <param name="schema"></param>
         /// <returns></returns>
-        private string GetModuleName(Schema schema){
+        private string GetModuleName(Schema schema)
+        {
             var moduleName = schema.Name;
             var metaJson = JsonConvert.DeserializeObject<PublisherMetaJson>(schema.PublisherMetaJson);
             if (metaJson != null && !string.IsNullOrEmpty(metaJson.Module))
