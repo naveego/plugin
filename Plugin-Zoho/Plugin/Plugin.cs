@@ -788,10 +788,12 @@ namespace Plugin_Zoho.Plugin
                 {
                     trigger.Add("workflow");
                 }
+
+                var putObj = GetPutObject(recObj, schema);
                 
                 var putRequestObj = new PutRequest
                 {
-                    data = new[] {recObj},
+                    data = new[] {putObj},
                     trigger = trigger
                 };
 
@@ -854,9 +856,11 @@ namespace Plugin_Zoho.Plugin
                     trigger.Add("workflow");
                 }
 
+                var putObj = GetPutObject(recObj, schema);
+                
                 var putRequestObj = new PutRequest
                 {
-                    data = new[] {recObj},
+                    data = new[] {putObj},
                     trigger = trigger
                 };
 
@@ -893,6 +897,37 @@ namespace Plugin_Zoho.Plugin
                 Logger.Error(e.Message);
                 return e.Message;
             }
+        }
+
+        /// <summary>
+        /// Gets put object and unwraps json objects
+        /// </summary>
+        /// <param name="recObj"></param>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetPutObject(Dictionary<string, object> recObj, Schema schema)
+        {
+            var putObj = new Dictionary<string, object>();
+            
+            foreach (var property in schema.Properties)
+            {
+                if (recObj.ContainsKey(property.Id))
+                {
+                    switch (property.Type)
+                    {
+                        case PropertyType.Json:
+                            var value = JsonConvert.SerializeObject(recObj[property.Id]);
+                            var dataObj = JsonConvert.DeserializeObject<ReadRecordObject>(value);
+                            putObj.Add(property.Id, dataObj.Data);
+                            break;
+                        default:
+                            putObj.Add(property.Id, recObj[property.Id]);
+                            break;
+                    } 
+                }
+            }
+
+            return putObj;
         }
 
         /// <summary>
