@@ -657,6 +657,15 @@ namespace Plugin_Zoho.Plugin
                         IsNullable = true
                     };
 
+                    if (property.Type == PropertyType.Json && field.data_type == "lookup")
+                    {
+                        property.Type = PropertyType.String;
+                        property.PublisherMetaJson = JsonConvert.SerializeObject(new LookupMetaJson
+                        {
+                            IsLookup = true
+                        });
+                    }
+
                     schema.Properties.Add(property);
                 }
 
@@ -686,7 +695,6 @@ namespace Plugin_Zoho.Plugin
                 case "integer":
                     return PropertyType.Integer;
                 case "jsonarray":
-                    return PropertyType.Json;
                 case "jsonobject":
                     return PropertyType.Json;
                 case "string":
@@ -702,6 +710,7 @@ namespace Plugin_Zoho.Plugin
                     {
                         return PropertyType.String;
                     }
+
                 default:
                     if (field.data_type == "userlookup")
                     {
@@ -725,7 +734,7 @@ namespace Plugin_Zoho.Plugin
             {
                 return await InsertRecord(schema, record);
             }
-            
+
             Dictionary<string, object> recObj;
 
             // get information from schema
@@ -735,8 +744,6 @@ namespace Plugin_Zoho.Plugin
             {
                 // check if source has newer record than write back record
                 recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
-
-                Logger.Info(record.DataJson);
 
                 if (recObj.ContainsKey("id"))
                 {
@@ -774,6 +781,7 @@ namespace Plugin_Zoho.Plugin
             catch (Exception e)
             {
                 Logger.Error(e.Message);
+                Logger.Error(record.DataJson);
                 return e.Message;
             }
 
@@ -790,7 +798,7 @@ namespace Plugin_Zoho.Plugin
                 }
 
                 var putObj = GetPutObject(recObj, schema);
-                
+
                 var putRequestObj = new PutRequest
                 {
                     data = new[] {putObj},
@@ -828,6 +836,8 @@ namespace Plugin_Zoho.Plugin
             catch (Exception e)
             {
                 Logger.Error(e.Message);
+                Logger.Error(e.StackTrace);
+                Logger.Error(record.DataJson);
                 return e.Message;
             }
         }
@@ -842,12 +852,12 @@ namespace Plugin_Zoho.Plugin
         {
             // get information from schema
             var moduleName = GetModuleName(schema);
-            
+
             try
             {
                 // build and send request
                 var uri = String.Format("https://www.zohoapis.com/crm/v2/{0}", moduleName);
-                
+
                 var recObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(record.DataJson);
                 var trigger = new List<string>();
 
@@ -857,7 +867,7 @@ namespace Plugin_Zoho.Plugin
                 }
 
                 var putObj = GetPutObject(recObj, schema);
-                
+
                 var putRequestObj = new PutRequest
                 {
                     data = new[] {putObj},
@@ -895,6 +905,7 @@ namespace Plugin_Zoho.Plugin
             catch (Exception e)
             {
                 Logger.Error(e.Message);
+                Logger.Error(record.DataJson);
                 return e.Message;
             }
         }
@@ -908,25 +919,69 @@ namespace Plugin_Zoho.Plugin
         private Dictionary<string, object> GetPutObject(Dictionary<string, object> recObj, Schema schema)
         {
             var putObj = new Dictionary<string, object>();
-            
+
             foreach (var property in schema.Properties)
             {
-                if (recObj.ContainsKey(property.Id))
+                var key = property.Id;
+                if (recObj.ContainsKey(key))
                 {
+                    if (recObj[key] == null)
+                    {
+                        continue;
+                    }
+                    
+                    var rawValue = recObj[key];
                     switch (property.Type)
                     {
+                        case PropertyType.String:
+                            try
+                            {
+                                var lookupMetaJson =
+                                    JsonConvert.DeserializeObject<LookupMetaJson>(property.PublisherMetaJson);
+
+                                if (lookupMetaJson.IsLookup)
+                                {
+                                    try
+                                    {
+                                        var lookupObj =
+                                            JsonConvert.DeserializeObject<Dictionary<string, object>>(
+                                                rawValue.ToString());
+                                        putObj.Add(key, lookupObj);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        var lookupObj = new LookupObject
+                                        {
+                                            Id = rawValue.ToString()
+                                        };
+                                        putObj.Add(key, lookupObj);
+                                    }
+
+                                    break;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                            }
+
+                            putObj.Add(key, rawValue);
+                            break;
                         case PropertyType.Json:
-                            var value = JsonConvert.SerializeObject(recObj[property.Id]);
-                            var dataObj = JsonConvert.DeserializeObject<ReadRecordObject>(value);
-                            putObj.Add(property.Id, dataObj.Data);
+                            var valueString = JsonConvert.SerializeObject(rawValue);
+                            var dataObj = JsonConvert.DeserializeObject<ReadRecordObject>(valueString);
+                            if (dataObj != null)
+                            {
+                                putObj.Add(key, dataObj.Data);
+                            }
+
                             break;
                         default:
-                            putObj.Add(property.Id, recObj[property.Id]);
+                            putObj.Add(key, rawValue);
                             break;
-                    } 
+                    }
                 }
             }
-
+            
             return putObj;
         }
 
