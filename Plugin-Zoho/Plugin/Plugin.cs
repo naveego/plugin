@@ -418,24 +418,44 @@ namespace Plugin_Zoho.Plugin
                             switch (property.Type)
                             {
                                 case PropertyType.String:
-                                    value = record[property.Id];
-                                    if (!(value is string))
+                                    if (record.ContainsKey(property.Id))
                                     {
-                                        record[property.Id] = JsonConvert.SerializeObject(value);
+                                        value = record[property.Id];
+                                        if (value != null)
+                                        {
+                                            outRecord.Add(property.Id, value.ToString());
+                                            continue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        outRecord.Add(property.Id, null);
+                                        continue;
                                     }
 
                                     break;
                                 case PropertyType.Json:
-                                    value = record[property.Id];
-                                    record[property.Id] = new ReadRecordObject
+                                    if (record.ContainsKey(property.Id))
                                     {
-                                        Data = value
-                                    };
+                                        value = record[property.Id];
+                                        record[property.Id] = new ReadRecordObject
+                                        {
+                                            Data = value
+                                        };
+                                    }
+                                    else
+                                    {
+                                        outRecord.Add(property.Id, null);
+                                        continue;
+                                    }
+
                                     break;
                             }
 
                             outRecord.Add(property.Id, record.ContainsKey(property.Id) ? record[property.Id] : null);
                         }
+                        
+                        Logger.Debug($"outRecord: {JsonConvert.SerializeObject(outRecord)}");
 
                         var recordOutput = new Record
                         {
@@ -929,7 +949,7 @@ namespace Plugin_Zoho.Plugin
                     {
                         continue;
                     }
-                    
+
                     var rawValue = recObj[key];
                     switch (property.Type)
                     {
@@ -981,7 +1001,7 @@ namespace Plugin_Zoho.Plugin
                     }
                 }
             }
-            
+
             return putObj;
         }
 
