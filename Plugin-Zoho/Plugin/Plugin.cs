@@ -8,10 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Grpc.Core;
+using Naveego.Sdk.Plugins;
 using Newtonsoft.Json;
 using Plugin_Zoho.DataContracts;
 using Plugin_Zoho.Helper;
-using Pub;
+
 
 namespace Plugin_Zoho.Plugin
 {
@@ -41,6 +42,7 @@ namespace Plugin_Zoho.Plugin
         public override Task<BeginOAuthFlowResponse> BeginOAuthFlow(BeginOAuthFlowRequest request,
             ServerCallContext context)
         {
+            Logger.SetLogPrefix("begin_oauth");
             Logger.Info("Getting Auth URL...");
 
             // params for auth url
@@ -81,6 +83,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task<CompleteOAuthFlowResponse> CompleteOAuthFlow(CompleteOAuthFlowRequest request,
             ServerCallContext context)
         {
+            Logger.SetLogPrefix("complete_oauth");
             Logger.Info("Getting Auth and Refresh Token...");
 
             // get code from redirect url
@@ -156,6 +159,7 @@ namespace Plugin_Zoho.Plugin
         /// <returns>A message indicating connection success</returns>
         public override async Task<ConnectResponse> Connect(ConnectRequest request, ServerCallContext context)
         {
+            Logger.SetLogPrefix("connect");
             _server.Connected = false;
 
             Logger.Info("Connecting...");
@@ -270,6 +274,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task ConnectSession(ConnectRequest request,
             IServerStreamWriter<ConnectResponse> responseStream, ServerCallContext context)
         {
+            Logger.SetLogPrefix("connect_session");
             Logger.Info("Connecting session...");
 
             // create task to wait for disconnect to be called
@@ -297,6 +302,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request,
             ServerCallContext context)
         {
+            Logger.SetLogPrefix("discover");
             Logger.Info("Discovering Schemas...");
 
             DiscoverSchemasResponse discoverSchemasResponse = new DiscoverSchemasResponse();
@@ -373,10 +379,12 @@ namespace Plugin_Zoho.Plugin
         public override async Task ReadStream(ReadRequest request, IServerStreamWriter<Record> responseStream,
             ServerCallContext context)
         {
+            var jobId = request.JobId;
             var schema = request.Schema;
             var limit = request.Limit;
             var limitFlag = request.Limit != 0;
 
+            Logger.SetLogPrefix(jobId);
             Logger.Info($"Publishing records for schema: {schema.Name}");
 
             // get information from schema
@@ -503,6 +511,7 @@ namespace Plugin_Zoho.Plugin
         /// <returns></returns>
         public override Task<PrepareWriteResponse> PrepareWrite(PrepareWriteRequest request, ServerCallContext context)
         {
+            Logger.SetLogPrefix(request.DataVersions.JobId);
             Logger.Info("Preparing write...");
             _server.WriteConfigured = false;
 

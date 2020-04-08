@@ -2,16 +2,14 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>Plugin_Zoho</RootNamespace>
         <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Google.Protobuf" Version="3.6.1" />
-        <PackageReference Include="Grpc" Version="1.17.0" />
-        <PackageReference Include="Grpc.HealthCheck" Version="1.17.0" />
-        <PackageReference Include="Grpc.Tools" Version="1.17.0" />
+        <PackageReference Include="Naveego.Sdk" Version="1.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
@@ -23,10 +21,6 @@
         <Icon Include="$(MSBuildProjectDirectory)/../icon.jpg" />
         <License Include="$(MSBuildProjectDirectory)/../LICENSE" />
         <Manifest Include="$(MSBuildProjectDirectory)/../manifest.json" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Publisher" />
     </ItemGroup>
 
     <Target Name="ZipWindows" AfterTargets="Publish" Condition="$(Configuration) == 'Release' And Exists('$(MSBuildProjectDirectory)\bin\Release\netcoreapp2.2\win-x64\publish')">

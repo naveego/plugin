@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Grpc.Core;
-using Pub;
+using Naveego.Sdk.Plugins;
 using Xunit;
 using RichardSzalay.MockHttp;
-using Record = Pub.Record;
+using Record = Naveego.Sdk.Plugins.Record;
 
 namespace Plugin_Zoho_Test.Plugin
 {
