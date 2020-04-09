@@ -159,13 +159,12 @@ namespace Plugin_Zoho.Plugin
         /// <returns>A message indicating connection success</returns>
         public override async Task<ConnectResponse> Connect(ConnectRequest request, ServerCallContext context)
         {
-            Logger.SetLogPrefix("connect");
             _server.Connected = false;
 
-            Logger.Info("Connecting...");
-            Logger.Info("Got OAuth State: " + !String.IsNullOrEmpty(request.OauthStateJson));
+            Logger.Info("Connecting...", true);
+            Logger.Info("Got OAuth State: " + !String.IsNullOrEmpty(request.OauthStateJson), true);
             Logger.Info("Got OAuthConfig " +
-                        !String.IsNullOrEmpty(JsonConvert.SerializeObject(request.OauthConfiguration)));
+                        !String.IsNullOrEmpty(JsonConvert.SerializeObject(request.OauthConfiguration)), true);
 
             OAuthState oAuthState;
             try
@@ -247,7 +246,7 @@ namespace Plugin_Zoho.Plugin
 
                 _server.Connected = true;
 
-                Logger.Info("Connected to Zoho");
+                Logger.Info("Connected to Zoho", true);
             }
             catch (Exception e)
             {
@@ -274,8 +273,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task ConnectSession(ConnectRequest request,
             IServerStreamWriter<ConnectResponse> responseStream, ServerCallContext context)
         {
-            Logger.SetLogPrefix("connect_session");
-            Logger.Info("Connecting session...");
+            Logger.Info("Connecting session...", true);
 
             // create task to wait for disconnect to be called
             _tcs?.SetResult(true);
@@ -286,7 +284,7 @@ namespace Plugin_Zoho.Plugin
 
             await responseStream.WriteAsync(response);
 
-            Logger.Info("Session connected.");
+            Logger.Info("Session connected.", true);
 
             // wait for disconnect to be called
             await _tcs.Task;
@@ -302,8 +300,7 @@ namespace Plugin_Zoho.Plugin
         public override async Task<DiscoverSchemasResponse> DiscoverSchemas(DiscoverSchemasRequest request,
             ServerCallContext context)
         {
-            Logger.SetLogPrefix("discover");
-            Logger.Info("Discovering Schemas...");
+            Logger.Info("Discovering Schemas...", true);
 
             DiscoverSchemasResponse discoverSchemasResponse = new DiscoverSchemasResponse();
             ModuleResponse modulesResponse;
@@ -311,7 +308,7 @@ namespace Plugin_Zoho.Plugin
             // get the modules present in Zoho
             try
             {
-                Logger.Debug("Getting modules...");
+                Logger.Debug("Getting modules...", true);
                 var response = await _client.GetAsync("https://www.zohoapis.com/crm/v2/settings/modules");
                 response.EnsureSuccessStatusCode();
 
@@ -329,7 +326,7 @@ namespace Plugin_Zoho.Plugin
             // attempt to get a schema for each module found
             try
             {
-                Logger.Info($"Schemas attempted: {modulesResponse.modules.Length}");
+                Logger.Info($"Schemas attempted: {modulesResponse.modules.Length}", true);
 
                 var tasks = modulesResponse.modules.Select(GetSchemaForModule)
                     .ToArray();
@@ -344,7 +341,7 @@ namespace Plugin_Zoho.Plugin
                 throw;
             }
 
-            Logger.Info($"Schemas found: {discoverSchemasResponse.Schemas.Count}");
+            Logger.Info($"Schemas found: {discoverSchemasResponse.Schemas.Count}", true);
 
             // only return requested schemas if refresh mode selected
             if (request.Mode == DiscoverSchemasRequest.Types.Mode.Refresh)
@@ -357,10 +354,10 @@ namespace Plugin_Zoho.Plugin
                 discoverSchemasResponse.Schemas.AddRange(schemas.Join(refreshSchemas, GetModuleName, GetModuleName,
                     (shape, refresh) => shape));
 
-                Logger.Debug($"Schemas found: {JsonConvert.SerializeObject(schemas)}");
-                Logger.Debug($"Refresh requested on schemas: {JsonConvert.SerializeObject(refreshSchemas)}");
+                Logger.Debug($"Schemas found: {JsonConvert.SerializeObject(schemas)}", true);
+                Logger.Debug($"Refresh requested on schemas: {JsonConvert.SerializeObject(refreshSchemas)}", true);
 
-                Logger.Info($"Schemas returned: {discoverSchemasResponse.Schemas.Count}");
+                Logger.Info($"Schemas returned: {discoverSchemasResponse.Schemas.Count}", true);
                 return discoverSchemasResponse;
             }
 
@@ -385,6 +382,7 @@ namespace Plugin_Zoho.Plugin
             var limitFlag = request.Limit != 0;
 
             Logger.SetLogPrefix(jobId);
+            Logger.WriteBuffer();
             Logger.Info($"Publishing records for schema: {schema.Name}");
 
             // get information from schema
@@ -512,6 +510,7 @@ namespace Plugin_Zoho.Plugin
         public override Task<PrepareWriteResponse> PrepareWrite(PrepareWriteRequest request, ServerCallContext context)
         {
             Logger.SetLogPrefix(request.DataVersions.JobId);
+            Logger.WriteBuffer();
             Logger.Info("Preparing write...");
             _server.WriteConfigured = false;
 
@@ -613,6 +612,7 @@ namespace Plugin_Zoho.Plugin
                 _tcs = null;
             }
 
+            Logger.WriteBuffer();
             Logger.Info("Disconnected");
             return Task.FromResult(new DisconnectResponse());
         }
@@ -639,7 +639,7 @@ namespace Plugin_Zoho.Plugin
 
             try
             {
-                Logger.Debug($"Getting fields for: {module.module_name}");
+                Logger.Debug($"Getting fields for: {module.module_name}", true);
 
                 // get fields for module
                 var response = await _client.GetAsync(
@@ -652,7 +652,7 @@ namespace Plugin_Zoho.Plugin
                     return null;
                 }
 
-                Logger.Debug($"Got fields for: {module.module_name}");
+                Logger.Debug($"Got fields for: {module.module_name}", true);
 
                 // for each field in the schema add a new property
                 var fieldsResponse =
@@ -698,7 +698,7 @@ namespace Plugin_Zoho.Plugin
                     schema.Properties.Add(property);
                 }
 
-                Logger.Debug($"Added schema for: {module.module_name}");
+                Logger.Debug($"Added schema for: {module.module_name}", true);
                 return schema;
             }
             catch (Exception e)

@@ -35,12 +35,12 @@ namespace Plugin_Zoho
             
                 Console.WriteLine(output);
             
-                Logger.Info("Started on port " + server.Ports.First().BoundPort);
+                Logger.Info("Started on port " + server.Ports.First().BoundPort, true);
                 
                 // wait to exit until given input
                 Console.ReadLine();
                 
-                Logger.Info("Plugin exiting...");
+                Logger.Info("Plugin exiting...", true);
 
                 // shutdown server
                 server.ShutdownAsync().Wait();
