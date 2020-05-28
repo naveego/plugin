@@ -56,7 +56,7 @@ namespace Plugin_Zoho.Helper
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e.Message);
+                    Logger.Error(e, e.Message);
                     throw;
                 }
             }

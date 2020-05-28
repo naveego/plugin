@@ -96,7 +96,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message);
                 throw;
             }
 
@@ -136,7 +136,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message);
                 throw;
             }
 
@@ -173,7 +173,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message, context);
                 return new ConnectResponse
                 {
                     OauthStateJson = request.OauthStateJson,
@@ -190,7 +190,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message, context);
                 return new ConnectResponse
                 {
                     OauthStateJson = request.OauthStateJson,
@@ -217,7 +217,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message, context);
                 return new ConnectResponse
                 {
                     OauthStateJson = request.OauthStateJson,
@@ -234,7 +234,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message);
                 throw;
             }
 
@@ -250,7 +250,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message, context);
 
                 return new ConnectResponse
                 {
@@ -319,8 +319,8 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                throw;
+                Logger.Error(e, e.Message, context);
+                return new DiscoverSchemasResponse();
             }
 
             // attempt to get a schema for each module found
@@ -337,8 +337,8 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                throw;
+                Logger.Error(e, e.Message, context);
+                return new DiscoverSchemasResponse();
             }
 
             Logger.Info($"Schemas found: {discoverSchemasResponse.Schemas.Count}", true);
@@ -496,8 +496,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                throw;
+                Logger.Error(e, e.Message, context);
             }
         }
 
@@ -588,8 +587,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                throw;
+                Logger.Error(e, e.Message, context);
             }
         }
 
@@ -703,7 +701,7 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e, e.Message);
                 return null;
             }
         }
@@ -809,8 +807,8 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                Logger.Error(record.DataJson);
+                // Logger.Error(record.DataJson);
+                Logger.Error(e, e.Message);
                 return e.Message;
             }
 
@@ -854,7 +852,7 @@ namespace Plugin_Zoho.Plugin
                     {
                         var error =
                             $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
-                        Logger.Error(error);
+                        Logger.Error(null, error);
                         return error;
                     }
                 }
@@ -864,9 +862,9 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                Logger.Error(e.StackTrace);
-                Logger.Error(record.DataJson);
+                Logger.Error(e, e.Message);
+                // Logger.Error(e.StackTrace);
+                // Logger.Error(record.DataJson);
                 return e.Message;
             }
         }
@@ -923,7 +921,7 @@ namespace Plugin_Zoho.Plugin
                     {
                         var error =
                             $"{upsertObj.Code}: {upsertObj.Message} {JsonConvert.SerializeObject(upsertObj.Details)}";
-                        Logger.Error(error);
+                        Logger.Error(null, error);
                         return error;
                     }
                 }
@@ -933,8 +931,8 @@ namespace Plugin_Zoho.Plugin
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
-                Logger.Error(record.DataJson);
+                Logger.Error(e, e.Message);
+                // Logger.Error(null,record.DataJson);
                 return e.Message;
             }
         }
