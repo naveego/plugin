@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Grpc.Core;
+using Naveego.Sdk.Logging;
 using Naveego.Sdk.Plugins;
 using Plugin_Zoho.Helper;
 
@@ -12,10 +13,12 @@ namespace Plugin_Zoho
         {
             try
             {
+                Logger.Init();
                 // Add final chance exception handler
                 AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
                 {
                     Logger.Error(null, $"died: {eventArgs.ExceptionObject}");
+                    Logger.CloseAndFlush();
                 };
                 
                 // clean old logs on start up
@@ -35,19 +38,21 @@ namespace Plugin_Zoho
             
                 Console.WriteLine(output);
             
-                Logger.Info("Started on port " + server.Ports.First().BoundPort, true);
+                Logger.Info("Started on port " + server.Ports.First().BoundPort);
                 
                 // wait to exit until given input
                 Console.ReadLine();
                 
-                Logger.Info("Plugin exiting...", true);
+                Logger.Info("Plugin exiting...");
 
+                Logger.CloseAndFlush();
                 // shutdown server
                 server.ShutdownAsync().Wait();
             }
             catch (Exception e)
             {
                 Logger.Error(e, e.Message);
+                Logger.CloseAndFlush();
             }
         }
     }
